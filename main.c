@@ -1,5 +1,5 @@
 #include <stdio.h>
-#inlcude "myProject.h"
+#include "myProject.h"
 
 int main(Void)
 {
