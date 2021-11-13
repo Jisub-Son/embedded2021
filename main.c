@@ -1,6 +1,9 @@
 #include <stdio.h>
+#inlcude "myProject.h"
 
-main(void)
+int main(Void)
 {
-	printf("Hello Embedded!\r\n");
+	printf("Chief name is [Jisub-Son]\r\n");
+	printMyName1();
+	printMyName2();
 }
