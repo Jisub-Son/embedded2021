@@ -16,18 +16,25 @@ int main(void)
 {
     int ledNum = 0;
     int ledStat = 0;
+    int i=0;
 
     ledLibInit();   // led initailize
 
-    printf("select ledNum : ");
-    scanf("%d", &ledNum);
+    //printf("select ledNum : ");
+    //scanf("%d", &ledNum);
+	for (i=0;i<8;i++)
+	{
+		ledOnOff(i, 1);
+		sleep(1);
+		ledOnOff(i,0);
+	}
 
-    ledOnOff(ledNum, 1);
+    
 
     ledStat = ledStatus();
     printf("ledStatus is : %08x\n", ledStat);
 
-    delay(1000);
+    sleep(1);
 
     ledLibExit();
 
