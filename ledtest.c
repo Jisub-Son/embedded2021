@@ -15,6 +15,7 @@
 int main(void)
 {
     int ledNum = 0;
+    int ledStat = 0;
 
     ledLibInit();   // led initailize
 
@@ -23,7 +24,8 @@ int main(void)
 
     ledOnOff(ledNum, 1);
 
-    printf("ledStatus is : %d\n", ledStatus);
+    ledStat = ledStatus();
+    printf("ledStatus is : %d\n", ledStat);
 
     ledLibExit();
 
