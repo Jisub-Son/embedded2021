@@ -25,7 +25,9 @@ int main(void)
     ledOnOff(ledNum, 1);
 
     ledStat = ledStatus();
-    printf("ledStatus is : %d\n", ledStat);
+    printf("ledStatus is : %08x\n", ledStat);
+
+    delay(1000);
 
     ledLibExit();
 
