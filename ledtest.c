@@ -25,13 +25,14 @@ int main(void)
 	{
 		ledOnOff(i, 1);
 		sleep(1);
+		ledStat = ledStatus();
+		printf("ledStatus is : %08x\n", ledStat);		
 		ledOnOff(i,0);
 	}
 
     
 
-    ledStat = ledStatus();
-    printf("ledStatus is : %08x\n", ledStat);
+
 
     sleep(1);
 
