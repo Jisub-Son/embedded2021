@@ -1,11 +1,3 @@
-final.elf: main.c 1.o 2.o myProject.h
-	gcc -o final.elf main.c 1.o 2.o
-
-1.o: 1.c myProject.h
-	gcc -o 1.o -c 1.c
-
-2.o: 2.c myProject.h
-	gcc -o 2.o -c 2.c
-
-clean:
-	rm -rf 1.o 2.o
+all : led.h led.c
+	arm-linux-gnueabi-gcc -c led.c -o led.o
+	arm-linux-gnueabi-ar rc libMyPeri.a led.o
