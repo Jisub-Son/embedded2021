@@ -20,8 +20,7 @@ int main(void)
 
     ledLibInit();   // led initailize
 
-    //printf("select ledNum : ");
-    //scanf("%d", &ledNum);
+
 	for (i=0;i<8;i++)
 	{
 		ledOnOff(i, 1);
@@ -40,3 +39,4 @@ int main(void)
 
     return 0;
 }
+
