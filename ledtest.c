@@ -20,23 +20,21 @@ int main(void)
 
     ledLibInit();   // led initailize
 
-
 	for (i=0;i<8;i++)
 	{
-		ledOnOff(i, 1);
+		ledOnOff(i, 1);		// i번째 led On
 		sleep(1);
 		ledStat = ledStatus();
-		printf("ledStatus is : %08x\n", ledStat);		
-		ledOnOff(i,0);
+		printf("ledStatus is : %02x\n", ledStat);		
+		ledOnOff(i,0);		// i번째 led Off
 	}
 
-    
-
-
-
     sleep(1);
+	printf("Answer is correct : All led On!\n");
+	ledifAns();		// All led On for 3time
+	
 
-    ledLibExit();
+    ledLibExit(); 	// led Exit
 
     return 0;
 }

@@ -44,3 +44,20 @@ int ledStatus(void)
 	return ledValue;
 }
 
+int ledifAns(void)
+{
+	int i, k;
+	
+	for(k=0;k<3;k++){
+		for(i=0;i<8;i++){
+			ledOnOff(i, 1);
+		}
+		usleep(500000);
+		for(i=0;i<8;i++){
+			ledOnOff(i, 0);
+		}
+		usleep(500000);
+	}
+
+	return 0;
+}

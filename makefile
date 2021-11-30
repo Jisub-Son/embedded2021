@@ -5,5 +5,8 @@ libMyPeri.a : led.o
 	arm-linux-gnueabi-ar rc libMyPeri.a led.o
 
 led.o : led.h led.c
-	arm-linux-
-	gnueabi-gcc -c led.c led.o
+	arm-linux-gnueabi-gcc -c led.c -o led.o
+
+clear :
+	rm *.o
+	rm libMyPeri.a
