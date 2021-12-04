@@ -67,20 +67,6 @@ void buttonThFunc(void)
             buttonTxData.pressed = stEvent.value;
             msgsnd(msgID, &buttonTxData, sizeof(buttonTxData)-sizeof(long int), 0);
         }
-        // if ( stEvent.type == EV_KEY){
-        //     printf("EV_KEY(");
-        //     switch(stEvent.code)
-        //     {
-        //         case KEY_VOLUMEUP: printf("Volume up key):"); break;
-        //         case KEY_HOME: printf("Home key):"); break;
-        //         case KEY_SEARCH: printf("Search key):"); break;
-        //         case KEY_BACK: printf("Back key):"); break;
-        //         case KEY_MENU: printf("Menu key):"); break;
-        //         case KEY_VOLUMEDOWN: printf("Volume down key):"); break;
-        //     }
-        //     if ( stEvent.value ) printf("pressed\n");
-        //     else printf("released\n");
-        // } //End of if
     } 
 }
 
@@ -104,7 +90,7 @@ int buttonInit(void)
     buttonTxData.messageNum = 1;
 
     err = pthread_create(&buttonTh_id, NULL, &buttonThFunc, NULL);
-    if(err != 0){      // 만약 err1이 0이 아니면(실패하면)
+    if(err != 0){      // 만약 err이 0이 아니면(실패하면)
             printf("Thread Create Error : [%d]\r\n", err);     // 에러 메세지를 출력한다
     }
 
