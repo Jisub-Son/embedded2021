@@ -1,8 +1,10 @@
 CC = arm-linux-gnueabi-gcc
 AR = arm-linux-gnueabi-ar
-object = led button buzzer
 
-all: ledtest buttontest buzzertest fndtest
+all: ledtest buttontest buzzertest fndtest textlcdtest
+
+textlcdtest : textlcdtest.c libMyPeri.a textlcd.h
+	$(CC) textlcdtest.c -l MyPeri -L. -o textlcdtest
 
 fndtest : fndtest.c libMyPeri.a fnd.h
 	$(CC) fndtest.c -l MyPeri -L. -o fndtest
@@ -16,8 +18,8 @@ buttontest : buttontest.c libMyPeri.a button.h
 ledtest : ledtest.c libMyPeri.a led.h
 	$(CC) ledtest.c -l MyPeri -L. -o ledtest
 
-libMyPeri.a : led.o button.o buzzer.o fnd.o
-	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o
+libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o
+	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o
 
 led.o : led.h led.c
 	$(CC) -c led.c -o led.o
@@ -30,6 +32,9 @@ buzzer.o : buzzer.h buzzer.c
 
 fnd.o : fnd.h fnd.c
 	$(CC) -c fnd.c -o fnd.o
+
+textlcd.o : textlcd.h textlcd.c
+	$(CC) -c textlcd.c -o textlcd.o
 
 clean :
 	rm *.o
