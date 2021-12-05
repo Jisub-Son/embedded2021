@@ -23,16 +23,16 @@ static char path_en[200] = {0,}, path_freq[200] = {0,};
 
 int findBuzzerSysPath(char *gBuzzerBaseSysDir)     //버저 경로 찾기: /sys/bus/platform/devices/peribuzzer.XX 의 XX를 결정하는 것
 {
-    DIR * dir_info = opendir(BUZZER_BASE_SYS_PATH);
+    DIR * dir_info = opendir(BUZZER_BASE_SYS_PATH); //path에 가서 
     int ifNotFound = 1;
     if (dir_info != NULL){
         while (1){
-            struct dirent *dir_entry;
+            struct dirent *dir_entry;//안에 있는 모든 파일을 읽고 
             dir_entry = readdir (dir_info);
             if (dir_entry == NULL) break;
-            if (strncasecmp(BUZZER_FILENAME, dir_entry->d_name, strlen(BUZZER_FILENAME)) == 0){
+            if (strncasecmp(BUZZER_FILENAME, dir_entry->d_name, strlen(BUZZER_FILENAME)) == 0){ //peribuzzer에 해당하는 파일 이름이 있는지 검사해서 
                 ifNotFound = 0;
-                sprintf(gBuzzerBaseSysDir,"%s%s/",BUZZER_BASE_SYS_PATH,dir_entry->d_name);
+                sprintf(gBuzzerBaseSysDir,"%s%s/",BUZZER_BASE_SYS_PATH,dir_entry->d_name); //있으면 파일 이름 찾아내기 
             }
         }
     }

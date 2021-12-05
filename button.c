@@ -20,7 +20,7 @@ static int msgID, fd;
 static BUTTON_MSG_T buttonTxData;
 static char buttonPath[200] = {0,};
 
-int probeButtonPath(char *newPath)
+int probeButtonPath(char *newPath) // /dev/input/event# 여기서 #에 해당하는 숫자를 확인 
 {
     int returnValue = 0;
     int number = 0;
@@ -64,7 +64,7 @@ void buttonThFunc(void)
 
         if ( stEvent.type == EV_KEY){
             buttonTxData.keyInput = stEvent.code;
-            buttonTxData.pressed = stEvent.value;
+            buttonTxData.pressed = stEvent.value; //1이면 버튼 눌렸을때, 0이면 버튼 떨어졌을때 
             msgsnd(msgID, &buttonTxData, sizeof(buttonTxData)-sizeof(long int), 0);
         }
     } 
