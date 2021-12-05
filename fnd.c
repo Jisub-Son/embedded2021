@@ -94,7 +94,7 @@ int fndTimeDisp(void)
 
 		fndDisp(number , 0b1010);
 }
-
+/*
 int fndCountDisp(int number)
 {
     int counter = 0;
@@ -109,9 +109,24 @@ int fndCountDisp(int number)
 				break;
 		}
 }
+*/
+
+int fndCountDisp(void)
+{
+    int counter = 0;
+    while(1)
+		{
+			if (!fndDisp(counter , 0))
+				break;
+
+			counter++;
+			sleep(1);
+		}
+}
 
 int fndExit(void)
 {
     fndOff();
     close(fd);
 }
+
