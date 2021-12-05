@@ -19,13 +19,13 @@
 int pwmActiveAll(void)
 {
 	int fd = 0;
-	fd = open(COLOR_LED_DEV_R_ ,PWM_EXPORT, O_WRONLY);
+	fd = open( COLOR_LED_DEV_R_ PWM_EXPORT, O_WRONLY);
 	write(fd,&"0",1);
 	close(fd);
-	fd = open(COLOR_LED_DEV_G_ ,PWM_EXPORT, O_WRONLY);
+	fd = open( COLOR_LED_DEV_G_ PWM_EXPORT, O_WRONLY);
 	write(fd,&"0",1);
 	close(fd);
-	fd = open(COLOR_LED_DEV_B_ ,PWM_EXPORT, O_WRONLY);
+	fd = open( COLOR_LED_DEV_B_ PWM_EXPORT, O_WRONLY);
 	write(fd,&"0",1);
 	close(fd);
 	return 1;
@@ -34,13 +34,13 @@ int pwmActiveAll(void)
 int pwmInactiveAll(void)
 {
 	int fd =0;
-	fd = open(COLOR_LED_DEV_R_ ,PWM_UNEXPORT, O_WRONLY);
+	fd = open( COLOR_LED_DEV_R_ PWM_UNEXPORT, O_WRONLY);
 	write(fd,&"0",1);
 	close(fd);
-	fd = open(COLOR_LED_DEV_G_ ,PWM_UNEXPORT, O_WRONLY);
+	fd = open( COLOR_LED_DEV_G_ PWM_UNEXPORT, O_WRONLY);
 	write(fd,&"0",1);
 	close(fd);
-	fd = open(COLOR_LED_DEV_B_ ,PWM_UNEXPORT, O_WRONLY);
+	fd = open( COLOR_LED_DEV_B_ PWM_UNEXPORT, O_WRONLY);
 	write(fd,&"0",1);
 	close(fd);
 	return 1;
@@ -52,14 +52,14 @@ int pwmSetDuty(int dutyCycle, int pwmIndex)
 	switch (pwmIndex)
 	{
 		case 0:
-		fd = open ( COLOR_LED_DEV_R_ ,PWM_DUTY, O_WRONLY);
+		fd = open ( COLOR_LED_DEV_R_ PWM_DUTY, O_WRONLY);
 		break;
 		case 1:
-		fd = open ( COLOR_LED_DEV_G_ ,PWM_DUTY, O_WRONLY);
+		fd = open ( COLOR_LED_DEV_G_ PWM_DUTY, O_WRONLY);
 		break;
 		case 2:
 		default:
-		fd = open ( COLOR_LED_DEV_B_ ,PWM_DUTY, O_WRONLY);
+		fd = open ( COLOR_LED_DEV_B_ PWM_DUTY, O_WRONLY);
 		break;
 	}
 	
@@ -74,14 +74,14 @@ int pwmSetPeriod(int Period, int pwmIndex)
 	switch (pwmIndex)
 	{
 		case 2:
-		fd = open ( COLOR_LED_DEV_R_ ,PWM_PERIOD, O_WRONLY);
+		fd = open ( COLOR_LED_DEV_R_ PWM_PERIOD, O_WRONLY);
 		break;
 		case 1:
-		fd = open ( COLOR_LED_DEV_G_, PWM_PERIOD, O_WRONLY);
+		fd = open ( COLOR_LED_DEV_G_ PWM_PERIOD, O_WRONLY);
 		break;
 		case 0:
 		default:
-		fd = open ( COLOR_LED_DEV_B_ ,PWM_PERIOD, O_WRONLY);
+		fd = open ( COLOR_LED_DEV_B_ PWM_PERIOD, O_WRONLY);
 		break;
 	}
 	
@@ -108,13 +108,13 @@ int pwmSetPercent(int percent, int ledColor)
 int pwmStartAll(void)
 {
 	int fd = 0;
-	fd = open ( COLOR_LED_DEV_R_ ,PWM_ENABLE, O_WRONLY);
+	fd = open ( COLOR_LED_DEV_R_ PWM_ENABLE, O_WRONLY);
 	write(fd,&"1",1);
 	close(fd);
-	fd = open ( COLOR_LED_DEV_G_, PWM_ENABLE, O_WRONLY);
+	fd = open ( COLOR_LED_DEV_G_ PWM_ENABLE, O_WRONLY);
 	write(fd,&"1",1);
 	close(fd);
-	fd = open ( COLOR_LED_DEV_B_ ,PWM_ENABLE, O_WRONLY);
+	fd = open ( COLOR_LED_DEV_B_ PWM_ENABLE, O_WRONLY);
 	write(fd,&"1",1);
 	close(fd);
 	return 1;
