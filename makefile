@@ -1,7 +1,10 @@
 CC = arm-linux-gnueabi-gcc
 AR = arm-linux-gnueabi-ar
 
-all: ledtest buttontest buzzertest fndtest textlcdtest colorledtest
+all: ledtest buttontest buzzertest fndtest textlcdtest colorledtest temperaturetest
+
+temperaturetest : temperaturetest.c libMyPeri.a temperature.h
+	$(CC) temperature.c -l MyPeri -L. -o temperaturetest
 
 colorledtest : colorledtest.c libMyPeri.a colorled.h
 	$(CC) colorledtest.c -l MyPeri -L. -o colorledtest
@@ -21,8 +24,8 @@ buttontest : buttontest.c libMyPeri.a button.h
 ledtest : ledtest.c libMyPeri.a led.h
 	$(CC) ledtest.c -l MyPeri -L. -o ledtest
 
-libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o
-	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o
+libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o
+	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o
 
 led.o : led.h led.c
 	$(CC) -c led.c -o led.o
@@ -41,6 +44,9 @@ textlcd.o : textlcd.h textlcd.c
 
 colorled.o : colorled.h colorled.c
 	$(CC) -c colorled.c -o colorled.o
+
+temperature.o : temperature.h temperature.c
+	$(CC) -c temperature.c -o temperature.o
 
 clean :
 	rm *.o
