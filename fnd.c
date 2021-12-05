@@ -5,6 +5,12 @@
 #include <unistd.h>
 #include <time.h>
 #include "fnd.h"
+#include "button.h"
+
+#include <linux/input.h>
+#include <sys/ioctl.h> // for ioctl
+#include <sys/msg.h>
+#include <pthread.h>
 
 #define FND_DRIVER_NAME "/dev/perifnd"
 
@@ -121,6 +127,7 @@ int fndCountDisp(void)
 
 			counter++;
 			sleep(1);
+			
 		}
 }
 

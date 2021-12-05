@@ -38,12 +38,7 @@ int main(void)
     fndOff();
 
 	fndCountDisp();
-	BUTTON_MSG_T buttonRxData;
-	switch (buttonRxData.keyInput)
-			{
-				case KEY_HOME: fndOff(); break;
-				case KEY_SEARCH: fndCountDisp(); break;
-			}
+	
     //fndCountDisp();
     //case KEY_HOME:
 	//	fndOff();
