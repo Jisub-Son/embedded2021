@@ -120,7 +120,10 @@ int fndCountDisp(int number)
 int fndCountDisp(void)
 {
     int counter = 0;
+    int msgID;
     BUTTON_MSG_T buttonRxData;
+    int returnValue = 0;
+        returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);
     while(1)
 		{
 			if (!fndDisp(counter , 0))
@@ -131,7 +134,9 @@ int fndCountDisp(void)
 			
 			if (buttonRxData.keyInput == KEY_HOME)
 			{
+				printf("Home key :");
 				if(buttonRxData.pressed)
+				printf(" pressed\r\n");
 				break;
 			}
 			
