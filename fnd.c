@@ -74,12 +74,12 @@ int fndOff(void)
 	return 1;
 }
 
-int fndStaticDisp(int num)
+int fndStaticDisp(int num) //숫자 계속 켜두기 
 {
     fndDisp(num, 0);
 }
 
-int fndTimeDisp(void)
+int fndTimeDisp(void) //현재시간 표시 
 {
     int number;
     struct tm *ptmcur;
@@ -130,7 +130,7 @@ int fndCountDisp(int stop)
 }
 */
 
-int fndCountDisp(int stop)
+int fndCountDisp(int stop) //카운트 업하는 함수 
 {
     int counter = 0;
     while(1)
