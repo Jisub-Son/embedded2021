@@ -21,7 +21,7 @@ int main(void)
 
     textlcdWrite(1, "  60172510 Son  ");
     textlcdWrite(2, "  60172533 Iim  ");
-    sleep(2);
+    sleep(1);
 
     for(int i = 1; i < 8; i++){
         textlcdTime(1);

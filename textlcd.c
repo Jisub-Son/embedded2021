@@ -66,7 +66,7 @@ int textlcdTime(int linenum)				// linenum에 날짜 및 시간 출력
     time(&now);
     t = *localtime(&now);
 
-    sprintf(buff, " %02d.%02d.%02d %02d:%02d ",   // ex)" 21.12.05 17:10 ""
+    sprintf(buff, " %02d.%02d.%02d %02d:%02d ",   // ex)" 21.12.05 17:10 "
     t.tm_year + 1900, t.tm_mon + 1, t.tm_mday,
     t.tm_hour, t.tm_min);
 
@@ -78,6 +78,7 @@ int textlcdTime(int linenum)				// linenum에 날짜 및 시간 출력
 int textlcdlevel(int linenum, int level)				// linenum에 현재 level 표시
 {
     char buff[16];
+    
     switch (level){
         case 1 : textlcdWrite(linenum, "  lv : 1------  "); break;
         case 2 : textlcdWrite(linenum, "  lv : -2-----  "); break;
