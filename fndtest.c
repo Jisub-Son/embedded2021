@@ -38,7 +38,10 @@ int main(void)
     fndOff();
 
 	fndCountDisp();
+	//sleep(4);
 	
+    fndOff();
+    
     //fndCountDisp();
     //case KEY_HOME:
 	//	fndOff();

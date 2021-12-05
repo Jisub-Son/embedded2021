@@ -120,6 +120,7 @@ int fndCountDisp(int number)
 int fndCountDisp(void)
 {
     int counter = 0;
+    BUTTON_MSG_T buttonRxData;
     while(1)
 		{
 			if (!fndDisp(counter , 0))
@@ -127,6 +128,9 @@ int fndCountDisp(void)
 
 			counter++;
 			sleep(1);
+			
+			if (buttonRxData.keyInput == KEY_HOME)
+				break;
 			
 		}
 }
