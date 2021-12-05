@@ -5,12 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 #include "fnd.h"
-#include "button.h"
 
-#include <linux/input.h>
-#include <sys/ioctl.h> // for ioctl
-#include <sys/msg.h>
-#include <pthread.h>
 
 #define FND_DRIVER_NAME "/dev/perifnd"
 
@@ -116,14 +111,28 @@ int fndCountDisp(int number)
 		}
 }
 */
-
-int fndCountDisp(void)
+/*
+int fndCountDisp(int stop)
 {
     int counter = 0;
-    int msgID;
-    BUTTON_MSG_T buttonRxData;
-    int returnValue = 0;
-        returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);
+    while(1)
+		{
+			if (!fndDisp(counter , 0))
+				break;
+			if (stop == 0)
+			{
+				counter++;
+				sleep(1);
+			}
+			else if (stop == 1)
+				break;
+		}
+}
+*/
+
+int fndCountDisp(int stop)
+{
+    int counter = 0;
     while(1)
 		{
 			if (!fndDisp(counter , 0))
@@ -131,15 +140,8 @@ int fndCountDisp(void)
 
 			counter++;
 			sleep(1);
-			
-			if (buttonRxData.keyInput == KEY_HOME)
-			{
-				printf("Home key :");
-				if(buttonRxData.pressed)
-				printf(" pressed\r\n");
+			if (stop ==1)
 				break;
-			}
-			
 		}
 }
 
