@@ -130,7 +130,10 @@ int fndCountDisp(void)
 			sleep(1);
 			
 			if (buttonRxData.keyInput == KEY_HOME)
+			{
+				if(buttonRxData.pressed)
 				break;
+			}
 			
 		}
 }
