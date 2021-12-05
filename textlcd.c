@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <time.h>
 #include "textlcd.h"
 
 #define TEXTLCD_DRIVER_NAME		"/dev/peritextlcd"
@@ -54,6 +55,39 @@ int textlcdWrite(int linenum, char *text)   // linenum(1~2)에 text 내용 출�
     stlcd.cmd = CMD_WRITE_STRING;
     
 	write(fd,&stlcd,sizeof(stTextLCD));
+    return 0;
+}
+int textlcdTime(int linenum)				// linenum에 날짜 및 시간 출력
+{
+    time_t now;
+    struct tm t;
+    char buff[16];
+
+    time(&now);
+    t = *localtime(&now);
+
+    sprintf(buff, " %02d.%02d.%02d %02d:%02d ",   // ex)" 21.12.05 17:10 ""
+    t.tm_year + 1900, t.tm_mon + 1, t.tm_mday,
+    t.tm_hour, t.tm_min);
+
+    textlcdWrite(linenum, buff);
+
+    return 0;
+}
+
+int textlcdlevel(int linenum, int level)				// linenum에 현재 level 표시
+{
+    char buff[16];
+    switch (level){
+        case 1 : textlcdWrite(linenum, "  lv : 1------  "); break;
+        case 2 : textlcdWrite(linenum, "  lv : -2-----  "); break;
+        case 3 : textlcdWrite(linenum, "  lv : --3----  "); break;
+        case 4 : textlcdWrite(linenum, "  lv : ---4---  "); break;
+        case 5 : textlcdWrite(linenum, "  lv : ----5--  "); break;
+        case 6 : textlcdWrite(linenum, "  lv : -----6-  "); break;
+        case 7 : textlcdWrite(linenum, "  lv : ------7  "); break;
+        default: printf("wrong level! : 1~6 level"); break;
+    }
     return 0;
 }
 

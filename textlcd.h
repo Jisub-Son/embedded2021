@@ -5,27 +5,11 @@
 #define COLUMN_NUM			16	
 
 #define  LINE_BUFF_NUM 	(COLUMN_NUM + 4)  // for dummy 
-
-#define  CMD_DISPLAY_MODE		0x10
-	#define  BIT_DISPLAY_MODE_CURSOR_DISP	0x01
-	#define  BIT_DISPLAY_MODE_CURSOR_BLINK	0x02
-	#define  BIT_DISPLAY_MODE_DISP_ENABLE	0x04
-
-#define  CMD_CURSOR_MOVE_MODE	0x11
-	#define CURSOR_MOVE_MODE_ENABLE		0x01
-	#define CURSOR_MOVE_MODE_RIGHT_DIR	0x02
-
-#define  CMD_CURSOR_MOVE_POSITION	0x12
-	#define  CURSOR_MOVE_X_MASK		0x3F
-	#define  CURSOR_MOVE_Y_MASK		0xC0
 	
 #define  CMD_WRITE_STRING			0x20	
 	#define CMD_DATA_WRITE_BOTH_LINE	0
 	#define CMD_DATA_WRITE_LINE_1		1
 	#define CMD_DATA_WRITE_LINE_2		2
-	
-#define  CMD_TEST_GPIO_HIGH			0x30
-#define  CMD_TEST_GPIO_LOW			0x31
 
 typedef struct TextLCD_tag 
 {
@@ -36,9 +20,11 @@ typedef struct TextLCD_tag
 	char	TextData[LINE_NUM][LINE_BUFF_NUM];
 }stTextLCD,*pStTextLCD;
 
-int textlcdInit(void);      // textlcd initialize
-int textlcdWrite(int linenum, char *text);   // linenum(1~2)에 text 내용 출력하는 함수 
-int textlcdExit(void);      // textlcd exit
+int textlcdInit(void);      				// textlcd initialize
+int textlcdWrite(int linenum, char *text);  // linenum(1~2)에 text 내용 출력하는 함수 
+int textlcdTime(int linenum);				// linenum에 날짜 및 시간 출력
+int textlcdlevel(int linenum, int level);	// linenum에 현재 level 표시
+int textlcdExit(void); 					    // textlcd exit
 
 
 #endif

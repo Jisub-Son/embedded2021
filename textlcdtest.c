@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <time.h>
 #include "textlcd.h"
 
 int main(void)
@@ -21,6 +22,12 @@ int main(void)
     textlcdWrite(1, "  60172510 Son  ");
     textlcdWrite(2, "  60172533 Iim  ");
     sleep(2);
+
+    for(int i = 1; i < 8; i++){
+        textlcdTime(1);
+        textlcdlevel(2, i);
+        sleep(1);
+    }
     
     textlcdExit();
     return 0;
