@@ -25,7 +25,9 @@ int main(void)
 
     for(int i = 1; i < 8; i++){
         textlcdTime(1);
+        printf("Time : %d\r\n", i);
         textlcdlevel(2, i);
+        printf("leveltest : %d\r\n", i);
         sleep(1);
     }
     

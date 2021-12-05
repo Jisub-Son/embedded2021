@@ -67,7 +67,7 @@ int textlcdTime(int linenum)				// linenum에 날짜 및 시간 출력
     t = *localtime(&now);
 
     sprintf(buff, " %02d.%02d.%02d %02d:%02d ",   // ex)" 21.12.05 17:10 "
-    t.tm_year + 1900, t.tm_mon + 1, t.tm_mday,
+    (t.tm_year + 1900) % 100, t.tm_mon + 1, t.tm_mday,
     t.tm_hour, t.tm_min);
 
     textlcdWrite(linenum, buff);
@@ -76,17 +76,15 @@ int textlcdTime(int linenum)				// linenum에 날짜 및 시간 출력
 }
 
 int textlcdlevel(int linenum, int level)				// linenum에 현재 level 표시
-{
-    char buff[16];
-    
+{   
     switch (level){
-        case 1 : textlcdWrite(linenum, "  lv : 1------  "); break;
-        case 2 : textlcdWrite(linenum, "  lv : -2-----  "); break;
-        case 3 : textlcdWrite(linenum, "  lv : --3----  "); break;
-        case 4 : textlcdWrite(linenum, "  lv : ---4---  "); break;
-        case 5 : textlcdWrite(linenum, "  lv : ----5--  "); break;
-        case 6 : textlcdWrite(linenum, "  lv : -----6-  "); break;
-        case 7 : textlcdWrite(linenum, "  lv : ------7  "); break;
+        case 1 : textlcdWrite(linenum, "  lv : 1------  "); printf("level 1\r\n"); break;
+        case 2 : textlcdWrite(linenum, "  lv : -2-----  "); printf("level 2\r\n"); break;
+        case 3 : textlcdWrite(linenum, "  lv : --3----  "); printf("level 3\r\n"); break;
+        case 4 : textlcdWrite(linenum, "  lv : ---4---  "); printf("level 4\r\n"); break;
+        case 5 : textlcdWrite(linenum, "  lv : ----5--  "); printf("level 5\r\n"); break;
+        case 6 : textlcdWrite(linenum, "  lv : -----6-  "); printf("level 6\r\n"); break;
+        case 7 : textlcdWrite(linenum, "  lv : ------7  "); printf("level 7\r\n"); break;
         default: printf("wrong level! : 1~6 level"); break;
     }
     return 0;
