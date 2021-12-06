@@ -4,13 +4,15 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <time.h>
+#include <pthread.h>
 #include "fnd.h"
 
 
 #define FND_DRIVER_NAME "/dev/perifnd"
 
-static int fd;
+static int fd, counter;
 static stFndWriteForm stWriteData;
+static pthread_t fndTh_id;
 
 int fndInit(void)
 {
@@ -130,21 +132,50 @@ int fndCountDisp(int stop)
 }
 */
 
-int fndCountDisp(int stop) //카운트 업하는 함수 
-{
-    int counter = 0;
+// int fndCountDisp(int stop) //카운트 업하는 함수 
+// {
+//     int counter = 0;
 
-    while(1)
-	{
-		if (!fndDisp(counter , 0))
+//     while(1)
+// 	{
+// 		if (!fndDisp(counter , 0))
+// 			break;
+
+// 		counter++;
+// 		printf("counter : %d\r\n", counter);
+// 		sleep(1);
+// 		if (stop == 1)
+// 			break;
+// 	}
+// }
+
+void fndThFunc(void)
+{
+	while(1){
+		if(!fndDisp(counter, 0))
 			break;
 
 		counter++;
 		printf("counter : %d\r\n", counter);
 		sleep(1);
-		if (stop == 1)
-			break;
 	}
+}
+
+int fndCountDisp(int stop)
+{
+	int err;
+
+	err = pthread_create(&fndTh_id, NULL, &fndThFunc, NULL);
+	if(err != 0){
+		printf("Thread Create Error : [%d]\r\n", err);
+	}
+
+	pthread_detach(fndTh_id);
+
+	if(stop == 1)
+		pthread_exit(&fndTh_id);
+	
+	return counter;
 }
 
 int fndExit(void)

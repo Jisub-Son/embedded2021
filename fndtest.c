@@ -15,7 +15,9 @@
 
 
 int main(void)
-{
+{   
+    int record;
+
     fndInit();
     printf("Init complete!\r\n");
 
@@ -35,9 +37,9 @@ int main(void)
 
 	fndCountDisp(0);
     printf("count start\r\n");
-	sleep(5);
-	fndCountDisp(1);
-    printf("count stop");
+	sleep(10);
+	record = fndCountDisp(1);
+    printf("count stop : %d", record);
 	
     fndOff();
     fndExit();

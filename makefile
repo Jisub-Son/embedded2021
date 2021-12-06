@@ -13,7 +13,7 @@ textlcdtest : textlcdtest.c libMyPeri.a textlcd.h
 	$(CC) textlcdtest.c -l MyPeri -L. -o textlcdtest
 
 fndtest : fndtest.c libMyPeri.a fnd.h
-	$(CC) fndtest.c -l MyPeri -L. -o fndtest
+	$(CC) fndtest.c -l MyPeri -L. -o fndtest -lpthread
 
 buzzertest : buzzertest.c libMyPeri.a buzzer.h
 	$(CC) buzzertest.c -l MyPeri -L. -o buzzertest
