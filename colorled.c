@@ -144,34 +144,34 @@ int pwmLedRed(void)
 */
 int pwmLedRed(void)
 {
-	pwmLedInit();
+	//pwmLedInit();
 	
 	pwmSetPercent(100,0);
 	pwmSetPercent(0,1);
 	pwmSetPercent(0,2);
-	pwmInactiveAll();
+	//pwmInactiveAll();
 	return 0;
 }
 
 int pwmLedGreen(void)
 { 
-	pwmLedInit();
+	//pwmLedInit();
 	
 	pwmSetPercent(0,0);
 	pwmSetPercent(100,1);
 	pwmSetPercent(0,2);
-	pwmInactiveAll();
+	//pwmInactiveAll();
 	return 0;
 }
 
 int pwmLedBlue(void)
 { 
-	pwmLedInit();
+	//pwmLedInit();
 	
 	pwmSetPercent(0,0);
 	pwmSetPercent(0,1);
 	pwmSetPercent(100,2);
-	pwmInactiveAll();
+	//pwmInactiveAll();
 	return 0;
 }
 
