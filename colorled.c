@@ -16,12 +16,12 @@
 #define PWM_COLOR_B 2
 #define PWM_PERIOD_NS 1000000
 
-int pwmActiveAll(void)
+int pwmActiveAll(void) //전부 켜는 함수 
 {
 	int fd = 0;
-	fd = open( COLOR_LED_DEV_R_ PWM_EXPORT, O_WRONLY);
-	write(fd,&"0",1);
-	close(fd);
+	fd = open( COLOR_LED_DEV_R_ PWM_EXPORT, O_WRONLY); //파일열어서 
+	write(fd,&"0",1);//"0"string을 한 바이트 쓰고 
+	close(fd);//닫아줌 
 	fd = open( COLOR_LED_DEV_G_ PWM_EXPORT, O_WRONLY);
 	write(fd,&"0",1);
 	close(fd);
@@ -31,7 +31,7 @@ int pwmActiveAll(void)
 	return 1;
 }
 
-int pwmInactiveAll(void)
+int pwmInactiveAll(void) //전부 비활성화 하는 함수 
 {
 	int fd =0;
 	fd = open( COLOR_LED_DEV_R_ PWM_UNEXPORT, O_WRONLY);
@@ -46,7 +46,7 @@ int pwmInactiveAll(void)
 	return 1;
 }
 
-int pwmSetDuty(int dutyCycle, int pwmIndex)
+int pwmSetDuty(int dutyCycle, int pwmIndex) //duty값 지정 
 {
 	int fd = 0;
 	switch (pwmIndex)
@@ -68,7 +68,7 @@ int pwmSetDuty(int dutyCycle, int pwmIndex)
 	return 1;
 }
 
-int pwmSetPeriod(int Period, int pwmIndex)
+int pwmSetPeriod(int Period, int pwmIndex) //Period값 설정 
 {
 	int fd = 0;
 	switch (pwmIndex)
@@ -101,7 +101,7 @@ int pwmSetPercent(int percent, int ledColor)
 
 	int duty = (100- percent) * PWM_PERIOD_NS / 100; //시간 
 	//LED Sinking.
-	pwmSetDuty(duty, ledColor);
+	pwmSetDuty(duty, ledColor); //원하는 led색 조정 
 	return 0;
 }
 
@@ -130,48 +130,34 @@ int pwmLedInit(void)
 	pwmStartAll();
 	return 0;
 }
-/*
-int pwmLedRed(void)
-{ //Initialize
-	pwmActiveAll();
-	pwmSetDuty(100, 0); //R<-100
-	pwmSetDuty(0, 1); //G<-0
-	pwmSetDuty(0, 2); //B<-0
-	pwmSetPeriod(PWM_PERIOD_NS, 0); pwmSetPeriod(PWM_PERIOD_NS, 1); pwmSetPeriod(PWM_PERIOD_NS, 2);
-	pwmStartAll();
-	return 0;
-}
-*/
+
 int pwmLedRed(void)
 {
-	//pwmLedInit();
 	
 	pwmSetPercent(100,0);
 	pwmSetPercent(0,1);
 	pwmSetPercent(0,2);
-	//pwmInactiveAll();
+	
 	return 0;
 }
 
 int pwmLedGreen(void)
 { 
-	//pwmLedInit();
 	
 	pwmSetPercent(0,0);
 	pwmSetPercent(100,1);
 	pwmSetPercent(0,2);
-	//pwmInactiveAll();
+	
 	return 0;
 }
 
 int pwmLedBlue(void)
 { 
-	//pwmLedInit();
 	
 	pwmSetPercent(0,0);
 	pwmSetPercent(0,1);
 	pwmSetPercent(100,2);
-	//pwmInactiveAll();
+	
 	return 0;
 }
 
@@ -182,7 +168,7 @@ int pwmLedRGB(int Red, int Green, int Blue) // RGB(0 or 1) 조합으로 led 출�
 		return -1;
 	}
 
-	pwmSetPercent(Red*100,0);
+	pwmSetPercent(Red*100,0); //1일경우 켜지고 0일경우 꺼짐 
 	pwmSetPercent(Green*100,1);
 	pwmSetPercent(Blue*100,2);
 	return 0;

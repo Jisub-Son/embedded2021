@@ -14,7 +14,7 @@ static int fd, counter = 0, state;
 static stFndWriteForm stWriteData;
 static pthread_t fndTh_id;
 
-int fndInit(void)
+int fndInit(void) 
 {
     fd = open(FND_DRIVER_NAME,O_RDWR);
 	if ( fd < 0 )
@@ -24,7 +24,7 @@ int fndInit(void)
 	}	
 }
 
-int fndDisp(int num , int dotflag)
+int fndDisp(int num , int dotflag) //fnd자리수 나뉘어서 출력되게 설정 
 {
 	// int fd;
 	int temp,i;
@@ -98,7 +98,7 @@ int fndTimeDisp(void) //현재시간 표시
 		fndDisp(number , 0b1010);
 }
 
-void fndThFunc(void)
+void fndThFunc(void) //시,분,초로 보여지게 설정 
 {	
 	int number;
 
@@ -119,7 +119,7 @@ void fndThFunc(void)
 	}
 }
 
-int fndCountDisp(int run)
+int fndCountDisp(int run) //카운트업 설정 
 {
 	int err;
 	
@@ -134,7 +134,6 @@ int fndCountDisp(int run)
 	else if(run == FND_STOP_CNT){	// stop이면 쓰레드 종료
 		return counter;
 	}
-	// 풀 좀 되라 한번 더
 	// return counter;
 }
 

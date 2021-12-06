@@ -22,25 +22,25 @@ int main(void)
     fndInit();
     printf("Init complete!\r\n");
 
-    fndDisp(123456, 0);
+    fndDisp(123456, 0); //123456출력 
     sleep(1);
     // fndOff();
 
-    fndStaticDisp(6017);
+    fndStaticDisp(6017); //006017출력 
     sleep(1);
     // fndOff();
 
     for(int i = 0; i < 8; i++){
-        fndTimeDisp();
+        fndTimeDisp(); //현재 시간 출력 
         sleep(1);
         // fndOff();
     }
 
-	fndCountDisp(FND_START_CNT);
+	fndCountDisp(FND_START_CNT); //카운트 업 
     printf("count start\r\n");
 	sleep(90);
-	record = fndCountDisp(FND_STOP_CNT);
-    printf("count stop : %d", record); // 제발 풀 되라
+	record = fndCountDisp(FND_STOP_CNT); //카운트 업 멈춤 
+    printf("count stop : %d", record); 
 	
     fndOff();
     fndExit();
