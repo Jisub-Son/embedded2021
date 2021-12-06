@@ -5,6 +5,13 @@
 #define MAGNEPATH "/sys/class/misc/FreescaleMagnetometer/"
 #define GYROPATH "/sys/class/misc/FreescaleGyroscope/"
 
+#define MESSAGE_ID 6017
+
+typedef struct {
+    long int messageNum;
+    int data[3];
+} ACCEL_MAG_GYRO_MSG_T;
+
 #define ACCEL 0
 #define MAG 1
 #define GYRO 2
