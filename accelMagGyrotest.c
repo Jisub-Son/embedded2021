@@ -37,6 +37,8 @@ int main(void)
         sleep(1);
     }
 
+    // 이번에도 안되는거냐
+
     // for(int i=0; i<10; i++){
     //     printf("accel start\r\n");
     //     accelMagGyroGetData(ACCEL);

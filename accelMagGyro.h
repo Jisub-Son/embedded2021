@@ -23,3 +23,5 @@ int accelMagGyroGetData(int sensor);     // getData from sensor
 // int accelMagGyroExit(void);     // exit 필요없을 수도
 
 #endif
+
+// 왜 또 문제인거야
