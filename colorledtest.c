@@ -22,12 +22,18 @@ int main(int argc, char *argv[])
 }
 */
 
+
 int main(void)
 {
 	pwmLedInit();
-	pwmInactiveAll();
+	
 	pwmLedRed();
-	pwmLedGreen();
+	sleep(1);
 	pwmLedBlue();
+	sleep(1);
+	pwmLedGreen();
+	sleep(1);
+	pwmInactiveAll();
 	return 0;
 }
+

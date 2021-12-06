@@ -130,7 +130,7 @@ int pwmLedInit(void)
 	pwmStartAll();
 	return 0;
 }
-
+/*
 int pwmLedRed(void)
 { //Initialize
 	pwmActiveAll();
@@ -141,25 +141,36 @@ int pwmLedRed(void)
 	pwmStartAll();
 	return 0;
 }
+*/
+int pwmLedRed(void)
+{
+	pwmLedInit();
+	
+	pwmSetPercent(100,0);
+	pwmSetPercent(0,1);
+	pwmSetPercent(0,2);
+	pwmInactiveAll();
+	return 0;
+}
 
 int pwmLedGreen(void)
-{ //Initialize
-	pwmActiveAll();
-	pwmSetDuty(0, 0); //R<-0
-	pwmSetDuty(100, 1); //G<-100
-	pwmSetDuty(0, 2); //B<-0
-	pwmSetPeriod(PWM_PERIOD_NS, 0); pwmSetPeriod(PWM_PERIOD_NS, 1); pwmSetPeriod(PWM_PERIOD_NS, 2);
-	pwmStartAll();
+{ 
+	pwmLedInit();
+	
+	pwmSetPercent(0,0);
+	pwmSetPercent(100,1);
+	pwmSetPercent(0,2);
+	pwmInactiveAll();
 	return 0;
 }
 
 int pwmLedBlue(void)
-{ //Initialize
-	pwmActiveAll();
-	pwmSetDuty(0, 0); //R<-0
-	pwmSetDuty(0, 1); //G<-0
-	pwmSetDuty(100, 2); //B<-100
-	pwmSetPeriod(PWM_PERIOD_NS, 0); pwmSetPeriod(PWM_PERIOD_NS, 1); pwmSetPeriod(PWM_PERIOD_NS, 2);
-	pwmStartAll();
+{ 
+	pwmLedInit();
+	
+	pwmSetPercent(0,0);
+	pwmSetPercent(0,1);
+	pwmSetPercent(100,2);
+	pwmInactiveAll();
 	return 0;
 }
