@@ -19,27 +19,25 @@ int main(void)
     fndInit();
     printf("Init complete!\r\n");
 
-    fndDisp(555555, 0);
+    fndDisp(123456, 0);
     sleep(1);
-    fndOff();
+    // fndOff();
 
-    fndStaticDisp(123456);
+    fndStaticDisp(6017);
     sleep(1);
-    fndOff();
-    fndStaticDisp(2510);
-    sleep(1);
-    fndOff();
-    fndStaticDisp(2533);
-    sleep(1);
-    fndOff();
+    // fndOff();
 
-    fndTimeDisp();
-    sleep(4);
-    fndOff();
+    for(int i = 0; i < 8; i++){
+        fndTimeDisp();
+        sleep(1);
+        // fndOff();
+    }
 
 	fndCountDisp(0);
-	sleep(4);
+    printf("count start\r\n");
+	sleep(5);
 	fndCountDisp(1);
+    printf("count stop");
 	
     fndOff();
     fndExit();

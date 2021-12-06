@@ -133,16 +133,18 @@ int fndCountDisp(int stop)
 int fndCountDisp(int stop) //카운트 업하는 함수 
 {
     int counter = 0;
-    while(1)
-		{
-			if (!fndDisp(counter , 0))
-				break;
 
-			counter++;
-			sleep(1);
-			if (stop ==1)
-				break;
-		}
+    while(1)
+	{
+		if (!fndDisp(counter , 0))
+			break;
+
+		counter++;
+		printf("counter : %d\r\n", counter);
+		sleep(1);
+		if (stop == 1)
+			break;
+	}
 }
 
 int fndExit(void)
