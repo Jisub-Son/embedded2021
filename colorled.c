@@ -174,3 +174,16 @@ int pwmLedBlue(void)
 	pwmInactiveAll();
 	return 0;
 }
+
+int pwmLedRGB(int Red, int Green, int Blue) // RGB(0 or 1) 조합으로 led 출력
+{	
+	if(Red>1 || Green>1 || Blue>1){		// error 메세지
+		printf("Wrong Value : write 0 or 1\r\n");
+		return -1;
+	}
+
+	pwmSetPercent(Red*100,0);
+	pwmSetPercent(Green*100,1);
+	pwmSetPercent(Blue*100,2);
+	return 0;
+}

@@ -33,6 +33,15 @@ int main(void)
 	sleep(1);
 	pwmLedGreen();
 	sleep(1);
+	for(int i=0; i<2; i++){
+		for(int j=0; j<2; j++){
+			for(int k=0; k<2; k++){
+				pwmLedRGB(i, j, k);
+				sleep(1);
+			}
+		}
+	}
+
 	pwmInactiveAll();
 	return 0;
 }
