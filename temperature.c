@@ -25,17 +25,17 @@ int spi_init(char filename[40])
 	
 	//possible modes: mode |= SPI_LOOP; mode |= SPI_CPHA; mode |= SPI_CPOL; mode |= SPI_LSB_FIRST; mode |= SPI_CS_HIGH;
 	//mode |= SPI_3WIRE; mode |= SPI_NO_CS; mode |= SPI_READY;
-	if (ioctl(file, SPI_IOC_RD_MODE, &mode) < 0)
+	if (ioctl(file, SPI_IOC_RD_MODE, &mode) < 0) //세팅된 SPI전송 모드를 확인 (mode에 저장)
 	{ 
 		perror("SPI rd_mode"); return 0; 
 	}
 	
-	if (ioctl(file, SPI_IOC_RD_LSB_FIRST, &lsb) < 0)
+	if (ioctl(file, SPI_IOC_RD_LSB_FIRST, &lsb) < 0)//세팅된 SPI 전송 LSB 순서를 확인(lsb에 저장)
 	{ 
 		perror("SPI rd_lsb_fist"); return 0; 
 	}
 	
-	if (ioctl(file, SPI_IOC_RD_BITS_PER_WORD, &bits) < 0)
+	if (ioctl(file, SPI_IOC_RD_BITS_PER_WORD, &bits) < 0) //세팅된 SPI전송 1Word bit 갯수를 확인(bits에 저장)
 	{ 
 		perror("SPI bits_per_word"); return 0; 
 	}
