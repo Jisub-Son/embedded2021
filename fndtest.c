@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <time.h>
+#include <pthread.h>
 #include "fnd.h"
 #include "button.h"
 
