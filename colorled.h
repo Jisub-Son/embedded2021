@@ -7,4 +7,7 @@ int pwmSetPeriod(int Period, int pwmIndex);
 int pwmSetPercent(int percent, int ledColor);
 int pwmStartAll(void);
 int pwmLedInit(void);
+int pwmLedRed(void);
+int pwmLedBlue(void);
+int pwmLedGreen(void);
 #endif _COLOR_LED_DRV_H_

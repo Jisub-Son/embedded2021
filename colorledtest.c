@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "colorled.h"
-
+/*
 int main(int argc, char *argv[]) 
 {
 	if (argc != 4)
@@ -18,5 +18,16 @@ int main(int argc, char *argv[])
 	pwmSetPercent(atoi(argv[2]),1);
 	pwmSetPercent(atoi(argv[3]),2);
 	pwmInactiveAll();
+	return 0;
+}
+*/
+
+int main(void)
+{
+	pwmLedInit();
+	pwmInactiveAll();
+	pwmLedRed();
+	pwmLedGreen();
+	pwmLedBlue();
 	return 0;
 }

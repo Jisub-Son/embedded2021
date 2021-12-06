@@ -63,7 +63,7 @@ int pwmSetDuty(int dutyCycle, int pwmIndex)
 		break;
 	}
 	
-	dprintf(fd, "%d", dutyCycle);
+	dprintf(fd, "%d", dutyCycle); //열려져 있는 파일 내부에 작성한다. 
 	close(fd);
 	return 1;
 }
@@ -86,7 +86,7 @@ int pwmSetPeriod(int Period, int pwmIndex)
 	}
 	
 	//printf ("Set pwm%d, Period:%d\r\n",pwmIndex, Period);
-	dprintf(fd, "%d", Period);
+	dprintf(fd, "%d", Period); //열려져 있는 파일 내부에 작성 
 	close(fd);
 	return 1;
 }
@@ -99,7 +99,7 @@ int pwmSetPercent(int percent, int ledColor)
 		return 0;
 	}
 
-	int duty = (100- percent) * PWM_PERIOD_NS / 100;
+	int duty = (100- percent) * PWM_PERIOD_NS / 100; //시간 
 	//LED Sinking.
 	pwmSetDuty(duty, ledColor);
 	return 0;
@@ -126,6 +126,39 @@ int pwmLedInit(void)
 	pwmSetDuty(0, 0); //R<-0
 	pwmSetDuty(0, 1); //G<-0
 	pwmSetDuty(0, 2); //B<-0
+	pwmSetPeriod(PWM_PERIOD_NS, 0); pwmSetPeriod(PWM_PERIOD_NS, 1); pwmSetPeriod(PWM_PERIOD_NS, 2);
+	pwmStartAll();
+	return 0;
+}
+
+int pwmLedRed(void)
+{ //Initialize
+	pwmActiveAll();
+	pwmSetDuty(100, 0); //R<-100
+	pwmSetDuty(0, 1); //G<-0
+	pwmSetDuty(0, 2); //B<-0
+	pwmSetPeriod(PWM_PERIOD_NS, 0); pwmSetPeriod(PWM_PERIOD_NS, 1); pwmSetPeriod(PWM_PERIOD_NS, 2);
+	pwmStartAll();
+	return 0;
+}
+
+int pwmLedGreen(void)
+{ //Initialize
+	pwmActiveAll();
+	pwmSetDuty(0, 0); //R<-0
+	pwmSetDuty(100, 1); //G<-100
+	pwmSetDuty(0, 2); //B<-0
+	pwmSetPeriod(PWM_PERIOD_NS, 0); pwmSetPeriod(PWM_PERIOD_NS, 1); pwmSetPeriod(PWM_PERIOD_NS, 2);
+	pwmStartAll();
+	return 0;
+}
+
+int pwmLedBlue(void)
+{ //Initialize
+	pwmActiveAll();
+	pwmSetDuty(0, 0); //R<-0
+	pwmSetDuty(0, 1); //G<-0
+	pwmSetDuty(100, 2); //B<-100
 	pwmSetPeriod(PWM_PERIOD_NS, 0); pwmSetPeriod(PWM_PERIOD_NS, 1); pwmSetPeriod(PWM_PERIOD_NS, 2);
 	pwmStartAll();
 	return 0;
