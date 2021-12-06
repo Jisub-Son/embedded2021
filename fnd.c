@@ -10,7 +10,7 @@
 
 #define FND_DRIVER_NAME "/dev/perifnd"
 
-static int fd, counter;
+static int fd, counter = 0, state;
 static stFndWriteForm stWriteData;
 static pthread_t fndTh_id;
 
@@ -158,24 +158,29 @@ void fndThFunc(void)
 		counter++;
 		printf("counter : %d\r\n", counter);
 		sleep(1);
+
+		if(state == FND_STOP_CNT)
+			pthread_exit(NULL);
 	}
 }
 
-int fndCountDisp(int stop)
+int fndCountDisp(int run)
 {
 	int err;
-
-	err = pthread_create(&fndTh_id, NULL, &fndThFunc, NULL);
-	if(err != 0){
-		printf("Thread Create Error : [%d]\r\n", err);
+	
+	state = run;
+	if(run == FND_START_CNT){		// start이면 쓰레드 생성하여 counter 동작
+		err = pthread_create(&fndTh_id, NULL, &fndThFunc, NULL);
+		if(err != 0){
+			printf("Thread Create Error : [%d]\r\n", err);
+		}
+		pthread_detach(fndTh_id);
 	}
-
-	pthread_detach(fndTh_id);
-
-	if(stop == 1)
-		pthread_exit(&fndTh_id);
+	else if(run == FND_STOP_CNT){	// stop이면 쓰레드 종료
+		return counter;
+	}
 	// 풀 좀 되라 한번 더
-	return counter;
+	// return counter;
 }
 
 int fndExit(void)

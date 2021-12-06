@@ -36,10 +36,10 @@ int main(void)
         // fndOff();
     }
 
-	fndCountDisp(0);
+	fndCountDisp(FND_START_CNT);
     printf("count start\r\n");
 	sleep(10);
-	record = fndCountDisp(1);
+	record = fndCountDisp(FND_STOP_CNT);
     printf("count stop : %d", record); // 제발 풀 되라
 	
     fndOff();
