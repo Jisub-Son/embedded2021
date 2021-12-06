@@ -39,7 +39,7 @@ int main(void)
     printf("count start\r\n");
 	sleep(10);
 	record = fndCountDisp(1);
-    printf("count stop : %d", record);
+    printf("count stop : %d", record); // 제발 풀 되라
 	
     fndOff();
     fndExit();

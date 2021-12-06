@@ -174,7 +174,7 @@ int fndCountDisp(int stop)
 
 	if(stop == 1)
 		pthread_exit(&fndTh_id);
-	
+	// 풀 좀 되라
 	return counter;
 }
 
