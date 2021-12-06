@@ -97,70 +97,25 @@ int fndTimeDisp(void) //현재시간 표시
 
 		fndDisp(number , 0b1010);
 }
-/*
-int fndCountDisp(int number)
-{
-    int counter = 0;
-    while(1)
-		{
-			if (!fndDisp(counter , 0))
-				break;
-
-			counter++;
-			sleep(1);
-			if (counter > number )
-				break;
-		}
-}
-*/
-/*
-int fndCountDisp(int stop)
-{
-    int counter = 0;
-    while(1)
-		{
-			if (!fndDisp(counter , 0))
-				break;
-			if (stop == 0)
-			{
-				counter++;
-				sleep(1);
-			}
-			else if (stop == 1)
-				break;
-		}
-}
-*/
-
-// int fndCountDisp(int stop) //카운트 업하는 함수 
-// {
-//     int counter = 0;
-
-//     while(1)
-// 	{
-// 		if (!fndDisp(counter , 0))
-// 			break;
-
-// 		counter++;
-// 		printf("counter : %d\r\n", counter);
-// 		sleep(1);
-// 		if (stop == 1)
-// 			break;
-// 	}
-// }
 
 void fndThFunc(void)
-{
+{	
+	int number;
+
 	while(1){
-		if(!fndDisp(counter, 0))
+		number = (counter / 3600) * 10000;
+		number += (counter / 60) * 100;
+		number += counter % 60;
+		
+		if(!fndDisp(number, 0b1010))
 			break;
+
+		if(state == FND_STOP_CNT)
+			pthread_exit(NULL);
 
 		counter++;
 		printf("counter : %d\r\n", counter);
 		sleep(1);
-
-		if(state == FND_STOP_CNT)
-			pthread_exit(NULL);
 	}
 }
 

@@ -38,7 +38,7 @@ int main(void)
 
 	fndCountDisp(FND_START_CNT);
     printf("count start\r\n");
-	sleep(10);
+	sleep(90);
 	record = fndCountDisp(FND_STOP_CNT);
     printf("count stop : %d", record); // 제발 풀 되라
 	
