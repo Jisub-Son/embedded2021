@@ -51,7 +51,6 @@ int accelMagGyroGetData(int sensor)     // getData from sensor
         fp = fopen (ACCELPATH "data", "rt");
         int accel[3];
         fscanf(fp,"%d, %d, %d",&accel[0],&accel[1],&accel[2]);
-        // printf ("I read Accel %d, %d, %d\r\n",accel[0],accel[1],accel[2]);
         fclose(fp);
         
         TxData.data[0] = accel[0];
@@ -65,7 +64,6 @@ int accelMagGyroGetData(int sensor)     // getData from sensor
         fp = fopen (MAGNEPATH "data", "rt");
         int magne[3];
         fscanf(fp,"%d, %d, %d",&magne[0],&magne[1],&magne[2]);
-        // printf ("I read Magneto %d, %d, %d\r\n",magne[0],magne[1],magne[2]);
         fclose(fp);
 
         TxData.data[0] = magne[0];
@@ -78,21 +76,13 @@ int accelMagGyroGetData(int sensor)     // getData from sensor
     case GYRO:
         fp = fopen (GYROPATH "data", "rt");
         int gyro[3];
-        // fscanf(fp,"%d, %d, %d",&gyro[0],&gyro[1],&gyro[2]);
-        // printf ("I read Gyroscope %d, %d, %d\r\n",gyro[0],gyro[1],gyro[2]);
-
+        
         fscanf(fp,"%d, %d, %d",&sensorData[0],&sensorData[1],&sensorData[2]);
         printf ("I read Gyroscope %d, %d, %d\r\n",sensorData[0],sensorData[1],sensorData[2]);
         
-        // TxData.data[0] = gyro[0];
-        // TxData.data[1] = gyro[1];
-        // TxData.data[2] = gyro[2];
-        // printf("TxData is %d, %d, %d\r\n", TxData.data[0], TxData.data[1], TxData.data[2]);
+       
         fclose(fp);
         
-        // msgsnd(msgID, &TxData, sizeof(TxData.data), 0);
-        // printf("msg send done\r\n");
-
         break;
 
     default:
@@ -100,4 +90,4 @@ int accelMagGyroGetData(int sensor)     // getData from sensor
         break;
     }
 }
-// 제발 되라
+

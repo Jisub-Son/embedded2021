@@ -22,8 +22,6 @@ int AccelInit(void);     // initialize Accel
 int MagInit(void);     // initialize Mag
 int GyroInit(void);     // initialize Gyro
 int accelMagGyroGetData(int sensor);     // getData from sensor
-// int accelMagGyroExit(void);     // exit 필요없을 수도
+
 
 #endif
-
-// 왜 또 문제인거야
