@@ -24,10 +24,8 @@ int main(void)
     sleep(1);
 
     for(int i = 1; i < 8; i++){
-        textlcdTime(1);
-        printf("Time : %d\r\n", i);
-        textlcdlevel(2, i);
-        printf("leveltest : %d\r\n", i);
+        textlcdTime(1);         // 현재 시간 출력
+        textlcdlevel(2, i);     // 현재 level 출력
         sleep(1);
     }
     

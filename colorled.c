@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "colorled.h"
+
 #define COLOR_LED_DEV_R_ "/sys/class/pwm/pwmchip0/"
 #define COLOR_LED_DEV_G_ "/sys/class/pwm/pwmchip1/"
 #define COLOR_LED_DEV_B_ "/sys/class/pwm/pwmchip2/"
@@ -85,7 +86,6 @@ int pwmSetPeriod(int Period, int pwmIndex) //Period값 설정
 		break;
 	}
 	
-	//printf ("Set pwm%d, Period:%d\r\n",pwmIndex, Period);
 	dprintf(fd, "%d", Period); //열려져 있는 파일 내부에 작성 
 	close(fd);
 	return 1;
@@ -133,7 +133,6 @@ int pwmLedInit(void)
 
 int pwmLedRed(void)
 {
-	
 	pwmSetPercent(100,0);
 	pwmSetPercent(0,1);
 	pwmSetPercent(0,2);
@@ -143,7 +142,6 @@ int pwmLedRed(void)
 
 int pwmLedGreen(void)
 { 
-	
 	pwmSetPercent(0,0);
 	pwmSetPercent(100,1);
 	pwmSetPercent(0,2);
@@ -153,7 +151,6 @@ int pwmLedGreen(void)
 
 int pwmLedBlue(void)
 { 
-	
 	pwmSetPercent(0,0);
 	pwmSetPercent(0,1);
 	pwmSetPercent(100,2);

@@ -26,9 +26,7 @@ int fndInit(void)
 
 int fndDisp(int num , int dotflag) //fnd자리수 나뉘어서 출력되게 설정 
 {
-	// int fd;
 	int temp,i;
-	// stFndWriteForm stWriteData;
 	
 	for (i = 0; i < MAX_FND_NUM ; i++ )
 	{
@@ -43,21 +41,13 @@ int fndDisp(int num , int dotflag) //fnd자리수 나뉘어서 출력되게 설�
 	temp = num % 100;		stWriteData.DataNumeric[4] = temp / 10;
 							stWriteData.DataNumeric[5] = num % 10;
 
-	// fd = open(FND_DRIVER_NAME,O_RDWR);
-	// if ( fd < 0 )
-	// {
-	// 	perror("driver open error.\n");
-	// 	return 0;
-	// }	
 	write(fd,&stWriteData,sizeof(stFndWriteForm));
-	// close(fd);
 	return 1;
 }
 
 int fndOff(void)
 {
 	int i;
-	// stFndWriteForm stWriteData;
 	
 	for (i = 0; i < MAX_FND_NUM ; i++ )
 	{
@@ -65,14 +55,8 @@ int fndOff(void)
 		stWriteData.DataNumeric[i] = 0;
 		stWriteData.DataValid[i] = 0;
 	}
-	// fd = open(FND_DRIVER_NAME,O_RDWR);
-	// if ( fd < 0 )
-	// {
-	// 	perror("driver open error.\n");
-	// 	return 0;
-	// }	
+
 	write(fd,&stWriteData,sizeof(stFndWriteForm));
-	// close(fd);
 	return 1;
 }
 
@@ -134,7 +118,6 @@ int fndCountDisp(int run) //카운트업 설정
 	else if(run == FND_STOP_CNT){	// stop이면 쓰레드 종료
 		return counter;
 	}
-	// return counter;
 }
 
 int fndExit(void)

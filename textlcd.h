@@ -13,7 +13,7 @@
 
 typedef struct TextLCD_tag 
 {
-	unsigned char cmd; //
+	unsigned char cmd;
 	unsigned char cmdData;  
 	unsigned char reserved[2];
 	
@@ -25,6 +25,5 @@ int textlcdWrite(int linenum, char *text);  // linenum(1~2)에 text 내용 출�
 int textlcdTime(int linenum);				// linenum에 날짜 및 시간 출력
 int textlcdlevel(int linenum, int level);	// linenum에 현재 level 표시
 int textlcdExit(void); 					    // textlcd exit
-
 
 #endif

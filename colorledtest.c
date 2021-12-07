@@ -25,8 +25,6 @@ int main(void)
 		}
 	}
 	
-
 	pwmInactiveAll();
 	return 0;
 }
-
