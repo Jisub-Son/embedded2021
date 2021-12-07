@@ -1,6 +1,8 @@
 #ifndef _TEMPERATURE_H_
 #define _TEMPERATURE_H_
-char gbuf[10];
-int spi_init(char filename[40]);
-char * spi_read_lm74(int file);
+
+int spi_init(void);
+double spi_read_lm74(void);
+int spi_exit(void);
+
 #endif
