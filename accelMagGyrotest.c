@@ -30,24 +30,26 @@ int main(void)
     }
     printf("check file open\r\n");
 
-    int count = 0;
-    while(1)
-    {   
-        int returnValue = 0;
-        returnValue = msgrcv(msgID, &RxData, sizeof(RxData.data), 0, IPC_NOWAIT); // 비었어도 리턴
-        count++;
-        if(returnValue == -1) break;    // 비었으면 -1 리턴하기 때문
-        printf("%d trash message Comes : [%d]\r\n", count, RxData.data);
-    }
-    printf("Lets get Gyro Data\r\n");
+    // int count = 0;
+    // while(1)
+    // {   
+    //     int returnValue = 0;
+    //     returnValue = msgrcv(msgID, &RxData, sizeof(RxData.data), 0, IPC_NOWAIT); // 비었어도 리턴
+    //     count++;
+    //     if(returnValue == -1) break;    // 비었으면 -1 리턴하기 때문
+    //     printf("%d trash message Comes : [%d]\r\n", count, RxData.data);
+    // }
+    // printf("Lets get Gyro Data\r\n");
     
     while(1)
     {
         accelMagGyroGetData(GYRO);
         printf("function done\r\n");
-        msgrcv(msgID, &RxData, sizeof(RxData.data), 0, 0);
-        printf ("Gyro at test file %d, %d, %d\r\n",RxData.data[0],RxData.data[1],RxData.data[2]);
-        dprintf(fd, "Gyro : %d\t%d\t%d\r\n", RxData.data[0], RxData.data[1], RxData.data[2]);
+        // msgrcv(msgID, &RxData, sizeof(RxData.data), 0, 0);
+        // printf ("Gyro at test file %d, %d, %d\r\n",RxData.data[0],RxData.data[1],RxData.data[2]);
+        // dprintf(fd, "Gyro : %d\t%d\t%d\r\n", RxData.data[0], RxData.data[1], RxData.data[2]);
+        printf ("Gyro at test file %d, %d, %d\r\n",sensorData[0],sensorData[1],sensorData[2]);
+        dprintf(fd, "Gyro : %d\t%d\t%d\r\n", sensorData[0], sensorData[1], sensorData[2]);
         sleep(1);
     }
 

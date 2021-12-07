@@ -12,6 +12,8 @@ typedef struct {
     int data[3];
 } ACCEL_MAG_GYRO_MSG_T;
 
+int sensorData[3];
+
 #define ACCEL 0
 #define MAG 1
 #define GYRO 2
