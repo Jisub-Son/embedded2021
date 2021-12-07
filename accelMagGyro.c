@@ -81,7 +81,7 @@ int accelMagGyroGetData(int sensor)     // getData from sensor
         // fscanf(fp,"%d, %d, %d",&gyro[0],&gyro[1],&gyro[2]);
         // printf ("I read Gyroscope %d, %d, %d\r\n",gyro[0],gyro[1],gyro[2]);
 
-        fscanf(fp,"%d, %d, %d",sensorData[0],sensorData[1],sensorData[2]);
+        fscanf(fp,"%d, %d, %d",&sensorData[0],&sensorData[1],&sensorData[2]);
         printf ("I read Gyroscope %d, %d, %d\r\n",sensorData[0],sensorData[1],sensorData[2]);
         
         // TxData.data[0] = gyro[0];
