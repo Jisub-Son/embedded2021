@@ -8,7 +8,6 @@
 
 int main(void)
 {
-    // int accelData[3], magData[3], gyroData[3];
     ACCEL_MAG_GYRO_MSG_T RxData;
     int msgID;
 
@@ -17,22 +16,36 @@ int main(void)
         printf("Cannot get msgID\r\n");
         return -1;
     }
+    printf("check msgget\r\n");
 
     AccelInit();
     MagInit();
     GyroInit();
+    printf("check initialize\r\n");
 
     int fd = open("gyrodata.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
     if(fd < 0){
         printf("file open error!\r\n");
         return -1;
     }
+    printf("check file open");
 
+    int count = 0;
+    while(1)
+    {   
+        int returnValue = 0;
+        returnValue = msgrcv(msgID, &RxData, sizeof(RxData.data), 0, IPC_NOWAIT); // 비었어도 리턴
+        count++;
+        if(returnValue == -1) break;    // 비었으면 -1 리턴하기 때문
+        printf("%d trash message Comes : [%s]\r\n", count, RxData.data);
+    }
+    printf("Lets get Gyro Data\r\n");
+    
     while(1)
     {
         accelMagGyroGetData(GYRO);
         msgrcv(msgID, &RxData, sizeof(RxData.data), 0, 0);
-        printf ("I read Gyroscope %d, %d, %d\r\n",RxData.data[0],RxData.data[1],RxData.data[2]);
+        printf ("Gyro at test file %d, %d, %d\r\n",RxData.data[0],RxData.data[1],RxData.data[2]);
         dprintf(fd, "Gyro : %d\t%d\t%d\r\n", RxData.data[0], RxData.data[1], RxData.data[2]);
         sleep(1);
     }
