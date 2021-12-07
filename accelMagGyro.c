@@ -84,10 +84,11 @@ int accelMagGyroGetData(int sensor)     // getData from sensor
         TxData.data[0] = gyro[0];
         TxData.data[1] = gyro[1];
         TxData.data[2] = gyro[2];
-
+        printf("TxData is %d, %d, %,d\r\n", TxData.data[0], TxData.data[1], TxData.data[2]);
         fclose(fp);
         
         msgsnd(msgID, &TxData, sizeof(TxData.data), 0);
+        printf("msg send done\r\n");
 
         break;
 
