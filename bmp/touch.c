@@ -60,7 +60,7 @@ void *touchThFunc(void* args)
 	int x = 0;
 	int y = 0;
 	struct input_event stEvent;
-	BUTTON_MSG_T sendMsg;
+	TOUCH_MSG_T sendMsg;
 	sendMsg.messageNum = 1;
 	sendMsg.keyInput = 999;
 	printf ("Touch Thread Ready\r\n");
@@ -96,7 +96,7 @@ void *touchThFunc(void* args)
 				sendMsg.pressed = 1;
 				//printf ("You touch Now!\r\n");
 			}
-			msgsnd(msgID, &sendMsg, sizeof (BUTTON_MSG_T) - sizeof (long int), 0);
+			msgsnd(msgID, &sendMsg, sizeof (TOUCH_MSG_T) - sizeof (long int), 0);
 		}
 		/*
 		if ((stEvent.value == 0) && (stEvent.type == EV_KEY) )
@@ -122,8 +122,8 @@ int touchInit(void)
 	}
 	fd=open (touchPath, O_RDONLY);
 	msgID = msgget (MESSAGE_ID, IPC_CREAT|0666);
-	BUTTON_MSG_T trashCan;
-	while (	msgrcv (msgID, &trashCan, sizeof(BUTTON_MSG_T) - sizeof(long int), 0, IPC_NOWAIT) >= 0	)
+	TOUCH_MSG_T trashCan;
+	while (	msgrcv (msgID, &trashCan, sizeof(TOUCH_MSG_T) - sizeof(long int), 0, IPC_NOWAIT) >= 0	)
 	{
 		printf ("Cleaning Messages...\r\n");
 	}
