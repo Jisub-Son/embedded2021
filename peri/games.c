@@ -226,7 +226,9 @@ int Level1(void)   // level1(button)
 }
 
 int Level2(void)   // level2(buzzer)
-{}
+{
+  
+}
 
 int Level3(void)   // level3(colorled)
 {}
