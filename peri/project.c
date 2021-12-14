@@ -21,8 +21,8 @@
 #include "../bmp/touch.h"
 #include "games.h"
 
-BUTTON_MSG_T buttonRxData;
-int msgID;
+static BUTTON_MSG_T buttonRxData;
+static int msgID;
 
 int main(void)  // Main Menu
 {
@@ -41,20 +41,6 @@ int main(void)  // Main Menu
         printf("Cannot get msgID\r\n");
         return -1;
     }
-
-    // trash msg
-    int count;
-    while(1)
-    {
-        int returnValue = 0;
-        returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, IPC_NOWAIT); // 비었어도 리턴
-
-        if(returnValue == -1) break;    // 비었으면 -1 리턴하기 때문
-        count++;
-        printf("%d trash message Comes : [%d]\r\n", count, buttonRxData.keyInput);
-    }
-
-    printf("\tI got %d messages in the queue\r\n", count);
 
     //Button msg setting
     GameInit();
@@ -82,7 +68,7 @@ int main(void)  // Main Menu
                 case KEY_HOME: 
                     printf("Home key\r\n"); 
                     ledOnOff(2, 1);
-                    buzzerPlaySongforMsec(buzzermusicScale[4], 1000);
+                    // buzzerPlaySongforMsec(buzzermusicScale[4], 1000);
                     fndStaticDisp(222222);
                     pwmLedRGB(0, 1, 0);
                     break;
@@ -95,14 +81,14 @@ int main(void)  // Main Menu
                 case KEY_BACK: 
                     printf("Back key\r\n"); 
                     ledOnOff(4, 1);
-                    buzzerifAns();
+                    // buzzerifAns();
                     fndCountDisp(FND_START_CNT);
                     pwmLedRGB(1, 1, 0);
                     break;
                 case KEY_MENU: 
                     printf("Menu key\r\n"); 
                     ledOnOff(5, 1);
-                    buzzerifNotAns();
+                    // buzzerifNotAns();
                     fndCountDisp(FND_STOP_CNT);
                     pwmLedRGB(0, 1, 1);
                     break;
