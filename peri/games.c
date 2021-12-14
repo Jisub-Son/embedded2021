@@ -24,13 +24,22 @@
 static BUTTON_MSG_T buttonRxData;
 static int msgID;
 
-// msgID = msgget(MESSAGE_ID, IPC_CREAT|0666);
+static TOUCH_MSG_T rcvMsg;
+static int msgID_T;
 
 int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 모으기
 {
-  // BUTTON_MSG_T buttonRxData;
-  //   int msgID;
-  int i;
+  int i, count;
+
+  ledLibInit();
+  buttonInit();
+  buzzerInit();
+  fndInit();
+  pwmLedInit();
+  textlcdInit();
+  touchInit();
+
+  //초기값 출력들 정리
   for (i=0;i<8;i++){  // led all off
 		ledOnOff(i, 0);
 	}
@@ -38,15 +47,18 @@ int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 
   pwmLedRGB(0, 0, 0); // colorled off
   textlcdWrite(1, "                ");  //text lcd all off
   textlcdWrite(2, "                ");
-
+  
+  msgID_T = msgget (TMESSAGE_ID, IPC_CREAT|0666);
+  if(msgID_T == -1){
+      printf("Cannot get msgID\r\n");
+      return -1;
+  }
   msgID = msgget (MESSAGE_ID, IPC_CREAT|0666);
   if(msgID == -1){
       printf("Cannot get msgID\r\n");
       return -1;
   }
-
   // trash msg
-  int count;
   while(1)
   {
       int returnValue = 0;
@@ -54,178 +66,115 @@ int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 
 
       if(returnValue == -1) break;    // 비었으면 -1 리턴하기 때문
       count++;
-      printf("%d trash message Comes : [%d]\r\n", count, buttonRxData.keyInput);
+      // printf("%d trash message Comes : [%d]\r\n", count, buttonRxData.keyInput);
   }
-
-printf("\tI got %d messages in the queue\r\n", count);
+  printf("\tI got %d messages in the queue\r\n", count);
+  printf("Init complete\r\n");
 }
 
 int GameExit(void)   // 전체 exit
-{}
+{
+  ledLibExit();
+  buttonExit();
+  buzzerExit();
+  fndExit();
+  pwmInactiveAll();
+  textlcdExit();
+  printf("Exit completed!\r\n");
+}
 
 int Level1(void)   // level1(button)
 {
   //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
+  //pwd = 132241
   printf("level 1 start\r\n");
+  print_bmp("./proj_image/ex1.bmp");  //set level1 image
+  textlcdlevel(1, 1);   // set level1 txtlcd
+
+  int index = 0, x, y;
+  char pwd;
+  char pwdAns[10] = {0,};
+  
   while(1)
   {
-    int returnValue = 0, pwd = 0;
+    int returnValue = 0;
     returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
-    
-    if(buttonRxData.pressed == 1)
-    {
-      //첫번째 숫자 
-      if(buttonRxData.keyInput == KEY_BACK)
-      {
-        //첫번째 숫자로 1을 입력했을 경우
-        //맞았다는 부저 울리고 txt lcd에는 다음숫자를 맞추라는 표시, led 하나 켜기 컬러 led에 초록색불  
-        pwmLedGreen();//초록색 표시 
-        textlcdWrite(1, "     Correct    ");
-        textlcdWrite(2, " Try second No. ");
-        ledOnOff(0, 1); //1번째 led on
-        // ledifAns();		// All led On for 3time
-        buzzerifAns();//정답일때의 부저
+    // msgrcv(msgID_T, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0); // get touch data
 
-        //두번째 숫자를 3으로 입력했을 경우
-        //맞았다는 부저 울리고 txt lcd에는 다음숫자를 맞추라는 표시, led 하나 켜기 컬러 led에 초록색불  
-        if(buttonRxData.keyInput == KEY_MENU)
-        {    
-          // ledifAns();		// All led On for 3time
-          pwmLedGreen();//초록색 표시 
-          textlcdWrite(1, "     Correct    ");
-          textlcdWrite(2, "  Try Third No. ");
-          //ledOnOff(0, 1); //0번째 led on
-          ledOnOff(1, 1); //2번째 led on
-          buzzerifAns();//정답일때의 부저  
-          
-          //세번째 숫자를 2로 입력했을 경우
-          //맞았다는 부저 울리고 txt lcd에는 다음숫자를 맞추라는 표시, led 하나 켜기 컬러 led에 초록색불  
-          if(buttonRxData.keyInput == KEY_SEARCH)
-          {
-            // ledifAns();		// All led On for 3time
-            pwmLedGreen();//초록색 표시 
-            textlcdWrite(1, "     Correct    ");
-            textlcdWrite(2, " Try Fourth No. ");
-            //ledOnOff(0, 1); //1번째 led on
-            //ledOnOff(1, 1); //2번째 led on
-            ledOnOff(2, 1); //3번째 led on
-            buzzerifAns();//정답일때의 부저
-              
-            // 네번째 숫자를 2로 입력했을경우 
-            //맞았다는 부저 울리고 txt lcd에는 다음숫자를 맞추라는 표시, led 하나 켜기 컬러 led에 초록색불  
-            if(buttonRxData.keyInput == KEY_SEARCH)
-            {
-              // ledifAns();		// All led On for 3time
-              pwmLedGreen();//초록색 표시 
-              textlcdWrite(1, "     Correct    ");
-              textlcdWrite(2, "  Try Fifth No. ");
-              //ledOnOff(0, 1); //1번째 led on
-              //ledOnOff(1, 1); //2번째 led on
-              //ledOnOff(2, 1); //3번째 led on
-              ledOnOff(3, 1); //4번째 led on
-              buzzerifAns();//정답일때의 부저
-                
-              //다섯번째 숫자를 3으로 입력했을 경우
-              if(buttonRxData.keyInput == KEY_MENU)
-              {
-                // ledifAns();		// All led On for 3time
-                pwmLedGreen();//초록색 표시 
-                textlcdWrite(1, "     Correct    ");
-                textlcdWrite(2, "  Try Sixth No. ");
-                //ledOnOff(0, 1); //1번째 led on
-                //ledOnOff(1, 1); //2번째 led on
-                //ledOnOff(2, 1); //3번째 led on
-                //ledOnOff(3, 1); //4번째 led on
-                ledOnOff(4, 1); //5번째 led on
-                buzzerifAns();//정답일때의 부저
-                  
-                //여섯번째 숫자를 1로 입력했을 경우
-                if ( buttonRxData.keyInput == KEY_HOME)
-                {
-                  // ledifAns();		// All led On for 3time
-                  pwmLedGreen();//초록색 표시 
-                  textlcdWrite(1, "     Correct    ");
-                  textlcdWrite(2, "  Try Next LV.  ");
-                  //ledOnOff(0, 1); //1번째 led on
-                  //ledOnOff(1, 1); //2번째 led on
-                  //ledOnOff(2, 1); //3번째 led on
-                  //ledOnOff(3, 1); //4번째 led on
-                  //ledOnOff(4, 1); //5번째 led on
-                  ledOnOff(5, 1); //5번째 led on
-                  buzzerifAns();//정답일때의 부저
-                }
-                //여섯번째 숫자를 틀렸을 경우
-                else 
-                {
-                  //틀렸다는 표시로 부저 한번 울리고, led하나 끄기, 컬러led 빨간불
-                  pwmLedRed(); //빨간색 표시 
-                  textlcdWrite(1, "      Wrong     ");
-                  textlcdWrite(2, "  Try Sixth No. ");
-                  buzzerifNotAns();//오답일때의 부저
-                  // break;
-                }
-              }  
-              //다섯번째 숫자를 틀렸을 경우
-              else 
-              {
-                //틀렸다는 표시로 부저 한번 울리고, led하나 끄기, 컬러led 빨간불
-                pwmLedRed(); //빨간색 표시 
-                textlcdWrite(1, "      Wrong     ");
-                textlcdWrite(2, "  Try Fifth No. ");
-                buzzerifNotAns();//오답일때의 부저
-                // break;
-              }
-            }
-            //네번째 숫자 틀렸을 경우
-            else 
-            {
-              //틀렸다는 표시로 부저 한번 울리고, led하나 끄기, 컬러led 빨간불
-              buzzerifNotAns();//오답일때의 부저
-              pwmLedRed(); //빨간색 표시 
-              textlcdWrite(1, "      Wrong     ");
-              textlcdWrite(2, " Try Fourth No. ");
-              break;
-            }
-          }
-          //if wrong third no.
-          else 
-          {
-            //틀렸다는 표시로 부저 한번 울리고, led하나 끄기, 컬러led 빨간불
-            pwmLedRed(); //빨간색 표시 
-            textlcdWrite(1, "      Wrong     ");
-            textlcdWrite(2, " Try Second No. ");
-            buzzerifNotAns();//오답일때의 부저
-            // break;
-          }
-        }  
-        //두번째 숫자 틀렸을 경우
-        else 
-        {
-          //틀렸다는 표시로 부저 한번 울리고, led하나 끄기, 컬러led 빨간불
-          pwmLedRed(); //빨간색 표시 
-          textlcdWrite(1, "      Wrong     ");
-          textlcdWrite(2, "  Try Third No. ");
-          ledOnOff(0, 0);
-          buzzerifNotAns();//오답일때의 부저
-          // break;
-        }
-      }
-      //첫번째 숫자 틀렸을 경우
-      else 
+    // x = rcvMsg.x; y = rcvMsg.y;
+    // if(rcvMsg.pressed == 1) // 터치가 눌리면
+    // {
+    //   if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
+    //     pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
+    //     printf("Give me Hint!\r\n");
+    //   }
+    //   else
+    //     pwmLedRGB(0, 0, 0);
+    // }
+    // switch (rcvMsg.keyInput)
+    // {
+    //   case 999:
+    //       printf("x : %d/t y : %d\r\n", rcvMsg.x, rcvMsg.y);
+    //       if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
+    //         pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
+    //         printf("Give me Hint!\r\n");
+    //       }
+    //       else
+    //         pwmLedRGB(0, 0, 0);
+    //       break;
+      
+    //   default:
+    //       break;
+    // }
+    
+    if(buttonRxData.keyInput == KEY_HOME) pwd = '0';
+    if(buttonRxData.keyInput == KEY_BACK) pwd = '1';
+    if(buttonRxData.keyInput == KEY_SEARCH) pwd = '2';
+    if(buttonRxData.keyInput == KEY_MENU) pwd = '3';
+    if(buttonRxData.keyInput == KEY_VOLUMEUP) pwd = '4';
+    if(buttonRxData.keyInput == KEY_VOLUMEDOWN) pwd = '5';  // 받아온 키값을 분류하여 pwd를 정한다 if문 말고 더 깔끔한 방법은?
+
+    if(buttonRxData.pressed == 1) // 키가 눌리면
+    {
+      switch (index)  // 인덱스에 따라(눌린 순서를 index로 구분함)
       {
-        //틀렸다는 표시로 부저 한번 울리고, led하나 끄기, 컬러led 빨간불
-        pwmLedRed(); //빨간색 표시 
-        textlcdWrite(1, "      Wrong     ");
-        textlcdWrite(2, "   Try Again    ");
-        buzzerifNotAns();//오답일때의 부저
+        case 0: pwdAns[index] = pwd; index++; break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
+        case 1: pwdAns[index] = pwd; index++; break;
+        case 2: pwdAns[index] = pwd; index++; break;
+        case 3: pwdAns[index] = pwd; index++; break;
+        case 4: pwdAns[index] = pwd; index++; break;
+        case 5: pwdAns[index] = pwd; index++; break;
       }
     }
+
+    if(index == 6 && strcmp("132241", pwdAns) == 0) // 6번 입력했고 정답이면
+    {
+      printf("answer correct : %s[%d]\r\n", pwdAns, index);
+      pwmLedGreen();
+      textlcdWrite(2, "     Correct    ");
+      buzzerifAns();
+      pwmLedRGB(0, 0, 0);
+      break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
+    }
+    else if(index == 6 && strcmp("132241", pwdAns) != 0) // 6번 입력했고 오답이면
+    {
+      printf("answer wrong : %s[%d]\r\n", pwdAns, index);
+      pwmLedRed();
+      textlcdWrite(2, "      Wrong     ");
+      buzzerifNotAns();
+      sleep(1);
+      textlcdWrite(2, "   Try Again    ");
+      pwmLedRGB(0, 0, 0);
+      index = 0;
+    }else;
   }
-  printf("level 1 out\r\n");
+  printf("level 1 finish\r\n");
 }
 
 int Level2(void)   // level2(buzzer)
-{
+{ 
+  printf("level2\r\n");
+  int x, y;
   buzzerifAns();//정답일때의 부저
   sleep(1);
   //방금 출력된 부저음을 맞추라는 이미지가 출력됨
@@ -236,7 +185,8 @@ int Level2(void)   // level2(buzzer)
       
      
         msgrcv(msgID, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0);
-
+        x=rcvMsg.x;
+        y=rcvMsg.y;
         switch (rcvMsg.keyInput)
         {
         case 999:
@@ -245,7 +195,7 @@ int Level2(void)   // level2(buzzer)
            
             
             ///////////////////////////첫번째 음 맞추기//////////////////////////////
-            if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
+            if((rcvMsg.x>0)&&(rcvMsg.x<128)&&(rcvMsg.y>100)&&(rcvMsg.y<600))//도
             {
               print_bmp("./proj_image/do.bmp"); //도 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
@@ -458,6 +408,7 @@ int Level2(void)   // level2(buzzer)
             break;
         }
     }
+    printf("level 2 finished\r\n");
 }
 
 int Level3(void)   // level3(colorled)
