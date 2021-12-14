@@ -22,6 +22,7 @@ libtouch.a: touch.o
 
 touch.o: touch.c touch.h
 	$(CC) -c touch.c -o touch.o
+	cp touch.o /home/son/embedded/embedded2021/peri/
 
 clean:
 	rm -f *.elf *.o *.a

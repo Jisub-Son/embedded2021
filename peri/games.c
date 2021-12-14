@@ -18,15 +18,39 @@
 #include "temperature.h"
 #include "accelMagGyro.h"
 #include "../bmp/libbmp.h"
+#include "../bmp/touch.h"
 #include "games.h"
 
 BUTTON_MSG_T buttonRxData;
 int msgID;
 
-msgID = msgget (MESSAGE_ID, IPC_CREAT|0666);
+// msgID = msgget(MESSAGE_ID, IPC_CREAT|0666);
 
 int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 모으기
-{}
+{
+  // BUTTON_MSG_T buttonRxData;
+  //   int msgID;
+
+    msgID = msgget (MESSAGE_ID, IPC_CREAT|0666);
+    if(msgID == -1){
+        printf("Cannot get msgID\r\n");
+        return -1;
+    }
+
+    // trash msg
+    int count;
+    while(1)
+    {
+        int returnValue = 0;
+        returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, IPC_NOWAIT); // 비었어도 리턴
+
+        if(returnValue == -1) break;    // 비었으면 -1 리턴하기 때문
+        count++;
+        printf("%d trash message Comes : [%d]\r\n", count, buttonRxData.keyInput);
+    }
+
+    printf("\tI got %d messages in the queue\r\n", count);
+}
 
 int GameExit(void)   // 전체 exit
 {}
@@ -34,6 +58,7 @@ int GameExit(void)   // 전체 exit
 int Level1(void)   // level1(button)
 {
 //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
+
   while(1)
   {
     int returnValue = 0;

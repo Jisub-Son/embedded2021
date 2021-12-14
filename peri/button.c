@@ -16,9 +16,10 @@
 #define HAVE_TO_FIND_2 "H: Handlers=kbd event"
 
 static pthread_t buttonTh_id;
-static int msgID, fd;
+static int fd;
 static BUTTON_MSG_T buttonTxData;
 static char buttonPath[200] = {0,};
+int msgID;
 
 int probeButtonPath(char *newPath) // /dev/input/event# 여기서 #에 해당하는 숫자를 확인 
 {
