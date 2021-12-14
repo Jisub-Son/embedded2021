@@ -7,7 +7,7 @@ int main(void)
 {
     touchInit();
 
-    int msgID = msgget(MESSAGE_ID, IPC_CREAT|0666);
+    int msgID = msgget(TMESSAGE_ID, IPC_CREAT|0666);
     TOUCH_MSG_T rcvMsg;
 
     while(1)
