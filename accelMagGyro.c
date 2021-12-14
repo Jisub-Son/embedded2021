@@ -6,9 +6,6 @@
 
 static int fd = 0;
 static FILE *fp = NULL;
-// static int msgID;
-// static pthread_t accelMagGyroTh_id;
-// static ACCEL_MAG_GYRO_MSG_T TxData;
 
 int AccelInit(void)     // initialize Accel
 {
@@ -32,13 +29,6 @@ int GyroInit(void)     // initialize Gyro
     dprintf (fd,"1");
     close(fd);
     return 0;
-
-    // msgID = msgget(MESSAGE_ID, IPC_CREAT | 0666);
-    // if(msgID == -1){
-    //     printf("Cannot get msgID\r\n");
-    //     return -1;
-    // }
-    // TxData.messageNum = 1;
 }
 
 int accelMagGyroGetData(int sensor)     // get Data from sensor
