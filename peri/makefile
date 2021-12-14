@@ -1,11 +1,10 @@
 CC = arm-linux-gnueabi-gcc
 AR = arm-linux-gnueabi-ar
 
-# all: ledtest buttontest buzzertest fndtest textlcdtest colorledtest accelMagGyrotest temperaturetest
-all: bmpviewer
+all: project
 
-bmpviewer : bmpviewer.c
-	$(CC) bmpviewer.c -o bmpviewer -L../ -L../libjpeg -l mylib -l jpeg
+project : project.c libMyPeri.a
+	$(CC) project.c -l MyPeri -L. -o project
 
 # accelMagGyrotest : accelMagGyrotest.c libMyPeri.a accelMagGyro.h
 # 	$(CC) accelMagGyrotest.c -l MyPeri -L. -o accelMagGyrotest
