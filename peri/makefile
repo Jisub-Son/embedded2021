@@ -30,8 +30,8 @@ project : project.c libMyPeri.a
 # ledtest : ledtest.c libMyPeri.a led.h
 # 	$(CC) ledtest.c -l MyPeri -L. -o ledtest
 
-libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o
-	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o
+libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o ../bmp/libbmp.o
+	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o ../bmp/libbmp.o
 
 led.o : led.h led.c
 	$(CC) -c led.c -o led.o
@@ -56,6 +56,9 @@ temperature.o : temperature.h temperature.c
 
 accelMagGyro.o : accelMagGyro.h accelMagGyro.c
 	$(CC) -c accelMagGyro.c -o accelMagGyro.o
+
+# libbmp.o : ../bmp/libbmp.h ../bmp/libbmp.c ../bmp/bitmapFileHeader.h
+# 	$(CC) -O3 -o libbmp.o -c libbmp.c
 
 clean :
 	rm *.o

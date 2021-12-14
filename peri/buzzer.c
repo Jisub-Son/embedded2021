@@ -13,10 +13,10 @@
 #define BUZZER_FREQUENCY_NAME "frequency"
 #define MAX_SCALE_STEP 8
 
-static const int musicScale[MAX_SCALE_STEP] =
-{
-    262, /*do*/ 294,330,349,392,440,494, /* si */ 523
-};
+// static const int musicScale[MAX_SCALE_STEP] =
+// {
+//     262, /*do*/ 294,330,349,392,440,494, /* si */ 523
+// };
 static char gBuzzerBaseSysDir[128]; ///sys/bus/platform/devices/peribuzzer.XX 가 결정됨
 static int fd_en, fd_freq;
 static char path_en[200] = {0,}, path_freq[200] = {0,};
