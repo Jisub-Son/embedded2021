@@ -30,8 +30,8 @@ project : project.c libMyPeri.a
 # ledtest : ledtest.c libMyPeri.a led.h
 # 	$(CC) ledtest.c -l MyPeri -L. -o ledtest
 
-libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o ../bmp/libbmp.o
-	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o ../bmp/libbmp.o
+libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o 
+	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o 
 
 led.o : led.h led.c
 	$(CC) -c led.c -o led.o
