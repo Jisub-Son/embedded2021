@@ -80,17 +80,17 @@ int buzzerPlaySongforMsec(int scale, int msec)   // scale 음계를 msec 동안�
 
 int buzzerifAns(void)          // 정답일 때 울리는 함수
 {
-    buzzerPlaySongforMsec(musicScale[0], 200);
-    buzzerPlaySongforMsec(musicScale[2], 200);
-    buzzerPlaySongforMsec(musicScale[4], 200);
-    buzzerPlaySongforMsec(musicScale[7], 400);
+    buzzerPlaySongforMsec(buzzermusicScale[0], 200);
+    buzzerPlaySongforMsec(buzzermusicScale[2], 200);
+    buzzerPlaySongforMsec(buzzermusicScale[4], 200);
+    buzzerPlaySongforMsec(buzzermusicScale[7], 400);
 }
 
 int buzzerifNotAns(void)       // 틀렸을 때 울리는 함수
 {
-    buzzerPlaySongforMsec(musicScale[0], 100);
+    buzzerPlaySongforMsec(buzzermusicScale[0], 100);
     usleep(200);
-    buzzerPlaySongforMsec(musicScale[0], 100);
+    buzzerPlaySongforMsec(buzzermusicScale[0], 100);
 }
 
 int buzzerExit(void)           // buzzer exit

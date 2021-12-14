@@ -4,7 +4,7 @@ AR = arm-linux-gnueabi-ar
 all: project
 
 project : project.c libMyPeri.a
-	$(CC) project.c -l MyPeri -L. -o project
+	$(CC) project.c -l MyPeri -L. -o project -lpthread
 
 # accelMagGyrotest : accelMagGyrotest.c libMyPeri.a accelMagGyro.h
 # 	$(CC) accelMagGyrotest.c -l MyPeri -L. -o accelMagGyrotest
