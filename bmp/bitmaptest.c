@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>     // for exit
 
-#include "libBitmap.h"
+#include "libbmp.h"
 
 
 
