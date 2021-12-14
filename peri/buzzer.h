@@ -3,7 +3,7 @@
 
 #define MAX_SCALE_STEP 8
 
-const int buzzermusicScale[MAX_SCALE_STEP] =
+static const int buzzermusicScale[MAX_SCALE_STEP] =
 {
     262, /*do*/ 294,330,349,392,440,494, /* si */ 523
 };

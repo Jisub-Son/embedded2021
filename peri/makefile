@@ -1,7 +1,7 @@
 CC = arm-linux-gnueabi-gcc
 AR = arm-linux-gnueabi-ar
 
-all: project
+all : project
 
 project : project.c libMyPeri.a
 	$(CC) project.c -l MyPeri -L. -o project -lpthread
@@ -30,8 +30,8 @@ project : project.c libMyPeri.a
 # ledtest : ledtest.c libMyPeri.a led.h
 # 	$(CC) ledtest.c -l MyPeri -L. -o ledtest
 
-libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o 
-	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o 
+libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o libbmp.o
+	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o libbmp.o
 
 led.o : led.h led.c
 	$(CC) -c led.c -o led.o
@@ -56,9 +56,6 @@ temperature.o : temperature.h temperature.c
 
 accelMagGyro.o : accelMagGyro.h accelMagGyro.c
 	$(CC) -c accelMagGyro.c -o accelMagGyro.o
-
-# libbmp.o : ../bmp/libbmp.h ../bmp/libbmp.c ../bmp/bitmapFileHeader.h
-# 	$(CC) -O3 -o libbmp.o -c libbmp.c
 
 clean :
 	rm *.o

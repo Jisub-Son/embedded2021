@@ -7,6 +7,7 @@
 #include <sys/ioctl.h>
 #include <sys/msg.h>
 #include <pthread.h>
+#include <dirent.h>
 
 #include "led.h"
 #include "button.h"
@@ -16,7 +17,7 @@
 #include "colorled.h"
 #include "temperature.h"
 #include "accelMagGyro.h"
-// #include "../bmp/libbmp.h"
+#include "../bmp/libbmp.h"
 
 int main(void)  // Main Menu
 {
@@ -40,8 +41,22 @@ int main(void)  // Main Menu
         return -1;
     }
 
+    // trash msg
+    int count;
+    while(1)
+    {
+        int returnValue = 0;
+        returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, IPC_NOWAIT); // 비었어도 리턴
+
+        if(returnValue == -1) break;    // 비었으면 -1 리턴하기 때문
+        count++;
+        printf("%d trash message Comes : [%d]\r\n", count, buttonRxData.keyInput);
+    }
+
+    printf("\tI got %d messages in the queue\r\n", count);
+
     //초기 이미지 띄워야 함
-    // print_bmp("flower.bmp");
+    print_bmp("flower.bmp");
     printf("main image loaded\r\n");
 
     textlcdWrite(1, "project test");
@@ -97,11 +112,11 @@ int main(void)  // Main Menu
         }
         if(exit) break;
     }
-
+        //dd
     //Exit
     ledLibExit();
     buttonExit();
-    buzzerInit();
+    buzzerExit();
     fndExit();
     pwmInactiveAll();
     textlcdExit();

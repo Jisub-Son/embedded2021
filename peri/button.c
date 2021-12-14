@@ -93,13 +93,13 @@ int buttonInit(void)
     if(err != 0){      // 만약 err이 0이 아니면(실패하면)
             printf("Thread Create Error : [%d]\r\n", err);     // 에러 메세지를 출력한다
     }
+    pthread_detach(buttonTh_id);
 
     return 1;
 }
 
 int buttonExit(void)
 {
-    pthread_join(buttonTh_id, NULL);
     close(fd);
 
     return 1;
