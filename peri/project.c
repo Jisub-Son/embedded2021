@@ -18,6 +18,7 @@
 #include "temperature.h"
 #include "accelMagGyro.h"
 #include "../bmp/libbmp.h"
+#include "games.h"
 
 int main(void)  // Main Menu
 {
