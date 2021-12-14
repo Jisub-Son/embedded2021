@@ -8,6 +8,8 @@
 #include <sys/mman.h>
 #include <linux/fb.h>   // for fb_var_screeninfo, FBIOGET_VSCREENINFO
 
+#define FBDEV_FILE  "/dev/fb0"
+#define BIT_VALUE_24BIT   24
 
 #include "libbmp.h"
 #include "bitmapFileHeader.h"
