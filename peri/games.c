@@ -20,6 +20,11 @@
 #include "../bmp/libbmp.h"
 #include "games.h"
 
+BUTTON_MSG_T buttonRxData;
+int msgID;
+
+msgID = msgget (MESSAGE_ID, IPC_CREAT|0666);
+
 int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 모으기
 {}
 
