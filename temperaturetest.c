@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	spi_init();
 
 	for(int i=0; i<10; i++){
-		test_temp = spi_read_lm74();
+		test_temp = spi_read_lm74();	// return값 = 온도값
 		printf("On test code : %lf\r\n", test_temp);
 		sleep(1);
 	}

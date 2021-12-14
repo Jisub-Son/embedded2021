@@ -1,34 +1,35 @@
 CC = arm-linux-gnueabi-gcc
 AR = arm-linux-gnueabi-ar
 
-all: ledtest buttontest buzzertest fndtest textlcdtest colorledtest accelMagGyrotest temperaturetest
-
-temperaturetest : temperaturetest.c libMyPeri.a temperature.h
-	$(CC) temperaturetest.c -l MyPeri -L. -o temperaturetest
+# all: ledtest buttontest buzzertest fndtest textlcdtest colorledtest accelMagGyrotest temperaturetest
+all: accelMagGyrotest
 
 accelMagGyrotest : accelMagGyrotest.c libMyPeri.a accelMagGyro.h
 	$(CC) accelMagGyrotest.c -l MyPeri -L. -o accelMagGyrotest
 
-colorledtest : colorledtest.c libMyPeri.a colorled.h
-	$(CC) colorledtest.c -l MyPeri -L. -o colorledtest
+# temperaturetest : temperaturetest.c libMyPeri.a temperature.h
+# 	$(CC) temperaturetest.c -l MyPeri -L. -o temperaturetest
 
-textlcdtest : textlcdtest.c libMyPeri.a textlcd.h
-	$(CC) textlcdtest.c -l MyPeri -L. -o textlcdtest
+# colorledtest : colorledtest.c libMyPeri.a colorled.h
+# 	$(CC) colorledtest.c -l MyPeri -L. -o colorledtest
 
-fndtest : fndtest.c libMyPeri.a fnd.h
-	$(CC) fndtest.c -l MyPeri -L. -o fndtest -lpthread
+# textlcdtest : textlcdtest.c libMyPeri.a textlcd.h
+# 	$(CC) textlcdtest.c -l MyPeri -L. -o textlcdtest
 
-buzzertest : buzzertest.c libMyPeri.a buzzer.h
-	$(CC) buzzertest.c -l MyPeri -L. -o buzzertest
+# fndtest : fndtest.c libMyPeri.a fnd.h
+# 	$(CC) fndtest.c -l MyPeri -L. -o fndtest -lpthread
 
-buttontest : buttontest.c libMyPeri.a button.h
-	$(CC) buttontest.c -l MyPeri -L. -o buttontest -lpthread
+# buzzertest : buzzertest.c libMyPeri.a buzzer.h
+# 	$(CC) buzzertest.c -l MyPeri -L. -o buzzertest
 
-ledtest : ledtest.c libMyPeri.a led.h
-	$(CC) ledtest.c -l MyPeri -L. -o ledtest
+# buttontest : buttontest.c libMyPeri.a button.h
+# 	$(CC) buttontest.c -l MyPeri -L. -o buttontest -lpthread
 
-libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o accelMagGyro.o temperature.o
-	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o accelMagGyro.o temperature.o
+# ledtest : ledtest.c libMyPeri.a led.h
+# 	$(CC) ledtest.c -l MyPeri -L. -o ledtest
+
+libMyPeri.a : led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o
+	$(AR) rc libMyPeri.a led.o button.o buzzer.o fnd.o textlcd.o colorled.o temperature.o accelMagGyro.o
 
 led.o : led.h led.c
 	$(CC) -c led.c -o led.o
@@ -48,11 +49,11 @@ textlcd.o : textlcd.h textlcd.c
 colorled.o : colorled.h colorled.c
 	$(CC) -c colorled.c -o colorled.o
 
-accelMagGyro.o : accelMagGyro.h accelMagGyro.c
-	$(CC) -c accelMagGyro.c -o accelMagGyro.o
-
 temperature.o : temperature.h temperature.c
 	$(CC) -c temperature.c -o temperature.o
+
+accelMagGyro.o : accelMagGyro.h accelMagGyro.c
+	$(CC) -c accelMagGyro.c -o accelMagGyro.o
 
 clean :
 	rm *.o

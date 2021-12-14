@@ -5,23 +5,25 @@
 #define MAGNEPATH "/sys/class/misc/FreescaleMagnetometer/"
 #define GYROPATH "/sys/class/misc/FreescaleGyroscope/"
 
-#define MESSAGE_ID 6017
+// #define MESSAGE_ID 6017
 
-typedef struct {
-    long int messageNum;
-    int data[3];
-} ACCEL_MAG_GYRO_MSG_T;
-
-int sensorData[3];
+// typedef struct {
+//     long int messageNum;
+//     int data[3];
+// } ACCEL_MAG_GYRO_MSG_T;
 
 #define ACCEL 0
 #define MAG 1
 #define GYRO 2
 
+static int sensorData[3];
+
 int AccelInit(void);     // initialize Accel
 int MagInit(void);     // initialize Mag
 int GyroInit(void);     // initialize Gyro
-int accelMagGyroGetData(int sensor);     // getData from sensor
-
+int accelMagGyroGetData(int sensor);     // get Data from sensor
+int AccelExit(void);     // exit Accel
+int MagExit(void);     // exit Mag
+int GyroExit(void);     // exit Gyro
 
 #endif
