@@ -3,8 +3,8 @@
 
 
 #include "bmpviewer.h"
-#include "../libfbdev.h"
-#include "../libbmp.h"
+#include "libfbdev.h"
+#include "libbmp.h"
 
 void usage(void)
 {
