@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../libfbdev/libfbdev.h"
-#include "../libbmp/libbmp.h"
+#include "../libfbdev.h"
+#include "../libbmp.h"
 
 int main (int argc, char **argv)
 {
