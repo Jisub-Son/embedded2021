@@ -170,7 +170,7 @@ int Level1(void)   // level1(button)
       pwmLedRGB(0, 0, 0);
       break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
     }
-    else if(index == 6 && strcmp("132241", pwdAns) != 0) // 6번 입력했고 오답이면
+    else if(index == 6 && strcmp("132231", pwdAns) != 0) // 6번 입력했고 오답이면
     {
       printf("answer wrong : %s[%d]\r\n", pwdAns, index);
       pwmLedRed();
@@ -426,7 +426,83 @@ int Level2(void)   // level2(buzzer)
 }
 
 int Level3(void)   // level3(colorled)
-{}
+{
+	//문제 도안
+	//사진에서의 회색부분에 해당하는 색을 차례대로 누르면 통과 
+  //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
+  //pwd3 = 131
+
+  // create msg rcv thread
+  pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
+  pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
+
+  printf("level 3 start\r\n");
+  print_bmp("./proj_image/ex3.bmp");  //set level3 image
+  textlcdlevel(1, 1);   // set level1 txtlcd
+  textlcdlevel(2, 1);	// set level2 txtlcd
+  textlcdlevel(3, 1);	// set level3 txtlcd
+
+  int index = 0;
+  char pwd3;
+  char pwdAns[10] = {0,};
+  
+  while(1)
+  {
+    if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
+                                 
+      once = 0;                         // 바로 once=0으로 만들어서 debounce?
+      if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
+        pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
+        printf("Give me Hint!\r\n");
+      }
+      else
+        pwmLedRGB(0, 0, 0);
+    }
+
+    if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
+      once = 0;                         // 바로 once=0으로 만들어서 debounce?
+
+      if(buttonRxData.keyInput == KEY_HOME) pwd = '0';
+      if(buttonRxData.keyInput == KEY_BACK) pwd = '1';
+      if(buttonRxData.keyInput == KEY_SEARCH) pwd = '2';
+      if(buttonRxData.keyInput == KEY_MENU) pwd = '3';
+      if(buttonRxData.keyInput == KEY_VOLUMEUP) pwd = '4';
+      if(buttonRxData.keyInput == KEY_VOLUMEDOWN) pwd = '5';  // 받아온 키값을 분류하여 pwd를 정한다 if문 말고 더 깔끔한 방법은?
+
+      switch (index)  // 인덱스에 따라(눌린 순서를 index로 구분함)
+      {
+        case 0: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
+        case 1: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 2: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 3: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 4: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 5: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+      }
+    }
+
+    if(index == 6 && strcmp("132231", pwdAns) == 0) // 6번 입력했고 정답이면
+    {
+      printf("answer correct : %s[%d]\r\n", pwdAns, index);
+      pwmLedGreen();
+      textlcdWrite(2, "     Correct    ");
+      buzzerifAns();
+      pwmLedRGB(0, 0, 0);
+      break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
+    }
+    else if(index == 6 && strcmp("132231", pwdAns) != 0) // 6번 입력했고 오답이면
+    {
+      printf("answer wrong : %s[%d]\r\n", pwdAns, index);
+      pwmLedRed();
+      textlcdWrite(2, "      Wrong     ");
+      buzzerifNotAns();
+      sleep(1);
+      textlcdWrite(2, "   Try Again    ");
+      pwmLedRGB(0, 0, 0);
+      index = 0;
+    }else;
+  }
+  printf("level 1 finish\r\n");
+}
 
 int Level4(void)   // level4(temperature)
 {}
