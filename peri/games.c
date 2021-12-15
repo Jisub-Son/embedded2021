@@ -187,10 +187,18 @@ int Level1(void)   // level1(button)
 
 int Level2(void)   // level2(buzzer)
 { 
-  printf("level2\r\n");
-  int x, y;
-  buzzerifAns();//정답일때의 부저
+	pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
+
+  printf("level 2 start\r\n");
+	buzzerifAns();//정답일때의 부저
   sleep(1);
+  print_bmp("./proj_image/ex2.bmp");  //set level1 image
+  textlcdlevel(1, 1);   // set level1 txtlcd
+	textlcdlevel(2, 1);   // set level1 txtlcd
+
+  
+  int x, y;
+  
   //방금 출력된 부저음을 맞추라는 이미지가 출력됨
   //이미지 안에 어떤 걸 눌러야 무슨 음이 나오는 지 알려줌
   print_bmp("./proj_image/ex2.bmp"); 
@@ -433,7 +441,7 @@ int Level3(void)   // level3(colorled)
   //pwd3 = 131
 
   // create msg rcv thread
-  pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
+  //pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
   pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
 
   printf("level 3 start\r\n");
