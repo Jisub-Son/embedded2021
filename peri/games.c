@@ -86,7 +86,7 @@ int GameExit(void)   // 전체 exit
 int Level1(void)   // level1(button)
 {
   //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
-  //pwd = 132241
+  //pwd = 132231
   printf("level 1 start\r\n");
   print_bmp("./proj_image/ex1.bmp");  //set level1 image
   textlcdlevel(1, 1);   // set level1 txtlcd
@@ -147,7 +147,7 @@ int Level1(void)   // level1(button)
       }
     }
 
-    if(index == 6 && strcmp("132241", pwdAns) == 0) // 6번 입력했고 정답이면
+    if(index == 6 && strcmp("132231", pwdAns) == 0) // 6번 입력했고 정답이면
     {
       printf("answer correct : %s[%d]\r\n", pwdAns, index);
       pwmLedGreen();
