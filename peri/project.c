@@ -46,7 +46,7 @@ int main(void)  // Main Menu
     {
         int returnValue = 0;
         returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
-
+        
         if(buttonRxData.pressed){
             switch (buttonRxData.keyInput)
             {

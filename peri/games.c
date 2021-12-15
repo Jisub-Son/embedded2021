@@ -27,6 +27,30 @@ static int msgID;
 static TOUCH_MSG_T rcvMsg;
 static int msgID_T;
 
+static pthread_t touchTh_id, buttonTh_id;
+static int x, y;
+static int once=0;
+
+void *touchThRcvFunc(void *args)    // rcvmsg를 쓰레드로 분리
+{
+  while(1){
+    msgrcv(msgID_T, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0); // get touch data
+    if(rcvMsg.pressed == 1) once = 1; //누르는 동작에서 once=1로 set
+    x = rcvMsg.x;
+    y = rcvMsg.y;
+    printf("tchth rcv : %d[%d, %d, %d]\r\n", rcvMsg.pressed, x, y, once);
+  }
+}
+
+void *buttonThRcvFunc(void *args)
+{
+  while(1){
+    msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
+    if(buttonRxData.pressed == 1) once = 1; //누르는 동작에서 once=1로 set
+    printf("bth rcv : %d[%d]\r\n", buttonRxData.pressed, once);
+  }
+}
+
 int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 모으기
 {
   int i, count;
@@ -69,6 +93,7 @@ int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 
       // printf("%d trash message Comes : [%d]\r\n", count, buttonRxData.keyInput);
   }
   printf("\tI got %d messages in the queue\r\n", count);
+
   printf("Init complete\r\n");
 }
 
@@ -80,74 +105,63 @@ int GameExit(void)   // 전체 exit
   fndExit();
   pwmInactiveAll();
   textlcdExit();
+  pthread_cancel(buttonTh_id);
+  pthread_cancel(touchTh_id);
   printf("Exit completed!\r\n");
 }
 
 int Level1(void)   // level1(button)
 {
   //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
-  //pwd = 132231
+  //pwd = 132241
+
+  // create msg rcv thread
+  pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
+  pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
+
   printf("level 1 start\r\n");
   print_bmp("./proj_image/ex1.bmp");  //set level1 image
   textlcdlevel(1, 1);   // set level1 txtlcd
 
-  int index = 0, x, y;
+  int index = 0;
   char pwd;
   char pwdAns[10] = {0,};
   
   while(1)
   {
-    int returnValue = 0;
-    returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
-    // msgrcv(msgID_T, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0); // get touch data
+    if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
+                                 
+      once = 0;                         // 바로 once=0으로 만들어서 debounce?
+      if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
+        pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
+        printf("Give me Hint!\r\n");
+      }
+      else
+        pwmLedRGB(0, 0, 0);
+    }
 
-    // x = rcvMsg.x; y = rcvMsg.y;
-    // if(rcvMsg.pressed == 1) // 터치가 눌리면
-    // {
-    //   if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
-    //     pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
-    //     printf("Give me Hint!\r\n");
-    //   }
-    //   else
-    //     pwmLedRGB(0, 0, 0);
-    // }
-    // switch (rcvMsg.keyInput)
-    // {
-    //   case 999:
-    //       printf("x : %d/t y : %d\r\n", rcvMsg.x, rcvMsg.y);
-    //       if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
-    //         pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
-    //         printf("Give me Hint!\r\n");
-    //       }
-    //       else
-    //         pwmLedRGB(0, 0, 0);
-    //       break;
-      
-    //   default:
-    //       break;
-    // }
-    
-    if(buttonRxData.keyInput == KEY_HOME) pwd = '0';
-    if(buttonRxData.keyInput == KEY_BACK) pwd = '1';
-    if(buttonRxData.keyInput == KEY_SEARCH) pwd = '2';
-    if(buttonRxData.keyInput == KEY_MENU) pwd = '3';
-    if(buttonRxData.keyInput == KEY_VOLUMEUP) pwd = '4';
-    if(buttonRxData.keyInput == KEY_VOLUMEDOWN) pwd = '5';  // 받아온 키값을 분류하여 pwd를 정한다 if문 말고 더 깔끔한 방법은?
+    if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
+      once = 0;                         // 바로 once=0으로 만들어서 debounce?
 
-    if(buttonRxData.pressed == 1) // 키가 눌리면
-    {
+      if(buttonRxData.keyInput == KEY_HOME) pwd = '0';
+      if(buttonRxData.keyInput == KEY_BACK) pwd = '1';
+      if(buttonRxData.keyInput == KEY_SEARCH) pwd = '2';
+      if(buttonRxData.keyInput == KEY_MENU) pwd = '3';
+      if(buttonRxData.keyInput == KEY_VOLUMEUP) pwd = '4';
+      if(buttonRxData.keyInput == KEY_VOLUMEDOWN) pwd = '5';  // 받아온 키값을 분류하여 pwd를 정한다 if문 말고 더 깔끔한 방법은?
+
       switch (index)  // 인덱스에 따라(눌린 순서를 index로 구분함)
       {
-        case 0: pwdAns[index] = pwd; index++; break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
-        case 1: pwdAns[index] = pwd; index++; break;
-        case 2: pwdAns[index] = pwd; index++; break;
-        case 3: pwdAns[index] = pwd; index++; break;
-        case 4: pwdAns[index] = pwd; index++; break;
-        case 5: pwdAns[index] = pwd; index++; break;
+        case 0: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
+        case 1: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 2: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 3: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 4: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 5: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
       }
     }
 
-    if(index == 6 && strcmp("132231", pwdAns) == 0) // 6번 입력했고 정답이면
+    if(index == 6 && strcmp("132241", pwdAns) == 0) // 6번 입력했고 정답이면
     {
       printf("answer correct : %s[%d]\r\n", pwdAns, index);
       pwmLedGreen();
