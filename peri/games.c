@@ -113,7 +113,7 @@ int GameExit(void)   // 전체 exit
 int Level1(void)   // level1(button)
 {
   //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
-  //pwd = 132241
+  //pwd = 132231
 
   // create msg rcv thread
   pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
@@ -161,7 +161,7 @@ int Level1(void)   // level1(button)
       }
     }
 
-    if(index == 6 && strcmp("132241", pwdAns) == 0) // 6번 입력했고 정답이면
+    if(index == 6 && strcmp("132231", pwdAns) == 0) // 6번 입력했고 정답이면
     {
       printf("answer correct : %s[%d]\r\n", pwdAns, index);
       pwmLedGreen();
@@ -307,7 +307,7 @@ int Level2(void)   // level2(buzzer)
                   }
                   else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
                   {
-                    print_bmp("./proj_image/Do.bmp"); //높은 도 눌린 이미지
+                    print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
                     print_bmp("./proj_image/passSecond.bmp"); //두번째 레벨 통과 이미지 
                     pwmLedGreen();//초록색 표시 
@@ -331,7 +331,7 @@ int Level2(void)   // level2(buzzer)
                 }
                 else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
                 {
-                  print_bmp("./proj_image/Do.bmp"); //높은 도 눌린 이미지
+                  print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
                   break;
                 }
@@ -364,7 +364,7 @@ int Level2(void)   // level2(buzzer)
               }
               else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
               {
-                print_bmp("./proj_image/Do.bmp"); //높은 도 눌린 이미지
+                print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
                 break;
               }
@@ -409,7 +409,7 @@ int Level2(void)   // level2(buzzer)
             }
             else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
             {
-              print_bmp("./proj_image/Do.bmp"); //높은 도 눌린 이미지
+              print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
               break;
             }
