@@ -442,54 +442,62 @@ int Level3(void)   // level3(colorled)
   textlcdlevel(2, 1);	// set level2 txtlcd
   textlcdlevel(3, 1);	// set level3 txtlcd
 
-  int index = 0;
+  int index3 = 0;
   char pwd3;
-  char pwdAns[10] = {0,};
+  char pwdAns3[10] = {0,};
   
   while(1)
   {
     if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
                                  
       once = 0;                         // 바로 once=0으로 만들어서 debounce?
-      if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
-        pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
-        printf("Give me Hint!\r\n");
+			//341, 683
+			//500, 600
+      if(x>0 && x<341 && y>500 && y<600){ // 그 영역이 하단 왼쪽이면
+        pwmLedRGB(1, 0, 0);           // 빨간색 led 켜기 
+        printf("Select Red!\r\n");
+				print_bmp("./proj_image/3_r.bmp");
       }
+			else if(x>341 && x<683 && y>500 && y<600){ // 그 영역이 하단 중간부분이면 
+        pwmLedRGB(1, 1, 0);           // 노란색 led 켜기 
+        printf("Select Yellow!\r\n");
+				print_bmp("./proj_image/3_y.bmp");
+      }
+			else if(x>683 && x<1024 && y>500 && y<600){ // 그 영역이 하단 오른쪽이면 
+        pwmLedRGB(0, 1, 0);           // 초록색 led 켜기 
+        printf("Select Green!\r\n");
+				print_bmp("./proj_image/3_g.bmp");
+      }
+	    
       else
         pwmLedRGB(0, 0, 0);
     }
 
-    if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
-      once = 0;                         // 바로 once=0으로 만들어서 debounce?
+    //if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
+      //once = 0;                         // 바로 once=0으로 만들어서 debounce?
 
-      if(buttonRxData.keyInput == KEY_HOME) pwd = '0';
-      if(buttonRxData.keyInput == KEY_BACK) pwd = '1';
-      if(buttonRxData.keyInput == KEY_SEARCH) pwd = '2';
-      if(buttonRxData.keyInput == KEY_MENU) pwd = '3';
-      if(buttonRxData.keyInput == KEY_VOLUMEUP) pwd = '4';
-      if(buttonRxData.keyInput == KEY_VOLUMEDOWN) pwd = '5';  // 받아온 키값을 분류하여 pwd를 정한다 if문 말고 더 깔끔한 방법은?
-
-      switch (index)  // 인덱스에 따라(눌린 순서를 index로 구분함)
+      if(x>0 && x<341 && y>500 && y<600) pwd3 = '0'; //red
+      if(x>341 && x<683 && y>500 && y<600) pwd3 = '1'; //yellow
+      if(x>683 && x<1024 && y>500 && y<600) pwd3 = '2'; //green
+      
+      switch (index3)  // 인덱스에 따라(눌린 순서를 index로 구분함)
       {
-        case 0: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
-        case 1: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
-        case 2: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
-        case 3: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
-        case 4: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
-        case 5: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 0: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
+        case 1: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 2: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break;
       }
     }
 
-    if(index == 6 && strcmp("132231", pwdAns) == 0) // 6번 입력했고 정답이면
+    if(index3 == 3 && strcmp("010", pwdAns) == 0) // 3번 입력했고 정답이면
     {
-      printf("answer correct : %s[%d]\r\n", pwdAns, index);
+      printf("answer correct : %s[%d]\r\n", pwdAns3, index3);
       pwmLedGreen();
       textlcdWrite(2, "     Correct    ");
       buzzerifAns();
       pwmLedRGB(0, 0, 0);
-      break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
+      break;    // 현재는 break로 탈출 -> level4로 가게 변경해야 함
     }
-    else if(index == 6 && strcmp("132231", pwdAns) != 0) // 6번 입력했고 오답이면
+    else if(index3 == 3 && strcmp("010", pwdAns) != 0) // 3번 입력했고 오답이면
     {
       printf("answer wrong : %s[%d]\r\n", pwdAns, index);
       pwmLedRed();
@@ -501,7 +509,7 @@ int Level3(void)   // level3(colorled)
       index = 0;
     }else;
   }
-  printf("level 1 finish\r\n");
+  printf("level 3 finish\r\n");
 }
 
 int Level4(void)   // level4(temperature)
