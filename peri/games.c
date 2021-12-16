@@ -62,6 +62,7 @@ int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 
   pwmLedInit();
   textlcdInit();
   touchInit();
+	printf("Init Finish\r\n")
 
   //초기값 출력들 정리
   for (i=0;i<8;i++){  // led all off
@@ -168,7 +169,6 @@ int Level1(void)   // level1(button)
       textlcdWrite(2, "     Correct    ");
       buzzerifAns();
       pwmLedRGB(0, 0, 0);
-      // Level2();
       break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
     }
     else if(index == 6 && strcmp("132231", pwdAns) != 0) // 6번 입력했고 오답이면
@@ -188,28 +188,29 @@ int Level1(void)   // level1(button)
 
 int Level2(void)   // level2(buzzer)
 { 
-	// pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
+	pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
 
   printf("level 2 start\r\n");
 	buzzerifAns();//정답일때의 부저
   sleep(1);
-  print_bmp("./proj_image/level2/ex2.bmp");  //set level1 image
+  print_bmp("./proj_image/ex2.bmp");  //set level1 image
   
 	textlcdlevel(1, 2);   // set level2 txtlcd
 
   
-  // int x, y;
+  int x, y;
   
   //방금 출력된 부저음을 맞추라는 이미지가 출력됨
   //이미지 안에 어떤 걸 눌러야 무슨 음이 나오는 지 알려줌
-  // print_bmp("./proj_image/ex2.bmp"); 
+	printf("show level2 quiz.\r\n");
+  print_bmp("./proj_image/ex2.bmp"); 
    while(1)
     {
       
      
-        // msgrcv(msgID, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0);
-        // x=rcvMsg.x;
-        // y=rcvMsg.y;
+        msgrcv(msgID, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0);
+        x=rcvMsg.x;
+        y=rcvMsg.y;
         switch (rcvMsg.keyInput)
         {
         case 999:
@@ -218,213 +219,315 @@ int Level2(void)   // level2(buzzer)
            
             
             ///////////////////////////첫번째 음 맞추기//////////////////////////////
-            if((rcvMsg.x>0)&&(rcvMsg.x<128)&&(rcvMsg.y>100)&&(rcvMsg.y<600))//도
+            if((rcvMsg.x>896)&&(rcvMsg.x<1024)&&(rcvMsg.y>0)&&(rcvMsg.y<500))//도
             {
+							printf("level 2 _1st-do touched.\r\n");
               print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
+							printf("level 2 _1st-do bmp.\r\n");
               buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
+							printf("level 2 _1st-do buz.\r\n");
               
               //////////////////////////두번째 음 맞추기 /////////////////////////////
-              if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
+              if((x>896)&&(x<1024)&&(y>0)&&(y<500))//도
               {
+								printf("level 2 _2nd-do touched.\r\n");
                 print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
+								printf("level 2 _2nd-do bmp.\r\n");
                 buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
+								printf("level 2 _2nd-do buz.\r\n");
                 break;
               }
-              else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
+              else if((x>768)&&(x<896)&&(y>0)&&(y<500))//레
               {
+								printf("level 2 _2nd- re touched.\r\n");
                 print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
+								printf("level 2 _2nd- re bmp.\r\n");
                 buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
+								printf("level 2 _2nd- re buz.\r\n");
                 break;
               }
-              else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
+              else if((x>640)&&(x<768)&&(y>0)&&(y<500))//미
               {
+								printf("level 2 _2nd- mi touched.\r\n");
                 print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
+								printf("level 2 _2nd- mi bmp.\r\n");
                 buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
+								printf("level 2 _2nd- mi buz.\r\n");
                 
                 /////////////세번째 음 맞추기///////////////////////////////////////
-                if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
+                if((x>896)&&(x<1024)&&(y>0)&&(y<500))//도
                 {
+									printf("level 2 _3rd- do touched.\r\n");
                   print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
+									printf("level 2 _3rd- do bmp.\r\n");
                   buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
+									printf("level 2 _3rd- do buz.\r\n");
                   break;
                 }
-                else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
+                else if((x>768)&&(x<896)&&(y>0)&&(y<500))//레
                 {
+									printf("level 2 _3rd- re touched.\r\n");
                   print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
+									printf("level 2 _3rd- re bmp.\r\n");
                   buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
+									printf("level 2 _3rd- re buz.\r\n");
                   break;
                 }
-                else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
+                else if((x>640)&&(x<768)&&(y>0)&&(y<500))//미
                 {
+									printf("level 2 _3rd- mi touched.\r\n");
                   print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
+									printf("level 2 _3rd- mi bmp.\r\n");
                   buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
+									printf("level 2 _3rd- mi buz.\r\n");
                   break;
                 }
-                else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
+                else if((x>512)&&(x<640)&&(y>0)&&(y<500))//파
                 {
+									printf("level 2 _3rd- fa touched.\r\n");
                   print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
+									printf("level 2 _3rd- fa bmp.\r\n");
                   buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
+									printf("level 2 _3rd- fa buz.\r\n");
                   break;
                 }
-                else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
+                else if((x>384)&&(x<512)&&(y>0)&&(y<500))//솔
                 {
+									printf("level 2 _3rd- sol touched.\r\n");
                   print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
+									printf("level 2 _3rd- sol bmp.\r\n");
                   buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
+									printf("level 2 _3rd- sol buz.\r\n");
                   
                   ////////////////////////여기부터 네번째 음 맞추기/////////////////////
-                  if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
+                  if((x>896)&&(x<1024)&&(y>0)&&(y<500))//도
                   {
+										printf("level 2 _4th- do touched.\r\n");
                     print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
+										printf("level 2 _4th- do bmp.\r\n");
                     buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
+										printf("level 2 _4th- do buz.\r\n");
                     break;
                   }
-                  else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
+                  else if((x>768)&&(x<896)&&(y>0)&&(y<500))//레
                   {
+										printf("level 2 _4th- re touched.\r\n");
                     print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
+										printf("level 2 _4th- re bmp.\r\n");
                     buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
+										printf("level 2 _4th- re buz.\r\n");
+										
                     break;
                   }
-                  else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
+                  else if((x>640)&&(x<768)&&(y>0)&&(y<500))//미
                   {
+										printf("level 2 _4th- mi touched.\r\n");
                     print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
+										printf("level 2 _4th- mi bmp.\r\n");
                     buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
+										printf("level 2 _4th- mi buz.\r\n");
                     break;
                   }
-                  else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
+                  else if((x>512)&&(x<640)&&(y>0)&&(y<500))//파
                   {
+										printf("level 2 _4th- fa touched.\r\n");
                     print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
+										printf("level 2 _4th- fa bmp.\r\n");
                     buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
+										printf("level 2 _4th- fa buz.\r\n");
                     break;
                   }
-                  else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
+                  else if((x>384)&&(x<512)&&(y>0)&&(y<500))//솔
                   {
+										printf("level 2 _4th- sol touched.\r\n");
                     print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
+										printf("level 2 _4th- sol bmp.\r\n");
                     buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
+										printf("level 2 _4th- sol buz.\r\n");
                     break;
                   }
-                  else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
+                  else if((x>256)&&(x<384)&&(y>0)&&(y<500))//라
                   {
+										printf("level 2 _4th- la touched.\r\n");
                     print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
+										printf("level 2 _4th- la bmp.\r\n");
                     buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
+										printf("level 2 _4th- la buz.\r\n");
                     break;
                   }
-                  else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
+                  else if((x>128)&&(x<256)&&(y>0)&&(y<500))//시
                   {
+										printf("level 2 _4th- si touched.\r\n");
                     print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
+										printf("level 2 _4th- si bmp.\r\n");
                     buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
+										printf("level 2 _4th- si buz.\r\n");
                     break;
                   }
-                  else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
+                  else if((x>0)&&(x<128)&&(y>0)&&(y<500))//도
                   {
+										printf("level 2 _4th- do2 touched.\r\n");
                     print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
+										printf("level 2 _4th- do2 bmp.\r\n");
                     buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
+										printf("level 2 _4th- do2 buz.\r\n");
                     print_bmp("./proj_image/level2/passSecond.bmp"); //두번째 레벨 통과 이미지 
+										printf("level 2 _pass bmp.\r\n");
                     pwmLedGreen();//초록색 표시 
+										printf("colorLedGreen On.\r\n");
                     textlcdWrite(1, "     Correct    ");
                     textlcdWrite(2, "  Try Next LV.  ");
+										printf("Correct, Try Next LV.\r\n");
                   }
                   break;
                   /////////////////여기까지 네번째 음 맞추기
                 }
-                else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
+                else if((x>256)&&(x<384)&&(y>0)&&(y<500))//라
                 {
+									printf("level 2 _3rd- la touched.\r\n");
                   print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
+									printf("level 2 _3rd- la bmp.\r\n");
                   buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
+									printf("level 2 _3rd- la buz.\r\n");
                   break;
                 }
-                else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
+                else if((x>128)&&(x<256)&&(y>0)&&(y<500))//시
                 {
+									printf("level 2 _3rd- si touched.\r\n");
                   print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
+									printf("level 2 _3rd- si bmp.\r\n");
                   buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
+									printf("level 2 _3rd- si buz.\r\n");
                   break;
                 }
-                else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
+                else if((x>0)&&(x<128)&&(y>0)&&(y<500))//도
                 {
+									printf("level 2 _3rd- do2 touched.\r\n");
                   print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
+									printf("level 2 _3rd- do2 bmp.\r\n");
                   buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
+									printf("level 2 _3rd- do2 buz.\r\n");
                   break;
                 }
                 break;
                 ////////////////////////여기까지 세번째 음 맞추기////////////////////////
               }
-              else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
+              else if((x>512)&&(x<640)&&(y>0)&&(y<500))//파
               {
+								printf("level 2 _2nd- fa touched.\r\n");
                 print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
+								printf("level 2 _2nd- fa bmp.\r\n");
                 buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
+								printf("level 2 _2nd- fa buz.\r\n");
                 break;
               }
-              else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
+              else if((x>384)&&(x<512)&&(y>0)&&(y<500))//솔
               {
+								printf("level 2 _2nd- sol touched.\r\n");
                 print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
+								printf("level 2 _2nd- sol bmp.\r\n");
                 buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
+								printf("level 2 _2nd- sol buz.\r\n");
                 break;
               }
-              else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
+              else if((x>256)&&(x<384)&&(y>0)&&(y<500))//라
               {
+								printf("level 2 _2nd- la touched.\r\n");
                 print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
+								printf("level 2 _2nd- la bmp.\r\n");
                 buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
+								printf("level 2 _2nd- la buz.\r\n");
                 break;
               }
-              else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
+              else if((x>128)&&(x<256)&&(y>0)&&(y<500))//시
               {
+								printf("level 2 _2nd- si touched.\r\n");
                 print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
+								printf("level 2 _2nd- si bmp.\r\n");
                 buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
+								printf("level 2 _2nd- si buz.\r\n");
                 break;
               }
-              else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
+              else if((x>0)&&(x<128)&&(y>0)&&(y<500))//도
               {
+								printf("level 2 _2nd- do2 touched.\r\n");
                 print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
+								printf("level 2 _2nd- do2 bmp.\r\n");
                 buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
+								printf("level 2 _2nd- do2 buz.\r\n");
                 break;
               }
               break;
               ///////////////////////여기까지 두번째 음 맞추기/////////////////////////
             }
-            else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
+            else if((x>768)&&(x<896)&&(y>0)&&(y<500))//레
             {
+							printf("level 2 _1st- re touched.\r\n");
               print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
+							printf("level 2 _1st- re bmp.\r\n");
               buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
+							printf("level 2 _1st- re buz.\r\n");
               break;
             }
-            else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
+            else if((x>640)&&(x<768)&&(y>0)&&(y<500))//미
             {
+							printf("level 2 _1st- mi touched.\r\n");
               print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
+							printf("level 2 _1st- mi bmp.\r\n");
               buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
+							printf("level 2 _1st- mi buz.\r\n");
               break;
             }
-            else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
+            else if((x>512)&&(x<640)&&(y>0)&&(y<500))//파
             {
+							printf("level 2 _1st- fa touched.\r\n");
               print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
+							printf("level 2 _1st- fa bmp.\r\n");
               buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
+							printf("level 2 _1st- fa buz.\r\n");
               break;
             }
-            else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
+            else if((x>384)&&(x<512)&&(y>0)&&(y<500))//솔
             {
+							printf("level 2_1st - sol touched.\r\n");
               print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
+							printf("level 2_1st - sol bmp.\r\n");
               buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
+							printf("level 2_1st - sol buz.\r\n");
               break;
             }
-            else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
+            else if((x>256)&&(x<384)&&(y>0)&&(y<500))//라
             {
+							printf("level 2_1st - la touched.\r\n");
               print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
+							printf("level 2_1st - la bmp.\r\n");
               buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
+							printf("level 2_1st - la buz.\r\n");
               break;
             }
-            else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
+            else if((x>128)&&(x<256)&&(y>0)&&(y<500))//시
             {
+							printf("level 2 _1st- si touched.\r\n");
               print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
+							printf("level 2 _1st- si bmp.\r\n");
               buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
+							printf("level 2 _1st- si buz.\r\n");
               break;
             }
-            else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
+            else if((x>0)&&(x<128)&&(y>0)&&(y<500))//도
             {
+							printf("level 2 _1st - do2 touched.\r\n");
               print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
+							printf("level 2 _1st - do2 bmp.\r\n");
               buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
+							printf("level 2 _1st - do2 buz.\r\n");
               break;
             }
             pwmLedRed();//빨간색 표시 
+						printf("pwmLedRed On.\r\n");
             textlcdWrite(1, "      Wrong     ");
             textlcdWrite(2, "    Try Again   ");
+						printf("Wrong, Try Again.\r\n");
             //////////////////////////여기까지 첫번째 음 맞추기///////////////////////
         
         default:
@@ -433,7 +536,7 @@ int Level2(void)   // level2(buzzer)
     }
     printf("level 2 finished\r\n");
 }
-/*
+
 int Level3(void)   // level3(colorled)
 {
 	//문제 도안
@@ -447,9 +550,8 @@ int Level3(void)   // level3(colorled)
 
   printf("level 3 start\r\n");
   print_bmp("./proj_image/level3/ex3.bmp");  //set level3 image
-  textlcdlevel(1, 1);   // set level1 txtlcd
-  textlcdlevel(2, 1);	// set level2 txtlcd
-  textlcdlevel(3, 1);	// set level3 txtlcd
+  
+  textlcdlevel(1, 3);	// set level3 txtlcd
 
   int index3 = 0;
   char pwd3;
@@ -491,13 +593,13 @@ int Level3(void)   // level3(colorled)
       
       switch (index3)  // 인덱스에 따라(눌린 순서를 index로 구분함)
       {
-        case 0: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
-        case 1: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break;
-        case 2: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 0: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
+        case 1: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break;
+        case 2: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break;
       }
     }
 
-    if(index3 == 3 && strcmp("010", pwdAns) == 0) // 3번 입력했고 정답이면
+    if(index3 == 3 && strcmp("010", pwdAns3) == 0) // 3번 입력했고 정답이면
     {
       printf("answer correct : %s[%d]\r\n", pwdAns3, index3);
       pwmLedGreen();
@@ -506,16 +608,16 @@ int Level3(void)   // level3(colorled)
       pwmLedRGB(0, 0, 0);
       break;    // 현재는 break로 탈출 -> level4로 가게 변경해야 함
     }
-    else if(index3 == 3 && strcmp("010", pwdAns) != 0) // 3번 입력했고 오답이면
+    else if(index3 == 3 && strcmp("010", pwdAns3) != 0) // 3번 입력했고 오답이면
     {
-      printf("answer wrong : %s[%d]\r\n", pwdAns, index);
+      printf("answer wrong : %s[%d]\r\n", pwdAns3, index3);
       pwmLedRed();
       textlcdWrite(2, "      Wrong     ");
       buzzerifNotAns();
       sleep(1);
       textlcdWrite(2, "   Try Again    ");
       pwmLedRGB(0, 0, 0);
-      index = 0;
+      index3 = 0;
     }else;
   }
   printf("level 3 finish\r\n");
@@ -532,14 +634,9 @@ int Level4(void)   // level4(temperature)
 
   printf("level 4 start\r\n");
   print_bmp("./proj_image/level4/notBoil.bmp");  //set level4 image
-  textlcdlevel(1, 1);   // set level1 txtlcd
-	textlcdlevel(2, 1);   // set level1 txtlcd
-	textlcdlevel(3, 1);   // set level1 txtlcd
-	textlcdlevel(4, 1);   // set level1 txtlcd
 
-  int index = 0;
-  char pwd;
-  char pwdAns[10] = {0,};
+	textlcdlevel(1, 4);   // set level1 txtlcd
+
   
   while(1)
   {
@@ -597,4 +694,3 @@ int Level7(void)   // level7(final)
 
 int Ranking(void)  // 순위표
 {}
-*/
