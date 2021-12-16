@@ -168,6 +168,7 @@ int Level1(void)   // level1(button)
       textlcdWrite(2, "     Correct    ");
       buzzerifAns();
       pwmLedRGB(0, 0, 0);
+      // Level2();
       break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
     }
     else if(index == 6 && strcmp("132231", pwdAns) != 0) // 6번 입력했고 오답이면
@@ -192,23 +193,23 @@ int Level2(void)   // level2(buzzer)
   printf("level 2 start\r\n");
 	buzzerifAns();//정답일때의 부저
   sleep(1);
-  print_bmp("./proj_image/ex2.bmp");  //set level1 image
+  print_bmp("./proj_image/level2/ex2.bmp");  //set level1 image
   
 	textlcdlevel(1, 2);   // set level2 txtlcd
 
   
-  int x, y;
+  // int x, y;
   
   //방금 출력된 부저음을 맞추라는 이미지가 출력됨
   //이미지 안에 어떤 걸 눌러야 무슨 음이 나오는 지 알려줌
-  print_bmp("./proj_image/ex2.bmp"); 
+  // print_bmp("./proj_image/ex2.bmp"); 
    while(1)
     {
       
      
-        msgrcv(msgID, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0);
-        x=rcvMsg.x;
-        y=rcvMsg.y;
+        // msgrcv(msgID, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0);
+        // x=rcvMsg.x;
+        // y=rcvMsg.y;
         switch (rcvMsg.keyInput)
         {
         case 999:
@@ -432,7 +433,7 @@ int Level2(void)   // level2(buzzer)
     }
     printf("level 2 finished\r\n");
 }
-
+/*
 int Level3(void)   // level3(colorled)
 {
 	//문제 도안
@@ -596,3 +597,4 @@ int Level7(void)   // level7(final)
 
 int Ranking(void)  // 순위표
 {}
+*/
