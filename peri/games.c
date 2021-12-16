@@ -219,105 +219,105 @@ int Level2(void)   // level2(buzzer)
             ///////////////////////////첫번째 음 맞추기//////////////////////////////
             if((rcvMsg.x>0)&&(rcvMsg.x<128)&&(rcvMsg.y>100)&&(rcvMsg.y<600))//도
             {
-              print_bmp("./proj_image/do.bmp"); //도 눌린 이미지
+              print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
               
               //////////////////////////두번째 음 맞추기 /////////////////////////////
               if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
               {
-                print_bmp("./proj_image/do.bmp"); //도 눌린 이미지
+                print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
                 break;
               }
               else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
               {
-                print_bmp("./proj_image/re.bmp"); //레 눌린 이미지
+                print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
                 break;
               }
               else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
               {
-                print_bmp("./proj_image/mi.bmp"); //미 눌린 이미지
+                print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
                 
                 /////////////세번째 음 맞추기///////////////////////////////////////
                 if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
                 {
-                  print_bmp("./proj_image/do.bmp"); //도 눌린 이미지
+                  print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
                   break;
                 }
                 else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
                 {
-                  print_bmp("./proj_image/re.bmp"); //레 눌린 이미지
+                  print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
                   break;
                 }
                 else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
                 {
-                  print_bmp("./proj_image/mi.bmp"); //미 눌린 이미지
+                  print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
                   break;
                 }
                 else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
                 {
-                  print_bmp("./proj_image/fa.bmp"); //파 눌린 이미지
+                  print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
                   break;
                 }
                 else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
                 {
-                  print_bmp("./proj_image/sol.bmp"); //솔 눌린 이미지
+                  print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
                   
                   ////////////////////////여기부터 네번째 음 맞추기/////////////////////
                   if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
                   {
-                    print_bmp("./proj_image/do.bmp"); //도 눌린 이미지
+                    print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
                     break;
                   }
                   else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
                   {
-                    print_bmp("./proj_image/re.bmp"); //레 눌린 이미지
+                    print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
                     break;
                   }
                   else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
                   {
-                    print_bmp("./proj_image/mi.bmp"); //미 눌린 이미지
+                    print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
                     break;
                   }
                   else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
                   {
-                    print_bmp("./proj_image/fa.bmp"); //파 눌린 이미지
+                    print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
                     break;
                   }
                   else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
                   {
-                    print_bmp("./proj_image/sol.bmp"); //솔 눌린 이미지
+                    print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
                     break;
                   }
                   else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
                   {
-                    print_bmp("./proj_image/la.bmp"); //라 눌린 이미지
+                    print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
                     break;
                   }
                   else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
                   {
-                    print_bmp("./proj_image/si.bmp"); //시 눌린 이미지
+                    print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
                     break;
                   }
                   else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
                   {
-                    print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
+                    print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
-                    print_bmp("./proj_image/passSecond.bmp"); //두번째 레벨 통과 이미지 
+                    print_bmp("./proj_image/level2/passSecond.bmp"); //두번째 레벨 통과 이미지 
                     pwmLedGreen();//초록색 표시 
                     textlcdWrite(1, "     Correct    ");
                     textlcdWrite(2, "  Try Next LV.  ");
@@ -327,19 +327,19 @@ int Level2(void)   // level2(buzzer)
                 }
                 else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
                 {
-                  print_bmp("./proj_image/la.bmp"); //라 눌린 이미지
+                  print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
                   break;
                 }
                 else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
                 {
-                  print_bmp("./proj_image/si.bmp"); //시 눌린 이미지
+                  print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
                   break;
                 }
                 else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
                 {
-                  print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
+                  print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
                   break;
                 }
@@ -348,31 +348,31 @@ int Level2(void)   // level2(buzzer)
               }
               else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
               {
-                print_bmp("./proj_image/fa.bmp"); //파 눌린 이미지
+                print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
                 break;
               }
               else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
               {
-                print_bmp("./proj_image/sol.bmp"); //솔 눌린 이미지
+                print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
                 break;
               }
               else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
               {
-                print_bmp("./proj_image/la.bmp"); //라 눌린 이미지
+                print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
                 break;
               }
               else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
               {
-                print_bmp("./proj_image/si.bmp"); //시 눌린 이미지
+                print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
                 break;
               }
               else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
               {
-                print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
+                print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
                 break;
               }
@@ -381,43 +381,43 @@ int Level2(void)   // level2(buzzer)
             }
             else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
             {
-              print_bmp("./proj_image/re.bmp"); //레 눌린 이미지
+              print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
               break;
             }
             else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
             {
-              print_bmp("./proj_image/mi.bmp"); //미 눌린 이미지
+              print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
               break;
             }
             else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
             {
-              print_bmp("./proj_image/fa.bmp"); //파 눌린 이미지
+              print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
               break;
             }
             else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
             {
-              print_bmp("./proj_image/sol.bmp"); //솔 눌린 이미지
+              print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
               break;
             }
             else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
             {
-              print_bmp("./proj_image/la.bmp"); //라 눌린 이미지
+              print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
               break;
             }
             else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
             {
-              print_bmp("./proj_image/si.bmp"); //시 눌린 이미지
+              print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
               break;
             }
             else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
             {
-              print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
+              print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
               break;
             }
