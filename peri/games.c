@@ -564,17 +564,17 @@ int Level3(void)   // level3(colorled)
       once = 0;                         // 바로 once=0으로 만들어서 debounce?
 			//341, 683
 			//500, 600
-      if(x>0 && x<341 && y>500 && y<600){ // 그 영역이 하단 왼쪽이면
+      if(x>683 && x<1024 && y>0 && y<100){ // 그 영역이 하단 왼쪽이면
         pwmLedRGB(1, 0, 0);           // 빨간색 led 켜기 
         printf("Select Red!\r\n");
 				print_bmp("./proj_image/level3/3_r.bmp");
       }
-			else if(x>341 && x<683 && y>500 && y<600){ // 그 영역이 하단 중간부분이면 
+			else if(x>341 && x<683 && y>0 && y<100){ // 그 영역이 하단 중간부분이면 
         pwmLedRGB(1, 1, 0);           // 노란색 led 켜기 
         printf("Select Yellow!\r\n");
 				print_bmp("./proj_image/level3/3_y.bmp");
       }
-			else if(x>683 && x<1024 && y>500 && y<600){ // 그 영역이 하단 오른쪽이면 
+			else if(x>0 && x<341 && y>0 && y<100){ // 그 영역이 하단 오른쪽이면 
         pwmLedRGB(0, 1, 0);           // 초록색 led 켜기 
         printf("Select Green!\r\n");
 				print_bmp("./proj_image/level3/3_g.bmp");
@@ -588,9 +588,9 @@ int Level3(void)   // level3(colorled)
     //if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
       //once = 0;                         // 바로 once=0으로 만들어서 debounce?
 
-      if(x>0 && x<341 && y>500 && y<600) pwd3 = '0'; //red
-      if(x>341 && x<683 && y>500 && y<600) pwd3 = '1'; //yellow
-      if(x>683 && x<1024 && y>500 && y<600) pwd3 = '2'; //green
+      if(x>683 && x<1024 && y>0 && y<100) pwd3 = '0'; //red
+      if(x>341 && x<683 && y>0 && y<100) pwd3 = '1'; //yellow
+      if(x>0 && x<341 && y>0 && y<100) pwd3 = '2'; //green
       
       switch (index3)  // 인덱스에 따라(눌린 순서를 index로 구분함)
       {
