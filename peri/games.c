@@ -575,8 +575,8 @@ int Level5(void)   // level5(accel&mag)
 		  print_bmp("./proj_image/level6/6_6.bmp");
     }
         
-    if(once == 1 && buttonRxData.pressed == 1 && buttonRxData.keyInput == KEY_SEARCH){
-			
+    if(once == 1 && buttonRxData.pressed == 1){
+			once == 0;
       // accelMagGyroGetData(MAG);
       printf ("MAG when button pushed %d, %d, %d\r\n",sensorData[0],sensorData[1],sensorData[2]);
       
