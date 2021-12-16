@@ -4,6 +4,7 @@
 #include <linux/input.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/kd.h>
 #include <sys/ioctl.h>
 #include <sys/msg.h>
 #include <pthread.h>
@@ -28,6 +29,11 @@ int main(void)  // Main Menu
 {
     int exit = 0;
     
+    /*===========터치스크린 깨짐방지=====================*/
+    int conFD = open ("/dev/tty0", O_RDWR);
+    ioctl(conFD, KDSETMODE, KD_GRAPHICS);
+    close (conFD);
+
     //Init
     GameInit();
 
@@ -38,7 +44,7 @@ int main(void)  // Main Menu
     }
 
     //Main Menu Image
-    print_bmp("./proj_image/flower.bmp");
+    print_bmp("./proj_image/start.bmp");
     textlcdWrite(1, "project test");
     printf("main image loaded\r\n");
 
@@ -58,6 +64,7 @@ int main(void)  // Main Menu
                     Level2();
                     Level3();
                     Level4();
+                    Level5();
                     // GameTime(GAME_STOP);
                     break;
                 case KEY_HOME: 
