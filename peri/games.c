@@ -197,6 +197,7 @@ int Level2(void)   // level2(buzzer)
   print_bmp("./proj_image//level2/ex2.bmp");  //set level1 image
   // sleep(1);
   textlcdlevel(1, 2);   // set level2 txtlcd
+  textlcdWrite(2, "                ");
   buzzerifAns();//정답일때의 부저
 
   int index = 0;
@@ -342,14 +343,11 @@ int Level3(void)   // level3(colorled)
   //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
   //pwd3 = 131
 
-  // create msg rcv thread
-  //pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
-  pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
-
   printf("level 3 start\r\n");
   print_bmp("./proj_image/level3/ex3.bmp");  //set level3 image
   
   textlcdlevel(1, 3);	// set level3 txtlcd
+  textlcdWrite(2, "                ");
 
   int index3 = 0;
   char pwd3;
@@ -365,30 +363,31 @@ int Level3(void)   // level3(colorled)
       if(x>683 && x<1024 && y>0 && y<100){ // 그 영역이 하단 왼쪽이면
         pwmLedRGB(1, 0, 0);           // 빨간색 led 켜기 
         printf("Select Red!\r\n");
-				print_bmp("./proj_image/level3/3_r.bmp");
+				if(index3 == 0) print_bmp("./proj_image/level3/santa.bmp");
+        else if(index3 == 2 && pwdAns3[0] == '0' && pwdAns3[1] == '1') print_bmp("./proj_image/level3/rudolf.bmp");
+        else print_bmp("./proj_image/level3/3_r.bmp");
+        pwd3 = '0';
       }
 			else if(x>341 && x<683 && y>0 && y<100){ // 그 영역이 하단 중간부분이면 
         pwmLedRGB(1, 1, 0);           // 노란색 led 켜기 
         printf("Select Yellow!\r\n");
-				print_bmp("./proj_image/level3/3_y.bmp");
+				printf("Select Yellow!\r\n");				
+        if(index3 == 1 && pwdAns3[0] == '0') print_bmp("./proj_image/level3/star.bmp");
+        else print_bmp("./proj_image/level3/3_y.bmp");
+        pwd3 = '1';
       }
 			else if(x>0 && x<341 && y>0 && y<100){ // 그 영역이 하단 오른쪽이면 
         pwmLedRGB(0, 1, 0);           // 초록색 led 켜기 
         printf("Select Green!\r\n");
 				print_bmp("./proj_image/level3/3_g.bmp");
+        pwd3 = '2';
       }
-	    
       else
-        pwmLedRGB(0, 0, 0);printf("Select Nothing!\r\n");
-				
+        pwmLedRGB(0, 0, 0);printf("Select Nothing!\r\n");	
     }
 
     //if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
       //once = 0;                         // 바로 once=0으로 만들어서 debounce?
-
-      if(x>683 && x<1024 && y>0 && y<100) pwd3 = '0'; //red
-      if(x>341 && x<683 && y>0 && y<100) pwd3 = '1'; //yellow
-      if(x>0 && x<341 && y>0 && y<100) pwd3 = '2'; //green
       
       switch (index3)  // 인덱스에 따라(눌린 순서를 index로 구분함)
       {
@@ -396,7 +395,7 @@ int Level3(void)   // level3(colorled)
         case 1: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break;
         case 2: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break;
       }
-    }
+    
 
     if(index3 == 3 && strcmp("010", pwdAns3) == 0) // 3번 입력했고 정답이면
     {
