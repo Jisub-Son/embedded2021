@@ -1,10 +1,12 @@
 CC = arm-linux-gnueabi-gcc
 AR = arm-linux-gnueabi-ar
 
-all : project
+all : project send
 
 project : project.c libMyPeri.a
 	$(CC) project.c -l MyPeri -L. -o project -lpthread
+
+send :
 	scp project ecube@192.168.219.103:/home/ecube/
 
 # accelMagGyrotest : accelMagGyrotest.c libMyPeri.a accelMagGyro.h

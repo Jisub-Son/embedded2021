@@ -191,12 +191,10 @@ int Level2(void)   // level2(buzzer)
 	// pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
 
   printf("level 2 start\r\n");
-	buzzerifAns();//정답일때의 부저
+	print_bmp("./proj_image/level2/ex2.bmp");  //set level1 image
   sleep(1);
-  print_bmp("./proj_image/level2/ex2.bmp");  //set level1 image
-  
+  buzzerifAns();//정답일때의 부저
 	textlcdlevel(1, 2);   // set level2 txtlcd
-
   
   // int x, y;
   
@@ -205,8 +203,9 @@ int Level2(void)   // level2(buzzer)
   // print_bmp("./proj_image/ex2.bmp"); 
    while(1)
     {
-      
-     
+    
+     if(rcvMsg.pressed == 1 && once == 1){
+       once = 0;
         // msgrcv(msgID, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0);
         // x=rcvMsg.x;
         // y=rcvMsg.y;
@@ -222,6 +221,7 @@ int Level2(void)   // level2(buzzer)
             {
               print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
+                printf("도?\r\n");
               
               //////////////////////////두번째 음 맞추기 /////////////////////////////
               if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
@@ -240,7 +240,7 @@ int Level2(void)   // level2(buzzer)
               {
                 print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
-                
+                printf("미\r\n");
                 /////////////세번째 음 맞추기///////////////////////////////////////
                 if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
                 {
@@ -384,6 +384,7 @@ int Level2(void)   // level2(buzzer)
             {
               print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
+              printf("레?\r\n");
               break;
             }
             else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
@@ -430,6 +431,7 @@ int Level2(void)   // level2(buzzer)
         default:
             break;
         }
+     }
     }
     printf("level 2 finished\r\n");
 }
@@ -457,9 +459,9 @@ int Level3(void)   // level3(colorled)
   
   while(1)
   {
-    if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
+    if(button == 1 && rcvMsg.pressed == 1){ // button==1이고 터치일때 if문 실행
                                  
-      once = 0;                         // 바로 once=0으로 만들어서 debounce?
+      button = 0;                         // 바로 button=0으로 만들어서 debounce?
 			//341, 683
 			//500, 600
       if(x>0 && x<341 && y>500 && y<600){ // 그 영역이 하단 왼쪽이면
@@ -482,8 +484,8 @@ int Level3(void)   // level3(colorled)
         pwmLedRGB(0, 0, 0);
     }
 
-    //if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
-      //once = 0;                         // 바로 once=0으로 만들어서 debounce?
+    //if(button == 1 && buttonRxData.pressed == 1){ // button==1이고 버튼일때 if문 실행
+      //button = 0;                         // 바로 button=0으로 만들어서 debounce?
 
       if(x>0 && x<341 && y>500 && y<600) pwd3 = '0'; //red
       if(x>341 && x<683 && y>500 && y<600) pwd3 = '1'; //yellow
@@ -543,9 +545,9 @@ int Level4(void)   // level4(temperature)
   
   while(1)
   {
-    if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
+    if(button == 1 && rcvMsg.pressed == 1){ // button==1이고 터치일때 if문 실행
                                  
-      once = 0;                         // 바로 once=0으로 만들어서 debounce?
+      button = 0;                         // 바로 button=0으로 만들어서 debounce?
       if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
         pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
         printf("Give me Hint!\r\n");

@@ -27,9 +27,9 @@ int print_bmp(char *path)
 	char *data;
 
 
-    printf("=================================\n");
-    printf("Frame buffer Application - Bitmap\n");
-    printf("=================================\n\n");
+    // printf("=================================\n");
+    // printf("Frame buffer Application - Bitmap\n");
+    // printf("=================================\n\n");
 
 
 	//FrameBuffer init
@@ -48,9 +48,9 @@ int print_bmp(char *path)
 		printf ("File open failed\r\n");
 		return 0;
 	}//파일읽기 실패하면 표시 
-    printf("\tBitmapFile: %dx%d pixels\n", cols, rows);
-    printf("\tFB Screen: %dx%d\n", screen_width, screen_height);
-    printf("\tFB bits_per_pixel: %d, FB line_length: %d\n", bits_per_pixel, line_length);
+    // printf("\tBitmapFile: %dx%d pixels\n", cols, rows);
+    // printf("\tFB Screen: %dx%d\n", screen_width, screen_height);
+    // printf("\tFB bits_per_pixel: %d, FB line_length: %d\n", bits_per_pixel, line_length);
 	
 	//FileWrite
 	fb_write(data, cols,rows);
@@ -219,7 +219,7 @@ void fb_doubleBufSwap(void)
 }
 void fb_close(void)
 {
-	printf ("Memory UnMapped!\r\n");
+	// printf ("Memory UnMapped!\r\n");
     munmap( pfbmap, PFBSIZE);
 	printf ("CloseFB\r\n");
     close( fbfd);

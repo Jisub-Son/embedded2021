@@ -24,9 +24,9 @@ int main (int argc, char **argv)
 	char *data;
 
 
-    printf("=================================\n");
-    printf("Frame buffer Application - Bitmap\n");
-    printf("=================================\n\n");
+    // printf("=================================\n");
+    // printf("Frame buffer Application - Bitmap\n");
+    // printf("=================================\n\n");
 
     if(argc != 2) {
         usage();
@@ -49,9 +49,9 @@ int main (int argc, char **argv)
 		printf ("File open failed\r\n");
 		return 0;
 	}
-    printf("\tBitmapFile: %dx%d pixels\n", cols, rows);
-    printf("\tFB Screen: %dx%d\n", screen_width, screen_height);
-    printf("\tFB bits_per_pixel: %d, FB line_length: %d\n", bits_per_pixel, line_length);
+    // printf("\tBitmapFile: %dx%d pixels\n", cols, rows);
+    // printf("\tFB Screen: %dx%d\n", screen_width, screen_height);
+    // printf("\tFB bits_per_pixel: %d, FB line_length: %d\n", bits_per_pixel, line_length);
 	
 	//FileWrite
 	fb_write(data, cols,rows);

@@ -148,7 +148,7 @@ void fb_clear2(int xpos, int ypos, int width, int height)
 
 void fb_close(void)
 {
-	printf ("Memory UnMapped!\r\n");
+	// printf ("Memory UnMapped!\r\n");
     munmap( pfbmap, PFBSIZE);
 	printf ("CloseFB\r\n");
     close( fbfd);
