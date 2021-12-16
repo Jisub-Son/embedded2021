@@ -56,6 +56,8 @@ int main(void)  // Main Menu
                     GameTime(GAME_START);
                     Level1();
                     Level2();
+                    Level3();
+                    
                     GameTime(GAME_STOP);
                     break;
                 case KEY_HOME: 
