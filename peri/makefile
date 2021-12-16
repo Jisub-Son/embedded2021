@@ -1,16 +1,13 @@
 CC = arm-linux-gnueabi-gcc
 AR = arm-linux-gnueabi-ar
 
-all : project send
+all : project send accelMagGyrotest
 
 project : project.c libMyPeri.a
 	$(CC) project.c -l MyPeri -L. -o project -lpthread
 
-send :
-	scp project ecube@192.168.219.103:/home/ecube/
-
 # accelMagGyrotest : accelMagGyrotest.c libMyPeri.a accelMagGyro.h
-# 	$(CC) accelMagGyrotest.c -l MyPeri -L. -o accelMagGyrotest
+#	$(CC) accelMagGyrotest.c -l MyPeri -L. -o accelMagGyrotest
 
 # temperaturetest : temperaturetest.c libMyPeri.a temperature.h
 # 	$(CC) temperaturetest.c -l MyPeri -L. -o temperaturetest
@@ -62,6 +59,10 @@ accelMagGyro.o : accelMagGyro.h accelMagGyro.c
 
 games.o : games.h games.c
 	$(CC) -c games.c -o games.o
+
+send :
+	scp project ecube@192.168.219.103:/home/ecube/
+#	scp accelMagGyrotest ecube@192.168.219.103:/home/ecube/
 
 clean :
 	rm *.o

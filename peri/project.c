@@ -52,13 +52,14 @@ int main(void)  // Main Menu
             switch (buttonRxData.keyInput)
             {
                 case KEY_VOLUMEUP:
-                    printf("Volume up key\r\n"); 
+                    printf("Volume up key\r\n");
+                    GameTime(GAME_START);
                     Level1();
                     Level2();
+                    GameTime(GAME_STOP);
                     break;
                 case KEY_HOME: 
                     printf("Home key\r\n"); 
-                    Level2();
                     break;
                 case KEY_SEARCH: 
                     printf("Search key\r\n");
