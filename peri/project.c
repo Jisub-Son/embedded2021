@@ -55,7 +55,7 @@ int main(void)  // Main Menu
                     printf("Volume up key\r\n");
                     // GameTime(GAME_START);
                     Level1();
-                    // Level2();
+                    Level2();
                     Level3();
 
                     // GameTime(GAME_STOP);

@@ -364,14 +364,14 @@ int Level3(void)   // level3(colorled)
         pwmLedRGB(1, 0, 0);           // 빨간색 led 켜기 
         printf("Select Red!\r\n");
         if(index3 == 0) print_bmp("./proj_image/level3/santa.bmp");
-        else if(index3 == 2) print_bmp("./proj_image/level3/rudolf.bmp");
+        else if(index3 == 2 && pwdAns3[0] == '0' && pwdAns3[1] == '1') print_bmp("./proj_image/level3/rudolf.bmp");
         else print_bmp("./proj_image/level3/3_r.bmp");
         pwd3 = '0';
       }
 			else if(x>341 && x<683 && y>0 && y<100){ // 그 영역이 하단 중간부분이면 
         pwmLedRGB(1, 1, 0);           // 노란색 led 켜기 
         printf("Select Yellow!\r\n");				
-        if(index3 == 1) print_bmp("./proj_image/level3/star.bmp");
+        if(index3 == 1 && pwdAns3[0] == '0') print_bmp("./proj_image/level3/star.bmp");
         else print_bmp("./proj_image/level3/3_y.bmp");
         pwd3 = '1';
       }
@@ -419,7 +419,7 @@ int Level3(void)   // level3(colorled)
   }
   printf("level 3 finish\r\n");
 }
-/*
+
 int Level4(void)   // level4(temperature)
 {
 	//home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
@@ -479,7 +479,7 @@ int Level4(void)   // level4(temperature)
   
   printf("level 4 finish\r\n");
 }
-
+/*
 int Level5(void)   // level5(accel&mag)
 {}
 
