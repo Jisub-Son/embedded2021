@@ -445,7 +445,7 @@ int Level3(void)   // level3(colorled)
   pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
 
   printf("level 3 start\r\n");
-  print_bmp("./proj_image/ex3.bmp");  //set level3 image
+  print_bmp("./proj_image/level3/ex3.bmp");  //set level3 image
   textlcdlevel(1, 1);   // set level1 txtlcd
   textlcdlevel(2, 1);	// set level2 txtlcd
   textlcdlevel(3, 1);	// set level3 txtlcd
@@ -464,17 +464,17 @@ int Level3(void)   // level3(colorled)
       if(x>0 && x<341 && y>500 && y<600){ // 그 영역이 하단 왼쪽이면
         pwmLedRGB(1, 0, 0);           // 빨간색 led 켜기 
         printf("Select Red!\r\n");
-				print_bmp("./proj_image/3_r.bmp");
+				print_bmp("./proj_image/level3/3_r.bmp");
       }
 			else if(x>341 && x<683 && y>500 && y<600){ // 그 영역이 하단 중간부분이면 
         pwmLedRGB(1, 1, 0);           // 노란색 led 켜기 
         printf("Select Yellow!\r\n");
-				print_bmp("./proj_image/3_y.bmp");
+				print_bmp("./proj_image/level3/3_y.bmp");
       }
 			else if(x>683 && x<1024 && y>500 && y<600){ // 그 영역이 하단 오른쪽이면 
         pwmLedRGB(0, 1, 0);           // 초록색 led 켜기 
         printf("Select Green!\r\n");
-				print_bmp("./proj_image/3_g.bmp");
+				print_bmp("./proj_image/level3/3_g.bmp");
       }
 	    
       else
@@ -530,7 +530,7 @@ int Level4(void)   // level4(temperature)
   pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
 
   printf("level 4 start\r\n");
-  print_bmp("./proj_image/notBoil.bmp");  //set level4 image
+  print_bmp("./proj_image/level4/notBoil.bmp");  //set level4 image
   textlcdlevel(1, 1);   // set level1 txtlcd
 	textlcdlevel(2, 1);   // set level1 txtlcd
 	textlcdlevel(3, 1);   // set level1 txtlcd
@@ -558,7 +558,7 @@ int Level4(void)   // level4(temperature)
 		sleep(1);
 		if (test_temp>100)
 		{
-			print_bmp("./proj_image/boil.bmp");
+			print_bmp("./proj_image/level4/boil.bmp");
 			printf("answer correct : %lf\r\n", test_temp);
       pwmLedGreen();
       textlcdWrite(2, "     Correct    ");
@@ -568,7 +568,7 @@ int Level4(void)   // level4(temperature)
 		}
 		else
 		{
-			print_bmp("./proj_image/boil.bmp");
+			print_bmp("./proj_image/level4/boil.bmp");
 			printf("answer wrong : %lf\r\n", test_temp);
       pwmLedRed();
       textlcdWrite(2, "      Wrong     ");
