@@ -65,8 +65,7 @@ int main(void)  // Main Menu
                     Level3();
                     Level4();
                     Level5();
-                    Level6();
-                    game_time = fndCountDisp(FND_STOP_CNT);
+                    fndCountDisp(FND_STOP_CNT);
                     break;
                 case KEY_HOME: 
                     printf("Home key\r\n"); 
