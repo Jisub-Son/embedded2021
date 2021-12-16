@@ -191,52 +191,38 @@ int Level2(void)   // level2(buzzer)
 
   printf("level 2 start\r\n");
 	buzzerifAns();//정답일때의 부저
-  // sleep(1);
-  print_bmp("./proj_image/level2/ex2.bmp");  //set level1 image
-  textlcdlevel(1, 2);   // set level1 txtlcd
+  sleep(1);
+  print_bmp("./proj_image/ex2.bmp");  //set level1 image
+  
+	textlcdlevel(1, 2);   // set level2 txtlcd
 
+  
+  int x, y;
+  
   //방금 출력된 부저음을 맞추라는 이미지가 출력됨
   //이미지 안에 어떤 걸 눌러야 무슨 음이 나오는 지 알려줌
-  // print_bmp("./proj_image/level2/ex2.bmp"); 
-  while(1)
-  {
-    
-    
-      msgrcv(msgID, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0);
-      x=rcvMsg.x;
-      y=rcvMsg.y;
-      switch (rcvMsg.keyInput)
-      {
-      case 999:
-          //printf("x : %d/t y : %d\r\n", rcvMsg.x, rcvMsg.y);
-          //break;
-          
-          
-          ///////////////////////////첫번째 음 맞추기//////////////////////////////
-          if((rcvMsg.x>0)&&(rcvMsg.x<128)&&(rcvMsg.y>100)&&(rcvMsg.y<600))//도
-          {
-            print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
-            buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
+  print_bmp("./proj_image/ex2.bmp"); 
+   while(1)
+    {
+      
+     
+        msgrcv(msgID, &rcvMsg, sizeof(rcvMsg)-sizeof(long int), 0, 0);
+        x=rcvMsg.x;
+        y=rcvMsg.y;
+        switch (rcvMsg.keyInput)
+        {
+        case 999:
+            //printf("x : %d/t y : %d\r\n", rcvMsg.x, rcvMsg.y);
+            //break;
+           
             
-            //////////////////////////두번째 음 맞추기 /////////////////////////////
-            if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
+            ///////////////////////////첫번째 음 맞추기//////////////////////////////
+            if((rcvMsg.x>0)&&(rcvMsg.x<128)&&(rcvMsg.y>100)&&(rcvMsg.y<600))//도
             {
               print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
-              break;
-            }
-            else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
-            {
-              print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
-              buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
-              break;
-            }
-            else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
-            {
-              print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
-              buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
               
-              /////////////세번째 음 맞추기///////////////////////////////////////
+              //////////////////////////두번째 음 맞추기 /////////////////////////////
               if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
               {
                 print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
@@ -253,20 +239,8 @@ int Level2(void)   // level2(buzzer)
               {
                 print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
-                break;
-              }
-              else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
-              {
-                print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
-                buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
-                break;
-              }
-              else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
-              {
-                print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
-                buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
                 
-                ////////////////////////여기부터 네번째 음 맞추기/////////////////////
+                /////////////세번째 음 맞추기///////////////////////////////////////
                 if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
                 {
                   print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
@@ -295,7 +269,61 @@ int Level2(void)   // level2(buzzer)
                 {
                   print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
+                  
+                  ////////////////////////여기부터 네번째 음 맞추기/////////////////////
+                  if((x>0)&&(x<128)&&(y>100)&&(y<600))//도
+                  {
+                    print_bmp("./proj_image/level2/do.bmp"); //도 눌린 이미지
+                    buzzerPlaySongforMsec(buzzermusicScale[0], 500); //도 음의 부저 출력
+                    break;
+                  }
+                  else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
+                  {
+                    print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
+                    buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
+                    break;
+                  }
+                  else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
+                  {
+                    print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
+                    buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
+                    break;
+                  }
+                  else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
+                  {
+                    print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
+                    buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
+                    break;
+                  }
+                  else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
+                  {
+                    print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
+                    buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
+                    break;
+                  }
+                  else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
+                  {
+                    print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
+                    buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
+                    break;
+                  }
+                  else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
+                  {
+                    print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
+                    buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
+                    break;
+                  }
+                  else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
+                  {
+                    print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
+                    buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
+                    print_bmp("./proj_image/level2/passSecond.bmp"); //두번째 레벨 통과 이미지 
+                    pwmLedGreen();//초록색 표시 
+                    textlcdWrite(1, "     Correct    ");
+                    textlcdWrite(2, "  Try Next LV.  ");
+                  }
                   break;
+                  /////////////////여기까지 네번째 음 맞추기
                 }
                 else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
                 {
@@ -313,13 +341,22 @@ int Level2(void)   // level2(buzzer)
                 {
                   print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
-                  print_bmp("./proj_image/level2/passSecond.bmp"); //두번째 레벨 통과 이미지 
-                  pwmLedGreen();//초록색 표시 
-                  textlcdWrite(1, "     Correct    ");
-                  textlcdWrite(2, "  Try Next LV.  ");
+                  break;
                 }
                 break;
-                /////////////////여기까지 네번째 음 맞추기
+                ////////////////////////여기까지 세번째 음 맞추기////////////////////////
+              }
+              else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
+              {
+                print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
+                buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
+                break;
+              }
+              else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
+              {
+                print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
+                buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
+                break;
               }
               else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
               {
@@ -340,7 +377,19 @@ int Level2(void)   // level2(buzzer)
                 break;
               }
               break;
-              ////////////////////////여기까지 세번째 음 맞추기////////////////////////
+              ///////////////////////여기까지 두번째 음 맞추기/////////////////////////
+            }
+            else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
+            {
+              print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
+              buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
+              break;
+            }
+            else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
+            {
+              print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
+              buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
+              break;
             }
             else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
             {
@@ -372,63 +421,18 @@ int Level2(void)   // level2(buzzer)
               buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
               break;
             }
+            pwmLedRed();//빨간색 표시 
+            textlcdWrite(1, "      Wrong     ");
+            textlcdWrite(2, "    Try Again   ");
+            //////////////////////////여기까지 첫번째 음 맞추기///////////////////////
+        
+        default:
             break;
-            ///////////////////////여기까지 두번째 음 맞추기/////////////////////////
-          }
-          else if((x>128)&&(x<256)&&(y>100)&&(y<600))//레
-          {
-            print_bmp("./proj_image/level2/re.bmp"); //레 눌린 이미지
-            buzzerPlaySongforMsec(buzzermusicScale[1], 500); //레 음의 부저 출력
-            break;
-          }
-          else if((x>256)&&(x<384)&&(y>100)&&(y<600))//미
-          {
-            print_bmp("./proj_image/level2/mi.bmp"); //미 눌린 이미지
-            buzzerPlaySongforMsec(buzzermusicScale[2], 500); //미 음의 부저 출력
-            break;
-          }
-          else if((x>384)&&(x<512)&&(y>100)&&(y<600))//파
-          {
-            print_bmp("./proj_image/level2/fa.bmp"); //파 눌린 이미지
-            buzzerPlaySongforMsec(buzzermusicScale[3], 500); //파 음의 부저 출력
-            break;
-          }
-          else if((x>512)&&(x<640)&&(y>100)&&(y<600))//솔
-          {
-            print_bmp("./proj_image/level2/sol.bmp"); //솔 눌린 이미지
-            buzzerPlaySongforMsec(buzzermusicScale[4], 500); //솔 음의 부저 출력
-            break;
-          }
-          else if((x>640)&&(x<768)&&(y>100)&&(y<600))//라
-          {
-            print_bmp("./proj_image/level2/la.bmp"); //라 눌린 이미지
-            buzzerPlaySongforMsec(buzzermusicScale[5], 500); //라 음의 부저 출력
-            break;
-          }
-          else if((x>768)&&(x<896)&&(y>100)&&(y<600))//시
-          {
-            print_bmp("./proj_image/level2/si.bmp"); //시 눌린 이미지
-            buzzerPlaySongforMsec(buzzermusicScale[6], 500); //시 음의 부저 출력
-            break;
-          }
-          else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
-          {
-            print_bmp("./proj_image/level2/do2.bmp"); //높은 도 눌린 이미지
-            buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
-            break;
-          }
-          pwmLedRed();//빨간색 표시 
-          textlcdWrite(1, "      Wrong     ");
-          textlcdWrite(2, "    Try Again   ");
-          //////////////////////////여기까지 첫번째 음 맞추기///////////////////////
-      
-      default:
-          break;
-      }
-  }
-  printf("level 2 finished\r\n");
+        }
+    }
+    printf("level 2 finished\r\n");
 }
-/*
+
 int Level3(void)   // level3(colorled)
 {
 	//문제 도안
@@ -572,7 +576,7 @@ int Level4(void)   // level4(temperature)
       sleep(1);
       textlcdWrite(2, "   Try Again    ");
       pwmLedRGB(0, 0, 0);
-      index = 0;
+     
 		}
 
     
@@ -592,4 +596,3 @@ int Level7(void)   // level7(final)
 
 int Ranking(void)  // 순위표
 {}
-*/
