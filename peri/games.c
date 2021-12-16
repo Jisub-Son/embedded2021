@@ -596,4 +596,4 @@ int Level7(void)   // level7(final)
 
 int Ranking(void)  // 순위표
 {}
-*/
+
