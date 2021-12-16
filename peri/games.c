@@ -363,24 +363,26 @@ int Level3(void)   // level3(colorled)
       if(x>683 && x<1024 && y>0 && y<100){ // 그 영역이 하단 왼쪽이면
         pwmLedRGB(1, 0, 0);           // 빨간색 led 켜기 
         printf("Select Red!\r\n");
-				print_bmp("./proj_image/level3/3_r.bmp");
+        if(index3 == 0) print_bmp("./proj_image/level3/santa.bmp");
+        else if(index3 == 2) print_bmp("./proj_image/level3/rudolf.bmp");
+        else print_bmp("./proj_image/level3/3_r.bmp");
         pwd3 = '0';
       }
 			else if(x>341 && x<683 && y>0 && y<100){ // 그 영역이 하단 중간부분이면 
         pwmLedRGB(1, 1, 0);           // 노란색 led 켜기 
-        printf("Select Yellow!\r\n");
-				print_bmp("./proj_image/level3/3_y.bmp");
+        printf("Select Yellow!\r\n");				
+        if(index3 == 1) print_bmp("./proj_image/level3/star.bmp");
+        else print_bmp("./proj_image/level3/3_y.bmp");
         pwd3 = '1';
       }
 			else if(x>0 && x<341 && y>0 && y<100){ // 그 영역이 하단 오른쪽이면 
         pwmLedRGB(0, 1, 0);           // 초록색 led 켜기 
         printf("Select Green!\r\n");
-				print_bmp("./proj_image/level3/3_g.bmp");
+        print_bmp("./proj_image/level3/3_g.bmp");
         pwd3 = '2';
       }
       else
         pwmLedRGB(0, 0, 0);printf("Select Nothing!\r\n");
-        print_bmp("./proj_image/level3/ex3.bmp");
     
 
     //if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행

@@ -53,12 +53,12 @@ int main(void)  // Main Menu
             {
                 case KEY_VOLUMEUP:
                     printf("Volume up key\r\n");
-                    GameTime(GAME_START);
+                    // GameTime(GAME_START);
                     Level1();
-                    Level2();
+                    // Level2();
                     Level3();
-                    
-                    GameTime(GAME_STOP);
+
+                    // GameTime(GAME_STOP);
                     break;
                 case KEY_HOME: 
                     printf("Home key\r\n"); 
