@@ -5,6 +5,7 @@ all : project
 
 project : project.c libMyPeri.a
 	$(CC) project.c -l MyPeri -L. -o project -lpthread
+	scp project ecube@192.168.219.103:/home/ecube/
 
 # accelMagGyrotest : accelMagGyrotest.c libMyPeri.a accelMagGyro.h
 # 	$(CC) accelMagGyrotest.c -l MyPeri -L. -o accelMagGyrotest

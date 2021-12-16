@@ -46,6 +46,7 @@ int main(void)  // Main Menu
     {
         int returnValue = 0;
         returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
+        printf("main button rcv : %d\r\n", buttonRxData.pressed);
         
         if(buttonRxData.pressed){
             switch (buttonRxData.keyInput)
@@ -53,6 +54,7 @@ int main(void)  // Main Menu
                 case KEY_VOLUMEUP:
                     printf("Volume up key\r\n"); 
                     Level1();
+                    Level2();
                     break;
                 case KEY_HOME: 
                     printf("Home key\r\n"); 
