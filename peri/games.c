@@ -113,7 +113,7 @@ int GameExit(void)   // 전체 exit
 
 int GameTime(int game_state)   // game start 시 타이머 동작, game stop이면 타이머 끝
 {
-
+  
 }
 
 int Level1(void)   // level1(button)
@@ -197,7 +197,6 @@ int Level2(void)   // level2(buzzer)
   print_bmp("./proj_image//level2/ex2.bmp");  //set level1 image
   // sleep(1);
   textlcdlevel(1, 2);   // set level2 txtlcd
-  textlcdWrite(2, "                ");
   buzzerifAns();//정답일때의 부저
 
   int index = 0;
@@ -343,11 +342,14 @@ int Level3(void)   // level3(colorled)
   //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
   //pwd3 = 131
 
+  // create msg rcv thread
+  //pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
+  pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
+
   printf("level 3 start\r\n");
   print_bmp("./proj_image/level3/ex3.bmp");  //set level3 image
   
   textlcdlevel(1, 3);	// set level3 txtlcd
-  textlcdWrite(2, "                ");
 
   int index3 = 0;
   char pwd3;
@@ -363,31 +365,31 @@ int Level3(void)   // level3(colorled)
       if(x>683 && x<1024 && y>0 && y<100){ // 그 영역이 하단 왼쪽이면
         pwmLedRGB(1, 0, 0);           // 빨간색 led 켜기 
         printf("Select Red!\r\n");
-        if(index3 == 0) print_bmp("./proj_image/level3/santa.bmp");
-        else if(index3 == 2 && pwdAns3[0] == '0' && pwdAns3[1] == '1') print_bmp("./proj_image/level3/rudolf.bmp");
-        else print_bmp("./proj_image/level3/3_r.bmp");
-        pwd3 = '0';
+				print_bmp("./proj_image/level3/3_r.bmp");
       }
 			else if(x>341 && x<683 && y>0 && y<100){ // 그 영역이 하단 중간부분이면 
         pwmLedRGB(1, 1, 0);           // 노란색 led 켜기 
-        printf("Select Yellow!\r\n");				
-        if(index3 == 1 && pwdAns3[0] == '0') print_bmp("./proj_image/level3/star.bmp");
-        else print_bmp("./proj_image/level3/3_y.bmp");
-        pwd3 = '1';
+        printf("Select Yellow!\r\n");
+				print_bmp("./proj_image/level3/3_y.bmp");
       }
 			else if(x>0 && x<341 && y>0 && y<100){ // 그 영역이 하단 오른쪽이면 
         pwmLedRGB(0, 1, 0);           // 초록색 led 켜기 
         printf("Select Green!\r\n");
-        print_bmp("./proj_image/level3/3_g.bmp");
-        pwd3 = '2';
+				print_bmp("./proj_image/level3/3_g.bmp");
       }
+	    
       else
         pwmLedRGB(0, 0, 0);printf("Select Nothing!\r\n");
-    
+				
+    }
 
     //if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
-      //once = 0;                         // 바로 once=0으로 만들어서 debounce
-    
+      //once = 0;                         // 바로 once=0으로 만들어서 debounce?
+
+      if(x>683 && x<1024 && y>0 && y<100) pwd3 = '0'; //red
+      if(x>341 && x<683 && y>0 && y<100) pwd3 = '1'; //yellow
+      if(x>0 && x<341 && y>0 && y<100) pwd3 = '2'; //green
+      
       switch (index3)  // 인덱스에 따라(눌린 순서를 index로 구분함)
       {
         case 0: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
@@ -479,9 +481,112 @@ int Level4(void)   // level4(temperature)
   
   printf("level 4 finish\r\n");
 }
-/*
+
 int Level5(void)   // level5(accel&mag)
-{}
+{
+	printf("level 5 start\r\n");
+  print_bmp("./proj_image/level5/ex5.bmp");  //set level5 image
+  
+  textlcdlevel(1, 5);	// set level5 txtlcd
+	
+	
+	MagInit();
+	printf("Mag Init.\r\n");
+
+	
+	while(1)
+  {
+		
+    int returnValue = 0;
+    returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
+    printf("main button rcv : %d\r\n", buttonRxData.pressed);
+		/*
+		if(sensorData[1]<600 && sensorData[1]>530) pwd = '0'; //비밀번호 1
+    if(sensorData[1]<530 && sensorData[1]>464) pwd = '1'; //비밀번호 2
+    if(sensorData[1]<464 && sensorData[1]>398) pwd = '2'; //비밀번호 3
+		if(sensorData[1]<398 && sensorData[1]>332) pwd = '3'; //비밀번호 4
+		if(sensorData[1]<332 && sensorData[1]>266) pwd = '4'; //비밀번호 5
+		if(sensorData[1]<266 && sensorData[1]>200) pwd = '5'; //비밀번호 6
+		*/
+		if(sensorData[1]<600 && sensorData[1]>530) 
+		{ //자물쇠 1영역
+			pwd = '0';
+      printf("pwd 1!\r\n");
+		  print_bmp("./proj_image/level5/5_1.bmp");
+    }
+		if(sensorData[1]<530 && sensorData[1]>464) 
+		{ //자물쇠 2 영역
+			pwd = '1';
+      printf("pwd 2!\r\n");
+		  print_bmp("./proj_image/level5/5_2.bmp");
+    }
+		if(sensorData[1]<464 && sensorData[1]>398) 
+		{ //자물쇠 3 영역
+			pwd = '2';
+      printf("pwd 3!\r\n");
+		  print_bmp("./proj_image/level5/5_3.bmp");
+    }
+		if(sensorData[1]<398 && sensorData[1]>332) 
+		{ //자물쇠 4 영역
+			pwd = '3';
+      printf("pwd 4!\r\n");
+		  print_bmp("./proj_image/level5/5_4.bmp");
+    }
+		if(sensorData[1]<332 && sensorData[1]>266) 
+		{ //자물쇠 5 영역
+			pwd = '4';
+      printf("pwd 5!\r\n");
+		  print_bmp("./proj_image/level5/5_5.bmp");
+    }
+		if(sensorData[1]<266 && sensorData[1]>200) 
+		{ //자물쇠 6 영역
+			pwd = '5';
+      printf("pwd 6!\r\n");
+		  print_bmp("./proj_image/level5/5_6.bmp");
+    }
+        
+    if(buttonRxData.pressed){
+			
+      if (buttonRxData.keyInput == KEY_SEARCH)
+      {
+				
+        accelMagGyroGetData(MAG);
+				printf ("MAG when button pushed %d, %d, %d\r\n",sensorData[0],sensorData[1],sensorData[2]);
+				
+				switch (index)  // 인덱스에 따라(눌린 순서를 index로 구분함)
+				{
+					case 0: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
+					case 1: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+					case 2: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+					case 3: pwdAns[index] = pwd; index++; printf("pwdAns : %s\r\n", pwdAns); break;
+				}
+    }
+
+    if(index == 4 && strcmp("4102", pwdAns) == 0) // 6번 입력했고 정답이면
+    {
+      printf("answer correct : %s[%d]\r\n", pwdAns, index);
+      pwmLedGreen();
+      textlcdWrite(2, "     Correct    ");
+      buzzerifAns();
+      pwmLedRGB(0, 0, 0);
+      break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
+    }
+    else if(index == 4 && strcmp("0247", pwdAns) != 0) // 6번 입력했고 오답이면
+    {
+      printf("answer wrong : %s[%d]\r\n", pwdAns, index);
+      pwmLedRed();
+      textlcdWrite(2, "      Wrong     ");
+      buzzerifNotAns();
+      sleep(1);
+      textlcdWrite(2, "   Try Again    ");
+      pwmLedRGB(0, 0, 0);
+      index = 0;
+							
+       }
+    
+        if(exit) break;
+  }
+}
 
 int Level6(void)   // level6(gyro)
 {}
