@@ -61,3 +61,23 @@ int ledifAns(void)
 
 	return 0;
 }
+
+int ledControl(const char arg[])
+{	
+	unsigned int data = 0;
+	int written;
+	data = strtol(arg,NULL,16); //String을 16진수로 가정하고 integer형으로 변환
+	printf("wrate data :0x%X\n", data);
+	
+	for(int i = 0; i < MAX_LED_NUM ; i++ ){
+	
+		if ( data & (0x01 << i)){
+			written = ledOnOff(i, 1);
+			if(written != 4)printf("write error");
+		}
+		else{
+			written = ledOnOff(i, 0);
+			if(written != 4)printf("write error");
+		}
+	}
+}

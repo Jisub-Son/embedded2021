@@ -425,54 +425,81 @@ int Level4(void)   // level4(temperature)
 	//home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
   //pwd = 132231
 
-  // create msg rcv thread
-  //pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
-  pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
-
   printf("level 4 start\r\n");
   print_bmp("./proj_image/level4/notBoil.bmp");  //set level4 image
 
-	textlcdlevel(1, 4);   // set level1 txtlcd
+  spi_init();
 
+	textlcdlevel(1, 4);   // set level1 txtlcd
+  textlcdWrite(2, "                ");
+
+  double test_temp;
   
   while(1)
   {
-    if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
+
+    // if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
                                  
-      once = 0;                         // 바로 once=0으로 만들어서 debounce?
-      if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
-        pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
-        printf("Give me Hint!\r\n");
-      }
-      else
-        pwmLedRGB(0, 0, 0);
-    }
+    //   once = 0;                         // 바로 once=0으로 만들어서 debounce?
+    //   if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
+    //     pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
+    //     printf("Give me Hint!\r\n");
+    //   }
+    //   else
+    //     pwmLedRGB(0, 0, 0);
+    // }
 		
 		test_temp = spi_read_lm74();
-		//printf("On test code : %lf\r\n", test_temp);
+		printf("On test code : %lf\r\n", test_temp);
 		sleep(1);
-		if (test_temp>100)
-		{
+
+		if (test_temp>=29){
 			print_bmp("./proj_image/level4/boil.bmp");
-			printf("answer correct : %lf\r\n", test_temp);
-      pwmLedGreen();
-      textlcdWrite(2, "     Correct    ");
-      buzzerifAns();
-      pwmLedRGB(0, 0, 0);
-      break;    // 현재는 break로 탈출 -> level4로 가게 변경해야 함
-		}
-		else
-		{
-			print_bmp("./proj_image/level4/boil.bmp");
-			printf("answer wrong : %lf\r\n", test_temp);
-      pwmLedRed();
-      textlcdWrite(2, "      Wrong     ");
-      buzzerifNotAns();
-      sleep(1);
-      textlcdWrite(2, "   Try Again    ");
-      pwmLedRGB(0, 0, 0);
-     
-		}
+      pwmLedRGB(1, 0, 0);
+      ledControl("0x7F");
+      sleep(3);
+      
+      if(test_temp>=29){
+        printf("answer correct : %lf\r\n", test_temp);
+        pwmLedGreen();
+        textlcdWrite(2, "     Correct    ");
+        buzzerifAns();
+        pwmLedRGB(0, 0, 0);
+        ledControl("0x00");
+        spi_exit();
+        break;    // 현재는 break로 탈출 -> level4로 가게 변경해야 함
+      }
+    }
+    else print_bmp("./proj_image/level4/notBoil.bmp");
+
+		if(test_temp >=28 && test_temp < 29){
+      pwmLedRGB(1, 1, 0);
+      ledControl("0x3F");
+    }
+    else if(test_temp >=27 && test_temp < 28){
+      pwmLedRGB(1, 1, 0);
+      ledControl("0x1F");
+    }
+    else if(test_temp >=26 && test_temp < 27){
+      pwmLedBlue();
+      ledControl("0x0F");
+    }
+    else if(test_temp >= 25 && test_temp < 26){
+      pwmLedBlue();
+      ledControl("0x07");
+    }
+    else{
+      pwmLedBlue();
+      ledControl("0x03");
+    }
+			
+			
+      // pwmLedRed();
+      // textlcdWrite(2, "      Wrong     ");
+      // buzzerifNotAns();
+      // sleep(1);
+      // textlcdWrite(2, "   Try Again    ");
+      // pwmLedRGB(0, 0, 0);
 
     
   }//while 문 종료
