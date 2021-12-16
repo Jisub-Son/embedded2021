@@ -640,9 +640,7 @@ int Level6(void)   // level6(gyro)
       if(buttonRxData.keyInput == KEY_MENU) print_bmp("./proj_image//level4/boil.bmp");//lv4
       if(buttonRxData.keyInput == KEY_VOLUMEUP) print_bmp("./proj_image//level5/5_4.bmp");//lv5
       if(buttonRxData.keyInput == KEY_VOLUMEDOWN) print_bmp("./proj_image//level6/ex6.bmp"); //lv6
-      }
-      else
-        pwmLedRGB(0, 0, 0);
+
     }
 		
     if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 버튼일때 if문 실행
@@ -755,7 +753,7 @@ int Level6(void)   // level6(gyro)
       pwmLedRGB(0, 0, 0);
       index = 0;
     }else;
-  
+  }
 }
 
 int Level7(void)   // level7(final)

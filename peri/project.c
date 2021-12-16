@@ -28,8 +28,8 @@ static int msgID;
 int main(void)  // Main Menu
 {
     int exit = 0;
-    
-    /*===========터치스크린 깨짐방지=====================*/
+    int game_time = 0;
+
     int conFD = open ("/dev/tty0", O_RDWR);
     ioctl(conFD, KDSETMODE, KD_GRAPHICS);
     close (conFD);
@@ -59,13 +59,14 @@ int main(void)  // Main Menu
             {
                 case KEY_VOLUMEUP:
                     printf("Volume up key\r\n");
-                    // GameTime(GAME_START);
+                    fndCountDisp(FND_START_CNT);
                     Level1();
                     Level2();
                     Level3();
                     Level4();
                     Level5();
-                    // GameTime(GAME_STOP);
+                    Level6();
+                    game_time = fndCountDisp(FND_STOP_CNT);
                     break;
                 case KEY_HOME: 
                     printf("Home key\r\n"); 
