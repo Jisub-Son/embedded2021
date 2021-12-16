@@ -524,7 +524,8 @@ int Level5(void)   // level5(accel&mag)
   char pwdAns[10] = {0,};
 	
 	while(1)
-  {
+  { 
+    sleep(1);
 		accelMagGyroGetData(MAG);
     // int returnValue = 0;
     // returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
@@ -541,37 +542,37 @@ int Level5(void)   // level5(accel&mag)
 		{ //자물쇠 1영역
 			pwd = '0';
       printf("pwd 1!\r\n");
-		  print_bmp("./proj_image/level5/5_1.bmp");
+		  print_bmp("./proj_image/level6/6_1.bmp");
     }
 		else if(sensorData[1]<530 && sensorData[1]>464) 
 		{ //자물쇠 2 영역
 			pwd = '1';
       printf("pwd 2!\r\n");
-		  print_bmp("./proj_image/level5/5_2.bmp");
+		  print_bmp("./proj_image/level6/6_2.bmp");
     }
 		else if(sensorData[1]<464 && sensorData[1]>398) 
 		{ //자물쇠 3 영역
 			pwd = '2';
       printf("pwd 3!\r\n");
-		  print_bmp("./proj_image/level5/5_3.bmp");
+		  print_bmp("./proj_image/level6/6_3.bmp");
     }
 		else if(sensorData[1]<398 && sensorData[1]>332) 
 		{ //자물쇠 4 영역
 			pwd = '3';
       printf("pwd 4!\r\n");
-		  print_bmp("./proj_image/level5/5_4.bmp");
+		  print_bmp("./proj_image/level6/6_4.bmp");
     }
 		else if(sensorData[1]<332 && sensorData[1]>266) 
 		{ //자물쇠 5 영역
 			pwd = '4';
       printf("pwd 5!\r\n");
-		  print_bmp("./proj_image/level5/5_5.bmp");
+		  print_bmp("./proj_image/level6/6_5.bmp");
     }
 		else if(sensorData[1]<266 && sensorData[1]>200) 
 		{ //자물쇠 6 영역
 			pwd = '5';
       printf("pwd 6!\r\n");
-		  print_bmp("./proj_image/level5/5_6.bmp");
+		  print_bmp("./proj_image/level6/6_6.bmp");
     }
         
     if(once == 1 && buttonRxData.pressed == 1 && buttonRxData.keyInput == KEY_SEARCH){
