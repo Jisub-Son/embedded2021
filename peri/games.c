@@ -193,8 +193,8 @@ int Level2(void)   // level2(buzzer)
 	buzzerifAns();//정답일때의 부저
   sleep(1);
   print_bmp("./proj_image/ex2.bmp");  //set level1 image
-  textlcdlevel(1, 1);   // set level1 txtlcd
-	textlcdlevel(2, 1);   // set level1 txtlcd
+  
+	textlcdlevel(1, 2);   // set level2 txtlcd
 
   
   int x, y;
@@ -446,9 +446,8 @@ int Level3(void)   // level3(colorled)
 
   printf("level 3 start\r\n");
   print_bmp("./proj_image/level3/ex3.bmp");  //set level3 image
-  textlcdlevel(1, 1);   // set level1 txtlcd
-  textlcdlevel(2, 1);	// set level2 txtlcd
-  textlcdlevel(3, 1);	// set level3 txtlcd
+  
+  textlcdlevel(1, 3);	// set level3 txtlcd
 
   int index3 = 0;
   char pwd3;
@@ -490,13 +489,13 @@ int Level3(void)   // level3(colorled)
       
       switch (index3)  // 인덱스에 따라(눌린 순서를 index로 구분함)
       {
-        case 0: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
-        case 1: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break;
-        case 2: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 0: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
+        case 1: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break;
+        case 2: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns3); break;
       }
     }
 
-    if(index3 == 3 && strcmp("010", pwdAns) == 0) // 3번 입력했고 정답이면
+    if(index3 == 3 && strcmp("010", pwdAns3) == 0) // 3번 입력했고 정답이면
     {
       printf("answer correct : %s[%d]\r\n", pwdAns3, index3);
       pwmLedGreen();
@@ -505,16 +504,16 @@ int Level3(void)   // level3(colorled)
       pwmLedRGB(0, 0, 0);
       break;    // 현재는 break로 탈출 -> level4로 가게 변경해야 함
     }
-    else if(index3 == 3 && strcmp("010", pwdAns) != 0) // 3번 입력했고 오답이면
+    else if(index3 == 3 && strcmp("010", pwdAns3) != 0) // 3번 입력했고 오답이면
     {
-      printf("answer wrong : %s[%d]\r\n", pwdAns, index);
+      printf("answer wrong : %s[%d]\r\n", pwdAns3, index3);
       pwmLedRed();
       textlcdWrite(2, "      Wrong     ");
       buzzerifNotAns();
       sleep(1);
       textlcdWrite(2, "   Try Again    ");
       pwmLedRGB(0, 0, 0);
-      index = 0;
+      index3 = 0;
     }else;
   }
   printf("level 3 finish\r\n");
@@ -531,14 +530,9 @@ int Level4(void)   // level4(temperature)
 
   printf("level 4 start\r\n");
   print_bmp("./proj_image/level4/notBoil.bmp");  //set level4 image
-  textlcdlevel(1, 1);   // set level1 txtlcd
-	textlcdlevel(2, 1);   // set level1 txtlcd
-	textlcdlevel(3, 1);   // set level1 txtlcd
-	textlcdlevel(4, 1);   // set level1 txtlcd
 
-  int index = 0;
-  char pwd;
-  char pwdAns[10] = {0,};
+	textlcdlevel(1, 4);   // set level1 txtlcd
+
   
   while(1)
   {
@@ -576,7 +570,7 @@ int Level4(void)   // level4(temperature)
       sleep(1);
       textlcdWrite(2, "   Try Again    ");
       pwmLedRGB(0, 0, 0);
-      index = 0;
+     
 		}
 
     
