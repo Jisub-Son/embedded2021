@@ -113,7 +113,7 @@ int GameExit(void)   // 전체 exit
 int Level1(void)   // level1(button)
 {
   //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
-  //pwd = 132241
+  //pwd = 132231
 
   // create msg rcv thread
   pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
@@ -161,7 +161,7 @@ int Level1(void)   // level1(button)
       }
     }
 
-    if(index == 6 && strcmp("132241", pwdAns) == 0) // 6번 입력했고 정답이면
+    if(index == 6 && strcmp("132231", pwdAns) == 0) // 6번 입력했고 정답이면
     {
       printf("answer correct : %s[%d]\r\n", pwdAns, index);
       pwmLedGreen();
@@ -170,7 +170,7 @@ int Level1(void)   // level1(button)
       pwmLedRGB(0, 0, 0);
       break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
     }
-    else if(index == 6 && strcmp("132241", pwdAns) != 0) // 6번 입력했고 오답이면
+    else if(index == 6 && strcmp("132231", pwdAns) != 0) // 6번 입력했고 오답이면
     {
       printf("answer wrong : %s[%d]\r\n", pwdAns, index);
       pwmLedRed();
@@ -187,10 +187,18 @@ int Level1(void)   // level1(button)
 
 int Level2(void)   // level2(buzzer)
 { 
-  printf("level2\r\n");
-  int x, y;
-  buzzerifAns();//정답일때의 부저
+	pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
+
+  printf("level 2 start\r\n");
+	buzzerifAns();//정답일때의 부저
   sleep(1);
+  print_bmp("./proj_image/ex2.bmp");  //set level1 image
+  textlcdlevel(1, 1);   // set level1 txtlcd
+	textlcdlevel(2, 1);   // set level1 txtlcd
+
+  
+  int x, y;
+  
   //방금 출력된 부저음을 맞추라는 이미지가 출력됨
   //이미지 안에 어떤 걸 눌러야 무슨 음이 나오는 지 알려줌
   print_bmp("./proj_image/ex2.bmp"); 
@@ -307,7 +315,7 @@ int Level2(void)   // level2(buzzer)
                   }
                   else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
                   {
-                    print_bmp("./proj_image/Do.bmp"); //높은 도 눌린 이미지
+                    print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
                     buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
                     print_bmp("./proj_image/passSecond.bmp"); //두번째 레벨 통과 이미지 
                     pwmLedGreen();//초록색 표시 
@@ -331,7 +339,7 @@ int Level2(void)   // level2(buzzer)
                 }
                 else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
                 {
-                  print_bmp("./proj_image/Do.bmp"); //높은 도 눌린 이미지
+                  print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
                   buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
                   break;
                 }
@@ -364,7 +372,7 @@ int Level2(void)   // level2(buzzer)
               }
               else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
               {
-                print_bmp("./proj_image/Do.bmp"); //높은 도 눌린 이미지
+                print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
                 buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
                 break;
               }
@@ -409,7 +417,7 @@ int Level2(void)   // level2(buzzer)
             }
             else if((x>896)&&(x<1024)&&(y>100)&&(y<600))//도
             {
-              print_bmp("./proj_image/Do.bmp"); //높은 도 눌린 이미지
+              print_bmp("./proj_image/do2.bmp"); //높은 도 눌린 이미지
               buzzerPlaySongforMsec(buzzermusicScale[7], 500); //도 음의 부저 출력
               break;
             }
@@ -426,10 +434,156 @@ int Level2(void)   // level2(buzzer)
 }
 
 int Level3(void)   // level3(colorled)
-{}
+{
+	//문제 도안
+	//사진에서의 회색부분에 해당하는 색을 차례대로 누르면 통과 
+  //home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
+  //pwd3 = 131
+
+  // create msg rcv thread
+  //pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
+  pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
+
+  printf("level 3 start\r\n");
+  print_bmp("./proj_image/ex3.bmp");  //set level3 image
+  textlcdlevel(1, 1);   // set level1 txtlcd
+  textlcdlevel(2, 1);	// set level2 txtlcd
+  textlcdlevel(3, 1);	// set level3 txtlcd
+
+  int index3 = 0;
+  char pwd3;
+  char pwdAns3[10] = {0,};
+  
+  while(1)
+  {
+    if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
+                                 
+      once = 0;                         // 바로 once=0으로 만들어서 debounce?
+			//341, 683
+			//500, 600
+      if(x>0 && x<341 && y>500 && y<600){ // 그 영역이 하단 왼쪽이면
+        pwmLedRGB(1, 0, 0);           // 빨간색 led 켜기 
+        printf("Select Red!\r\n");
+				print_bmp("./proj_image/3_r.bmp");
+      }
+			else if(x>341 && x<683 && y>500 && y<600){ // 그 영역이 하단 중간부분이면 
+        pwmLedRGB(1, 1, 0);           // 노란색 led 켜기 
+        printf("Select Yellow!\r\n");
+				print_bmp("./proj_image/3_y.bmp");
+      }
+			else if(x>683 && x<1024 && y>500 && y<600){ // 그 영역이 하단 오른쪽이면 
+        pwmLedRGB(0, 1, 0);           // 초록색 led 켜기 
+        printf("Select Green!\r\n");
+				print_bmp("./proj_image/3_g.bmp");
+      }
+	    
+      else
+        pwmLedRGB(0, 0, 0);
+    }
+
+    //if(once == 1 && buttonRxData.pressed == 1){ // once==1이고 버튼일때 if문 실행
+      //once = 0;                         // 바로 once=0으로 만들어서 debounce?
+
+      if(x>0 && x<341 && y>500 && y<600) pwd3 = '0'; //red
+      if(x>341 && x<683 && y>500 && y<600) pwd3 = '1'; //yellow
+      if(x>683 && x<1024 && y>500 && y<600) pwd3 = '2'; //green
+      
+      switch (index3)  // 인덱스에 따라(눌린 순서를 index로 구분함)
+      {
+        case 0: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break; //ex 첫번째 입력(index=0)일 경우 pwd(keyinput)을 pwdAns[0]에 저장
+        case 1: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break;
+        case 2: pwdAns3[index3] = pwd3; index3++; printf("pwdAns : %s\r\n", pwdAns); break;
+      }
+    }
+
+    if(index3 == 3 && strcmp("010", pwdAns) == 0) // 3번 입력했고 정답이면
+    {
+      printf("answer correct : %s[%d]\r\n", pwdAns3, index3);
+      pwmLedGreen();
+      textlcdWrite(2, "     Correct    ");
+      buzzerifAns();
+      pwmLedRGB(0, 0, 0);
+      break;    // 현재는 break로 탈출 -> level4로 가게 변경해야 함
+    }
+    else if(index3 == 3 && strcmp("010", pwdAns) != 0) // 3번 입력했고 오답이면
+    {
+      printf("answer wrong : %s[%d]\r\n", pwdAns, index);
+      pwmLedRed();
+      textlcdWrite(2, "      Wrong     ");
+      buzzerifNotAns();
+      sleep(1);
+      textlcdWrite(2, "   Try Again    ");
+      pwmLedRGB(0, 0, 0);
+      index = 0;
+    }else;
+  }
+  printf("level 3 finish\r\n");
+}
 
 int Level4(void)   // level4(temperature)
-{}
+{
+	//home = 0, back = 1, search = 2, menu = 3, volup = 4, voldn = 5
+  //pwd = 132231
+
+  // create msg rcv thread
+  //pthread_create(&buttonTh_id, NULL, buttonThRcvFunc, NULL);
+  pthread_create(&touchTh_id, NULL, touchThRcvFunc, NULL);    //thread 생성
+
+  printf("level 4 start\r\n");
+  print_bmp("./proj_image/notBoil.bmp");  //set level4 image
+  textlcdlevel(1, 1);   // set level1 txtlcd
+	textlcdlevel(2, 1);   // set level1 txtlcd
+	textlcdlevel(3, 1);   // set level1 txtlcd
+	textlcdlevel(4, 1);   // set level1 txtlcd
+
+  int index = 0;
+  char pwd;
+  char pwdAns[10] = {0,};
+  
+  while(1)
+  {
+    if(once == 1 && rcvMsg.pressed == 1){ // once==1이고 터치일때 if문 실행
+                                 
+      once = 0;                         // 바로 once=0으로 만들어서 debounce?
+      if(x>0 && x<300 && y>0 && y<300){ // 그 영역이 오른쪽 상단이면
+        pwmLedRGB(0, 0, 1);           // 특정 영역을 만들어서 힌트나 level 간 이동 가능하게 만들자
+        printf("Give me Hint!\r\n");
+      }
+      else
+        pwmLedRGB(0, 0, 0);
+    }
+		
+		test_temp = spi_read_lm74();
+		//printf("On test code : %lf\r\n", test_temp);
+		sleep(1);
+		if (test_temp>100)
+		{
+			print_bmp("./proj_image/boil.bmp");
+			printf("answer correct : %lf\r\n", test_temp);
+      pwmLedGreen();
+      textlcdWrite(2, "     Correct    ");
+      buzzerifAns();
+      pwmLedRGB(0, 0, 0);
+      break;    // 현재는 break로 탈출 -> level4로 가게 변경해야 함
+		}
+		else
+		{
+			print_bmp("./proj_image/boil.bmp");
+			printf("answer wrong : %lf\r\n", test_temp);
+      pwmLedRed();
+      textlcdWrite(2, "      Wrong     ");
+      buzzerifNotAns();
+      sleep(1);
+      textlcdWrite(2, "   Try Again    ");
+      pwmLedRGB(0, 0, 0);
+      index = 0;
+		}
+
+    
+  }//while 문 종료
+  
+  printf("level 4 finish\r\n");
+}
 
 int Level5(void)   // level5(accel&mag)
 {}
