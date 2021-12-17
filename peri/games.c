@@ -204,7 +204,12 @@ int Level2(void)   // level2(buzzer)
   // sleep(1);
   textlcdlevel(1, 2);   // set level2 txtlcd
   textlcdWrite(2, "                ");
-  buzzerifAns();//정답일때의 부저
+  sleep(1);
+  
+  buzzerPlaySongforMsec(buzzermusicScale[1], 200);
+  buzzerPlaySongforMsec(buzzermusicScale[3], 200);
+  buzzerPlaySongforMsec(buzzermusicScale[4], 200);
+  buzzerPlaySongforMsec(buzzermusicScale[5], 400);
 
   int index = 0;
   char pwd;
