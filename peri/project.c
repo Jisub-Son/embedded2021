@@ -50,6 +50,8 @@ int main(void)  // Main Menu
 
     while(1)
     {
+        textlcdWrite(1, "project test");
+        textlcdWrite(2, "                ");
         int returnValue = 0;
         returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
         printf("main button rcv : %d\r\n", buttonRxData.pressed);

@@ -100,6 +100,9 @@ int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 
 
 int GameExit(void)   // 전체 exit
 {
+  ledControl("0x00");
+  textlcdWrite(1, "                ");
+  textlcdWrite(1, "                ");
   ledLibExit();
   buttonExit();
   buzzerExit();
@@ -760,6 +763,10 @@ int Level6(void)   // level6(gyro)
 
 int Ranking(int game_time)  // 순위표
 {
+     print_bmp("./proj_image/start.bmp");
+    // textlcdWrite(1, "project test");
+    // printf("main image loaded\r\n");
+
   // game is done
   char txt_time[16] = {0 };
   int fd, player = 0, Rank = 1;
@@ -768,6 +775,9 @@ int Ranking(int game_time)  // 순위표
   
   textlcdWrite(1, " Congratulation ");
   textlcdWrite(2, "              ");
+
+  pwmLedRGB(0, 0, 0);
+  ledControl("0x00");
 
   fd = open("Rank.txt", O_RDWR, 0644);
   if(fd<0){
@@ -780,19 +790,28 @@ int Ranking(int game_time)  // 순위표
     printf("read_time %s\r\n", read_time);
     // prev_game_time = strtol(read_time,NULL,10);
     prev_game_time = atoi(read_time);
-    printf("prev_time : %d", prev_game_time);
+    printf("prev_time : %d\r\n", prev_game_time);
     if(prev_game_time < game_time){
       Rank++;
     }
   }
+  sprintf(txt_time, " ur Rank : %d", Rank);
+  textlcdWrite(2, txt_time);
 
   printf("ur Rank is : %d", Rank);
 
   lseek(fd, 0, SEEK_END);
   dprintf(fd, "%04d\n", game_time);
 
-  pthread_cancel(buttonTh_id);
-  pthread_cancel(touchTh_id);
+  while(1){
+    if(buttonRxData.pressed == 1){
+      pthread_cancel(buttonTh_id);
+      pthread_cancel(touchTh_id);
+      break;
+    }
+  }
+  // pthread_cancel(buttonTh_id);
+  // pthread_cancel(touchTh_id);
 
   return 0;
   

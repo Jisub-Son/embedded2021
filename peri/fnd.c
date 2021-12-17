@@ -114,6 +114,7 @@ int fndCountDisp(int run) //카운트업 설정
 			printf("Thread Create Error : [%d]\r\n", err);
 		}
 		pthread_detach(fndTh_id);
+		counter = 0;
 	}
 	else if(run == FND_STOP_CNT){	// stop이면 쓰레드 종료
 		return counter;
