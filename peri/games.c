@@ -100,9 +100,12 @@ int GameInit(void)     // 전체 init 또는 초기 필요한 Init 여기다가 
 
 int GameExit(void)   // 전체 exit
 {
+        buzzerPlaySongforMsec(buzzermusicScale[6], 100);
+      buzzerPlaySongforMsec(buzzermusicScale[5], 100);
+      buzzerPlaySongforMsec(buzzermusicScale[4], 150);
   ledControl("0x00");
   textlcdWrite(1, "                ");
-  textlcdWrite(1, "                ");
+  textlcdWrite(2, "                ");
   ledLibExit();
   buttonExit();
   buzzerExit();
@@ -807,6 +810,7 @@ int Ranking(int game_time)  // 순위표
     if(buttonRxData.pressed == 1){
       pthread_cancel(buttonTh_id);
       pthread_cancel(touchTh_id);
+      fndOff();
       break;
     }
   }

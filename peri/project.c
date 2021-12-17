@@ -45,13 +45,14 @@ int main(void)  // Main Menu
 
     //Main Menu Image
     print_bmp("./proj_image/start.bmp");
-    textlcdWrite(1, "project test");
+    textlcdWrite(1, " Welcome to Emb ");
+    textlcdWrite(2, "  Press Vol.up  ");
     printf("main image loaded\r\n");
 
     while(1)
     {
-        textlcdWrite(1, "project test");
-        textlcdWrite(2, "                ");
+        textlcdWrite(1, " Welcome to Emb ");
+        textlcdWrite(2, "  Press Vol.up  ");
         int returnValue = 0;
         returnValue = msgrcv(msgID, &buttonRxData, sizeof(buttonRxData)-sizeof(long int), 0, 0);    // get button input
         printf("main button rcv : %d\r\n", buttonRxData.pressed);
@@ -63,11 +64,11 @@ int main(void)  // Main Menu
                     printf("Volume up key\r\n");
                     fndCountDisp(FND_START_CNT);
                     Level1();
-                    // Level2();
-                    // Level3();
-                    // Level4();
-                    // Level5();
-                    // Level6();
+                    Level2();
+                    Level3();
+                    Level4();
+                    Level5();
+                    Level6();
                     game_time = fndCountDisp(FND_STOP_CNT);
                     Ranking(game_time);
                     break;
