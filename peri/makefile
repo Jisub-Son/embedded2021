@@ -62,6 +62,7 @@ games.o : games.h games.c
 
 send :
 	scp project ecube@192.168.219.103:/home/ecube/
+	scp Rank.txt ecube@192.168.219.103:/home/ecube/
 #	scp accelMagGyrotest ecube@192.168.219.103:/home/ecube/
 
 clean :

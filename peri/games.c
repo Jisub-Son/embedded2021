@@ -769,16 +769,17 @@ int Ranking(int game_time)  // 순위표
   textlcdWrite(1, " Congratulation ");
   textlcdWrite(2, "              ");
 
-  fd = open("Rank.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
+  fd = open("Rank.txt", O_RDWR, 0644);
   if(fd<0){
     printf("file open error!\r\n");
     return -1;
   }
 
-  while(!feof(fd) ){
-    fgets(read_time, 5, fd);
-    printf("%s\r\n", read_time);
-    prev_game_time = read_time - '0';
+  while(read(fd, read_time, 5) > 0 ){
+    // fgets(read_time, 4, fd);
+    printf("read_time %s\r\n", read_time);
+    // prev_game_time = strtol(read_time,NULL,10);
+    prev_game_time = atoi(read_time);
     printf("prev_time : %d", prev_game_time);
     if(prev_game_time < game_time){
       Rank++;
@@ -787,11 +788,13 @@ int Ranking(int game_time)  // 순위표
 
   printf("ur Rank is : %d", Rank);
 
-  lseek(fd, 0, SEEK_CUR);
+  lseek(fd, 0, SEEK_END);
   dprintf(fd, "%04d\n", game_time);
 
-  
+  pthread_cancel(buttonTh_id);
+  pthread_cancel(touchTh_id);
 
+  return 0;
   
 }
 

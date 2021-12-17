@@ -13,7 +13,7 @@ int Level4(void);   // level4(temperature)
 int Level5(void);   // level5(accel&mag)
 int Level6(void);   // level6(gyro)
 int Level7(void);   // level7(final)
-int Ranking(void);  // 순위표
+int Ranking(int game_time);  // 순위표
 
 // 기타 필요한 함수도 추가하는 걸로
 

@@ -61,12 +61,13 @@ int main(void)  // Main Menu
                     printf("Volume up key\r\n");
                     fndCountDisp(FND_START_CNT);
                     Level1();
-                    Level2();
-                    Level3();
-                    Level4();
-                    Level5();
-                    Level6();
-                    fndCountDisp(FND_STOP_CNT);
+                    // Level2();
+                    // Level3();
+                    // Level4();
+                    // Level5();
+                    // Level6();
+                    game_time = fndCountDisp(FND_STOP_CNT);
+                    Ranking(game_time);
                     break;
                 case KEY_HOME: 
                     printf("Home key\r\n"); 
