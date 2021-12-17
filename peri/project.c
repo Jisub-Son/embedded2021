@@ -65,6 +65,7 @@ int main(void)  // Main Menu
                     Level3();
                     Level4();
                     Level5();
+                    Level6();
                     fndCountDisp(FND_STOP_CNT);
                     break;
                 case KEY_HOME: 

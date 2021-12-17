@@ -744,7 +744,7 @@ int Level6(void)   // level6(gyro)
       pwmLedRGB(0, 0, 0);
       break;    // 현재는 break로 탈출 -> level2로 가게 변경해야 함
     }
-    else if(index == 4 && strcmp("13021", pwdAns) != 0) // 6번 입력했고 오답이면
+    else if(index == 5 && strcmp("13021", pwdAns) != 0) // 6번 입력했고 오답이면
     {
       printf("answer wrong : %s[%d]\r\n", pwdAns, index);
       pwmLedRed();
@@ -758,9 +758,40 @@ int Level6(void)   // level6(gyro)
   }
 }
 
-int Level7(void)   // level7(final)
-{}
+int Ranking(int game_time)  // 순위표
+{
+  // game is done
+  char txt_time[16] = {0 };
+  int fd, player = 0, Rank = 1;
+  int prev_game_time;
+  char read_time[4] = {0,};
+  
+  textlcdWrite(1, " Congratulation ");
+  textlcdWrite(2, "              ");
 
-int Ranking(void)  // 순위표
-{}
+  fd = open("Rank.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
+  if(fd<0){
+    printf("file open error!\r\n");
+    return -1;
+  }
+
+  while(!feof(fd) ){
+    fgets(read_time, 5, fd);
+    printf("%s\r\n", read_time);
+    prev_game_time = read_time - '0';
+    printf("prev_time : %d", prev_game_time);
+    if(prev_game_time < game_time){
+      Rank++;
+    }
+  }
+
+  printf("ur Rank is : %d", Rank);
+
+  lseek(fd, 0, SEEK_CUR);
+  dprintf(fd, "%04d\n", game_time);
+
+  
+
+  
+}
 

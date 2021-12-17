@@ -3,12 +3,8 @@
 
 // 여기다가 필요한 함수들 정리해서 모으는게 좋을 듯
 
-#define GAME_START 1
-#define GAME_STOP 0
-
 int GameInit(void);     // 전체 init 또는 초기 필요한 Init 여기다가 모으기
 int GameExit(void);   // 전체 exit
-int GameTime(int game_state);   // game start 시 타이머 동작, game stop이면 타이머 끝
 
 int Level1(void);   // level1(button)
 int Level2(void);   // level2(buzzer)
